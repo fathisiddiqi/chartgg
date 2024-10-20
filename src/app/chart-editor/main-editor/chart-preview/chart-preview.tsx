@@ -21,7 +21,6 @@ import { useEffect, useState } from "react";
 import { hexToRGB, replaceSpaceWithUnderscore } from "@/lib/utils";
 import useChartColor from "@/hook/use-chart-colors";
 import { Input } from "@/components/custom-ui/input";
-import ChromeLightFrame from "@/components/frame/chrome-light";
 import ChartFrame from "@/components/common/chart-frame";
 
 const ChartPreview = () => {
@@ -110,7 +109,9 @@ const ChartPreview = () => {
       <div
         style={{
           width: `${chartScreenshot.canvas.width}px`,
+          minWidth: `${chartScreenshot.canvas.width}px`,
           height: `${chartScreenshot.canvas.height}px`,
+          minHeight: `${chartScreenshot.canvas.height}px`,
           backgroundColor: `rgba(${hexToRGB(
             chartScreenshot.canvas.background.color
           )}, ${chartScreenshot.canvas.background.opacity})`,
