@@ -7,21 +7,15 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useChartStore } from "@/store/chart";
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
+import { ChartConfig } from "@/components/ui/chart";
 import { icons } from "lucide-react";
 import { useEffect, useState } from "react";
 import { hexToRGB, replaceSpaceWithUnderscore } from "@/lib/utils";
 import useChartColor from "@/hook/use-chart-colors";
 import { Input } from "@/components/custom-ui/input";
 import ChartFrame from "@/components/common/chart-frame";
+import BarChartPreview from "./bar-chart";
+import LineChartPreview from "./line-chart";
 
 const ChartPreview = () => {
   const { chartType, chartData, chartScreenshot, chartCustomization } =
@@ -147,80 +141,23 @@ const ChartPreview = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <ChartContainer config={chartConfig}>
-                  <BarChart accessibilityLayer data={chartData}>
-                    <CartesianGrid
-                      vertical={chartCustomization.grid.vertical.show}
-                      horizontal={chartCustomization.grid.horizontal.show}
-                    />
-                    {chartCustomization.label.xAxis.show && (
-                      <XAxis
-                        dataKey="label"
-                        tickLine={chartCustomization.label.xAxis.tickLine}
-                        tickMargin={10}
-                        axisLine={chartCustomization.label.xAxis.axisLine}
-                        tickFormatter={(value) =>
-                          value.slice(
-                            0,
-                            chartCustomization.label.xAxis.charLength
-                          )
-                        }
-                      />
-                    )}
-                    {chartCustomization.label.yAxis.show && (
-                      <YAxis
-                        axisLine={false}
-                        tickLine={false}
-                        reversed={false}
-                      />
-                    )}
-                    <ChartTooltip
-                      cursor={chartCustomization.tooltip.focused}
-                      content={
-                        <ChartTooltipContent
-                          indicator={
-                            chartCustomization.tooltip.indicator !== "none"
-                              ? chartCustomization.tooltip.indicator
-                              : undefined
-                          }
-                          hideIndicator={
-                            chartCustomization.tooltip.indicator === "none"
-                          }
-                        />
-                      }
-                      active={!!chartCustomization.tooltip.show}
-                      defaultIndex={
-                        chartCustomization.tooltip.show
-                          ? chartCustomization.tooltip.showTooltipIndex
-                          : undefined
-                      }
-                    />
-                    {chartCustomization.legend.show && (
-                      <>
-                        {chartKeys.length > 0 &&
-                          chartKeys.map((key) => (
-                            <ChartLegend
-                              key={key}
-                              content={
-                                <ChartLegendContent
-                                  nameKey={replaceSpaceWithUnderscore(key)}
-                                />
-                              }
-                            />
-                          ))}
-                      </>
-                    )}
-                    {chartKeys.map((key) => (
-                      <Bar
-                        key={key}
-                        dataKey={key}
-                        name={key}
-                        fill={`var(--color-${replaceSpaceWithUnderscore(key)})`}
-                        radius={4}
-                      />
-                    ))}
-                  </BarChart>
-                </ChartContainer>
+                {chartType === "bar" ? (
+                  <BarChartPreview
+                    data={chartData}
+                    config={chartConfig}
+                    chartCustomization={chartCustomization}
+                    chartKeys={chartKeys}
+                  />
+                ) : chartType === "line" ? (
+                  <LineChartPreview
+                    data={chartData}
+                    config={chartConfig}
+                    chartCustomization={chartCustomization}
+                    chartKeys={chartKeys}
+                  />
+                ) : (
+                  <></>
+                )}
               </CardContent>
               <CardFooter className="flex-col items-start gap-2 text-sm">
                 <div className="flex gap-2 font-medium leading-none">

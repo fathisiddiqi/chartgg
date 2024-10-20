@@ -250,7 +250,7 @@ interface ChartState {
 }
 
 export const useChartStore = create<ChartState>()((set) => ({
-  chartType: "",
+  chartType: "bar",
   setChartType: (chartType: ChartType) => set({ chartType }),
   chartData: [
     {
