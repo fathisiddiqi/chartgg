@@ -1,6 +1,5 @@
 import ChartCanvasLayout from "@/components/common/chart-canvas-layout";
 import ChartFrame from "@/components/common/chart-frame";
-import ChartFrameIcon from "@/components/common/chart-frame-icon";
 import { Button } from "@/components/custom-ui/button";
 import { Input } from "@/components/custom-ui/input";
 import {
@@ -18,11 +17,7 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Slider } from "@/components/ui/slider";
 import { Text } from "@/components/ui/text";
-import {
-  replaceSpaceWithUnderscore,
-  replaceUnderscoreWithSpace,
-  titleCase,
-} from "@/lib/utils";
+import { replaceUnderscoreWithSpace, titleCase } from "@/lib/utils";
 import {
   ChartBackgroundLayouts,
   ChartFrames,

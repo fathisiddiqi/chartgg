@@ -1,6 +1,13 @@
 import { create } from "zustand";
 
-export type ChartType = "bar" | "line" | "pie" | "area" | "";
+export type ChartType =
+  | "bar"
+  | "line"
+  | "pie"
+  | "area"
+  | "radar"
+  | "radial"
+  | "scatter";
 
 export type ChartTheme =
   | "default"
@@ -250,7 +257,7 @@ interface ChartState {
 }
 
 export const useChartStore = create<ChartState>()((set) => ({
-  chartType: "",
+  chartType: "bar",
   setChartType: (chartType: ChartType) => set({ chartType }),
   chartData: [
     {

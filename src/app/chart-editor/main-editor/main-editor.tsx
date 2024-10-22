@@ -1,4 +1,3 @@
-import { useState } from "react"; // Add this import
 import ChartPreview from "./chart-preview/chart-preview";
 import MenuEditor from "./menu-editor/menu-editor";
 import {
@@ -6,15 +5,16 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
+import ChooseChart from "./choose-chart/choose-chart";
 
 const MainEditor = () => {
   return (
     <ResizablePanelGroup direction="horizontal">
-      <ResizablePanel defaultSize={75} minSize={50} maxSize={75}>
+      <ResizablePanel defaultSize={55} minSize={50} maxSize={75}>
         <ChartPreview />
       </ResizablePanel>
       <ResizableHandle withHandle />
-      <ResizablePanel defaultSize={25} minSize={15} maxSize={50}>
+      <ResizablePanel defaultSize={25} minSize={20} maxSize={40}>
         <MenuEditor />
       </ResizablePanel>
     </ResizablePanelGroup>

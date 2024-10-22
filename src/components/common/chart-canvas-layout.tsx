@@ -1,6 +1,4 @@
-import { replaceSpaceWithUnderscore } from "@/lib/utils";
-import { Card } from "../ui/card";
-import { Text } from "../ui/text";
+import React from "react";
 
 const ChartCanvasLayout = ({
   id,
