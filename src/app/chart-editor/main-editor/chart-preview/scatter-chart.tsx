@@ -8,11 +8,11 @@ import {
 } from "@/components/ui/chart";
 import useChartColor from "@/hook/use-chart-colors";
 import { replaceSpaceWithUnderscore } from "@/lib/utils";
-import { ChartCustomization, ChartData, useChartStore } from "@/store/chart";
+import { useChartStore } from "@/store/chart";
 import { useEffect, useState } from "react";
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
+import { CartesianGrid, Scatter, ScatterChart, XAxis, YAxis } from "recharts";
 
-const BarChartPreview = () => {
+const ScatterChartPreview = () => {
   const { chartData, chartCustomization } = useChartStore((state) => state);
   const chartColors = useChartColor(chartCustomization.chart.theme.selected);
 
@@ -49,7 +49,7 @@ const BarChartPreview = () => {
 
   return (
     <ChartContainer config={chartConfig}>
-      <BarChart accessibilityLayer data={chartData}>
+      <ScatterChart accessibilityLayer data={chartData}>
         <CartesianGrid
           vertical={chartCustomization.grid.vertical.show}
           horizontal={chartCustomization.grid.horizontal.show}
@@ -103,7 +103,7 @@ const BarChartPreview = () => {
           </>
         )}
         {chartKeys.map((key) => (
-          <Bar
+          <Scatter
             key={key}
             dataKey={key}
             name={key}
@@ -111,9 +111,9 @@ const BarChartPreview = () => {
             radius={4}
           />
         ))}
-      </BarChart>
+      </ScatterChart>
     </ChartContainer>
   );
 };
 
-export default BarChartPreview;
+export default ScatterChartPreview;

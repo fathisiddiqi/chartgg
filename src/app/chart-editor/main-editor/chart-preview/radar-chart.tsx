@@ -8,11 +8,11 @@ import {
 } from "@/components/ui/chart";
 import useChartColor from "@/hook/use-chart-colors";
 import { replaceSpaceWithUnderscore } from "@/lib/utils";
-import { ChartCustomization, ChartData, useChartStore } from "@/store/chart";
+import { useChartStore } from "@/store/chart";
 import { useEffect, useState } from "react";
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
+import { CartesianGrid, Radar, RadarChart } from "recharts";
 
-const BarChartPreview = () => {
+const RadarChartPreview = () => {
   const { chartData, chartCustomization } = useChartStore((state) => state);
   const chartColors = useChartColor(chartCustomization.chart.theme.selected);
 
@@ -49,25 +49,11 @@ const BarChartPreview = () => {
 
   return (
     <ChartContainer config={chartConfig}>
-      <BarChart accessibilityLayer data={chartData}>
+      <RadarChart accessibilityLayer data={chartData}>
         <CartesianGrid
           vertical={chartCustomization.grid.vertical.show}
           horizontal={chartCustomization.grid.horizontal.show}
         />
-        {chartCustomization.label.xAxis.show && (
-          <XAxis
-            dataKey="label"
-            tickLine={chartCustomization.label.xAxis.tickLine}
-            tickMargin={10}
-            axisLine={chartCustomization.label.xAxis.axisLine}
-            tickFormatter={(value) =>
-              value.slice(0, chartCustomization.label.xAxis.charLength)
-            }
-          />
-        )}
-        {chartCustomization.label.yAxis.show && (
-          <YAxis axisLine={false} tickLine={false} reversed={false} />
-        )}
         <ChartTooltip
           cursor={chartCustomization.tooltip.focused}
           content={
@@ -103,7 +89,7 @@ const BarChartPreview = () => {
           </>
         )}
         {chartKeys.map((key) => (
-          <Bar
+          <Radar
             key={key}
             dataKey={key}
             name={key}
@@ -111,9 +97,9 @@ const BarChartPreview = () => {
             radius={4}
           />
         ))}
-      </BarChart>
+      </RadarChart>
     </ChartContainer>
   );
 };
 
-export default BarChartPreview;
+export default RadarChartPreview;

@@ -6,99 +6,35 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useChartStore } from "@/store/chart";
-import { ChartConfig } from "@/components/ui/chart";
+import { ChartType, useChartStore } from "@/store/chart";
 import { icons } from "lucide-react";
-import { useEffect, useState } from "react";
-import { hexToRGB, replaceSpaceWithUnderscore } from "@/lib/utils";
-import useChartColor from "@/hook/use-chart-colors";
+import { hexToRGB } from "@/lib/utils";
 import { Input } from "@/components/custom-ui/input";
 import ChartFrame from "@/components/common/chart-frame";
 import BarChartPreview from "./bar-chart";
 import LineChartPreview from "./line-chart";
+import PieChartPreview from "./pie-chart";
+import AreaChartPreview from "./area-chart";
+import RadarChartPreview from "./radar-chart";
+import RadialChartPreview from "./radial-chart";
+import ScatterChartPreview from "./scatter-chart";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import ChooseChart from "../choose-chart/choose-chart";
+import { Button } from "@/components/custom-ui/button";
+import { useState } from "react";
 
 const ChartPreview = () => {
-  const { chartType, chartData, chartScreenshot, chartCustomization } =
-    useChartStore((state) => state);
-  const chartColors = useChartColor(chartCustomization.chart.theme.selected);
-
-  const [chartKeys, setChartKeys] = useState<string[]>([]);
-  const [chartConfig, setChartConfig] = useState<ChartConfig>({});
-
-  useEffect(() => {
-    if (chartData?.length > 0) {
-      setChartKeys(
-        Object.keys(chartData[0]).filter(
-          (key) => key !== "id" && key !== "label"
-        )
-      );
-    }
-  }, [chartData]);
-
-  useEffect(() => {
-    if (chartKeys?.length > 0) {
-      setChartConfig((prevConfig) => ({
-        ...prevConfig,
-        ...Object.fromEntries(
-          chartKeys.map((key, index) => [
-            replaceSpaceWithUnderscore(key),
-            {
-              label: key,
-              color: `hsl(${chartColors[index + 1]})`,
-            },
-          ])
-        ),
-      }));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chartKeys, chartCustomization.chart.theme.selected]);
+  const { chartType, chartScreenshot, chartCustomization } = useChartStore(
+    (state) => state
+  );
 
   return (
     <div className="w-full h-full bg-gray-50 flex justify-center items-center relative">
-      <div className="w-2/12 flex gap-2 absolute top-4 right-4">
-        <div className="relative">
-          <Input
-            variant="sm"
-            type="numeric"
-            value={chartScreenshot.canvas.width || ""}
-            onChange={(e) =>
-              useChartStore.setState({
-                chartScreenshot: {
-                  ...chartScreenshot,
-                  canvas: {
-                    ...chartScreenshot.canvas,
-                    width: parseInt(e.target.value),
-                  },
-                },
-              })
-            }
-          />
-          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">
-            px
-          </span>
-        </div>
-        <div className="relative">
-          <Input
-            variant="sm"
-            type="numeric"
-            value={chartScreenshot.canvas.height}
-            onChange={(e) =>
-              useChartStore.setState({
-                chartScreenshot: {
-                  ...chartScreenshot,
-                  canvas: {
-                    ...chartScreenshot.canvas,
-                    height: parseInt(e.target.value),
-                  },
-                },
-              })
-            }
-          />
-          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">
-            px
-          </span>
-        </div>
-      </div>
+      <ActionMenu />
       {/* Background component */}
       <div
         style={{
@@ -120,6 +56,7 @@ const ChartPreview = () => {
               chartScreenshot.content.rotate
             }deg)`,
             boxShadow: chartScreenshot.content.shadow,
+            padding: 0,
           }}
         >
           {/* Chart Frame */}
@@ -131,8 +68,10 @@ const ChartPreview = () => {
                 borderColor: chartCustomization.chart.border.color,
                 borderRadius: chartCustomization.chart.border.radius,
                 borderWidth: chartCustomization.chart.border.width,
+
                 width: chartCustomization.chart.content.width,
               }}
+              className="shadow-none"
             >
               <CardHeader>
                 <CardTitle>{chartCustomization.text.title.text}</CardTitle>
@@ -141,23 +80,7 @@ const ChartPreview = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                {chartType === "bar" ? (
-                  <BarChartPreview
-                    data={chartData}
-                    config={chartConfig}
-                    chartCustomization={chartCustomization}
-                    chartKeys={chartKeys}
-                  />
-                ) : chartType === "line" ? (
-                  <LineChartPreview
-                    data={chartData}
-                    config={chartConfig}
-                    chartCustomization={chartCustomization}
-                    chartKeys={chartKeys}
-                  />
-                ) : (
-                  <></>
-                )}
+                <ChartTypePreview chartType={chartType} />
               </CardContent>
               <CardFooter className="flex-col items-start gap-2 text-sm">
                 <div className="flex gap-2 font-medium leading-none">
@@ -175,6 +98,8 @@ const ChartPreview = () => {
   );
 };
 
+export default ChartPreview;
+
 const FooterTitleIcon = ({ iconInStr }: { iconInStr: string }) => {
   const LucideIcon = icons[iconInStr as keyof typeof icons];
 
@@ -183,4 +108,83 @@ const FooterTitleIcon = ({ iconInStr }: { iconInStr: string }) => {
   );
 };
 
-export default ChartPreview;
+const ActionMenu = () => {
+  const { chartScreenshot } = useChartStore((state) => state);
+
+  const [openChooseChart, setOpenChooseChart] = useState(false);
+
+  return (
+    <div className="w-full flex justify-between gap-2 absolute top-4 left-4 right-10 z-10">
+      <div className="relative">
+        <Popover open={openChooseChart} onOpenChange={setOpenChooseChart}>
+          <PopoverTrigger>
+            <Button variant="default" size="sm">
+              Choose Chart
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-full ml-4">
+            <ChooseChart setOpenChooseChart={setOpenChooseChart} />
+          </PopoverContent>
+        </Popover>
+      </div>
+      <div className="relative flex gap-2 mr-8">
+        <div className="relative w-24">
+          <Input
+            variant="sm"
+            type="numeric"
+            value={chartScreenshot.canvas.width || ""}
+            onChange={(e) =>
+              useChartStore.setState({
+                chartScreenshot: {
+                  ...chartScreenshot,
+                  canvas: {
+                    ...chartScreenshot.canvas,
+                    width: parseInt(e.target.value),
+                  },
+                },
+              })
+            }
+          />
+          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">
+            px
+          </span>
+        </div>
+        <div className="relative w-24">
+          <Input
+            variant="sm"
+            type="numeric"
+            value={chartScreenshot.canvas.height}
+            onChange={(e) =>
+              useChartStore.setState({
+                chartScreenshot: {
+                  ...chartScreenshot,
+                  canvas: {
+                    ...chartScreenshot.canvas,
+                    height: parseInt(e.target.value),
+                  },
+                },
+              })
+            }
+          />
+          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">
+            px
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const ChartTypePreview = ({ chartType }: { chartType: ChartType }) => {
+  const chartTypeToPreview: Record<ChartType, JSX.Element> = {
+    bar: <BarChartPreview />,
+    line: <LineChartPreview />,
+    pie: <PieChartPreview />,
+    area: <AreaChartPreview />,
+    radar: <RadarChartPreview />,
+    radial: <RadialChartPreview />,
+    scatter: <ScatterChartPreview />,
+  };
+
+  return chartTypeToPreview[chartType];
+};

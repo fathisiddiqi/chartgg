@@ -10,17 +10,20 @@ import useChartColor from "@/hook/use-chart-colors";
 import { replaceSpaceWithUnderscore } from "@/lib/utils";
 import { ChartCustomization, ChartData, useChartStore } from "@/store/chart";
 import { useEffect, useState } from "react";
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
+import { Pie, PieChart } from "recharts";
 
-const BarChartPreview = () => {
+const PieChartPreview = () => {
   const { chartData, chartCustomization } = useChartStore((state) => state);
   const chartColors = useChartColor(chartCustomization.chart.theme.selected);
 
   const [chartKeys, setChartKeys] = useState<string[]>([]);
   const [chartConfig, setChartConfig] = useState<ChartConfig>({});
+  const [pieChartData, setPieChartData] = useState<ChartData[]>([]);
+  const [pieChartKeys, setPieChartKeys] = useState<string[]>([]);
 
   useEffect(() => {
     if (chartData?.length > 0) {
+      setPieChartKeys(chartData.map((item) => item.label));
       setChartKeys(
         Object.keys(chartData[0]).filter(
           (key) => key !== "id" && key !== "label"
@@ -30,11 +33,11 @@ const BarChartPreview = () => {
   }, [chartData]);
 
   useEffect(() => {
-    if (chartKeys?.length > 0) {
+    if (pieChartKeys?.length > 0) {
       setChartConfig((prevConfig) => ({
         ...prevConfig,
         ...Object.fromEntries(
-          chartKeys.map((key, index) => [
+          pieChartKeys.map((key, index) => [
             replaceSpaceWithUnderscore(key),
             {
               label: key,
@@ -44,30 +47,26 @@ const BarChartPreview = () => {
         ),
       }));
     }
+
+    setPieChartData(
+      chartData.map((item, index) => ({
+        ...item,
+        fill: `hsl(${chartColors[index + 1]})`,
+      }))
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chartKeys, chartCustomization.chart.theme.selected]);
+  }, [pieChartKeys, chartCustomization.chart.theme.selected]);
 
   return (
     <ChartContainer config={chartConfig}>
-      <BarChart accessibilityLayer data={chartData}>
-        <CartesianGrid
-          vertical={chartCustomization.grid.vertical.show}
-          horizontal={chartCustomization.grid.horizontal.show}
-        />
-        {chartCustomization.label.xAxis.show && (
-          <XAxis
-            dataKey="label"
-            tickLine={chartCustomization.label.xAxis.tickLine}
-            tickMargin={10}
-            axisLine={chartCustomization.label.xAxis.axisLine}
-            tickFormatter={(value) =>
-              value.slice(0, chartCustomization.label.xAxis.charLength)
-            }
-          />
-        )}
-        {chartCustomization.label.yAxis.show && (
-          <YAxis axisLine={false} tickLine={false} reversed={false} />
-        )}
+      <PieChart
+        accessibilityLayer
+        margin={{
+          left: 12,
+          right: 12,
+          top: 12,
+        }}
+      >
         <ChartTooltip
           cursor={chartCustomization.tooltip.focused}
           content={
@@ -87,33 +86,11 @@ const BarChartPreview = () => {
               : undefined
           }
         />
-        {chartCustomization.legend.show && (
-          <>
-            {chartKeys.length > 0 &&
-              chartKeys.map((key) => (
-                <ChartLegend
-                  key={key}
-                  content={
-                    <ChartLegendContent
-                      nameKey={replaceSpaceWithUnderscore(key)}
-                    />
-                  }
-                />
-              ))}
-          </>
-        )}
-        {chartKeys.map((key) => (
-          <Bar
-            key={key}
-            dataKey={key}
-            name={key}
-            fill={`var(--color-${replaceSpaceWithUnderscore(key)})`}
-            radius={4}
-          />
-        ))}
-      </BarChart>
+        <ChartLegend content={<ChartLegendContent nameKey="label" />} />
+        <Pie data={pieChartData} dataKey={chartKeys[0]} nameKey="label" />
+      </PieChart>
     </ChartContainer>
   );
 };
 
-export default BarChartPreview;
+export default PieChartPreview;

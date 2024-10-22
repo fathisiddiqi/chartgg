@@ -6,26 +6,58 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import useChartColor from "@/hook/use-chart-colors";
 import { replaceSpaceWithUnderscore } from "@/lib/utils";
-import { ChartCustomization, ChartData } from "@/store/chart";
+import { ChartCustomization, ChartData, useChartStore } from "@/store/chart";
+import { useEffect, useState } from "react";
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
 
-interface LineChartProps {
-  data: ChartData[];
-  config: ChartConfig;
-  chartCustomization: ChartCustomization;
-  chartKeys: string[];
-}
+const LineChartPreview = () => {
+  const { chartData, chartCustomization } = useChartStore((state) => state);
+  const chartColors = useChartColor(chartCustomization.chart.theme.selected);
 
-const LineChartPreview = ({
-  data: chartData,
-  config: chartConfig,
-  chartCustomization,
-  chartKeys,
-}: LineChartProps) => {
+  const [chartKeys, setChartKeys] = useState<string[]>([]);
+  const [chartConfig, setChartConfig] = useState<ChartConfig>({});
+
+  useEffect(() => {
+    if (chartData?.length > 0) {
+      setChartKeys(
+        Object.keys(chartData[0]).filter(
+          (key) => key !== "id" && key !== "label"
+        )
+      );
+    }
+  }, [chartData]);
+
+  useEffect(() => {
+    if (chartKeys?.length > 0) {
+      setChartConfig((prevConfig) => ({
+        ...prevConfig,
+        ...Object.fromEntries(
+          chartKeys.map((key, index) => [
+            replaceSpaceWithUnderscore(key),
+            {
+              label: key,
+              color: `hsl(${chartColors[index + 1]})`,
+            },
+          ])
+        ),
+      }));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chartKeys, chartCustomization.chart.theme.selected]);
+
   return (
     <ChartContainer config={chartConfig}>
-      <LineChart accessibilityLayer data={chartData}>
+      <LineChart
+        accessibilityLayer
+        data={chartData}
+        margin={{
+          left: 12,
+          right: 12,
+          top: 12,
+        }}
+      >
         <CartesianGrid
           vertical={chartCustomization.grid.vertical.show}
           horizontal={chartCustomization.grid.horizontal.show}

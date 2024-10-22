@@ -10,10 +10,6 @@ import ChooseChart from "./choose-chart/choose-chart";
 const MainEditor = () => {
   return (
     <ResizablePanelGroup direction="horizontal">
-      <ResizablePanel defaultSize={15} minSize={0} maxSize={15}>
-        <ChooseChart />
-      </ResizablePanel>
-      <ResizableHandle withHandle />
       <ResizablePanel defaultSize={55} minSize={50} maxSize={75}>
         <ChartPreview />
       </ResizablePanel>
