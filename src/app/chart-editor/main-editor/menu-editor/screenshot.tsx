@@ -1,6 +1,7 @@
 import ChartCanvasLayout from "@/components/common/chart-canvas-layout";
 import ChartFrame from "@/components/common/chart-frame";
 import { Button } from "@/components/custom-ui/button";
+import { ColorInput } from "@/components/custom-ui/color-input";
 import { Input } from "@/components/custom-ui/input";
 import {
   Accordion,
@@ -233,10 +234,8 @@ const BackgroundCard = ({ chartScreenshot, setChartScreenshot }: CardProps) => {
             Color
           </Text>
           <div className="flex items-center space-x-2">
-            <Input
+            <ColorInput
               variant="sm"
-              type="color"
-              id="text-color"
               value={chartScreenshot.canvas.background.color}
               onChange={(e) =>
                 setChartScreenshot({
@@ -250,7 +249,6 @@ const BackgroundCard = ({ chartScreenshot, setChartScreenshot }: CardProps) => {
                   },
                 })
               }
-              className="w-10 h-10 p-0 border rounded"
             />
           </div>
         </div>

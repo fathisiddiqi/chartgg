@@ -74,8 +74,16 @@ const ChartPreview = () => {
               className="shadow-none"
             >
               <CardHeader>
-                <CardTitle>{chartCustomization.text.title.text}</CardTitle>
-                <CardDescription>
+                <CardTitle
+                  style={{
+                    color: chartCustomization.text.title.color,
+                  }}
+                >
+                  {chartCustomization.text.title.text}
+                </CardTitle>
+                <CardDescription
+                  style={{ color: chartCustomization.text.subtitle.color }}
+                >
                   {chartCustomization.text.title.text}
                 </CardDescription>
               </CardHeader>
@@ -83,10 +91,20 @@ const ChartPreview = () => {
                 <ChartTypePreview chartType={chartType} />
               </CardContent>
               <CardFooter className="flex-col items-start gap-2 text-sm">
-                <div className="flex gap-2 font-medium leading-none">
+                <div
+                  className="flex gap-2 font-medium leading-none"
+                  style={{
+                    color: chartCustomization.text.footerTitle.color,
+                  }}
+                >
                   {chartCustomization.text.footerTitle.text}
                 </div>
-                <div className="leading-none text-muted-foreground">
+                <div
+                  className="leading-none text-muted-foreground"
+                  style={{
+                    color: chartCustomization.text.footerSubtitle.color,
+                  }}
+                >
                   {chartCustomization.text.footerSubtitle.text}
                 </div>
               </CardFooter>
@@ -117,10 +135,10 @@ const ActionMenu = () => {
     <div className="w-full flex justify-between gap-2 absolute top-4 left-4 right-10 z-10">
       <div className="relative">
         <Popover open={openChooseChart} onOpenChange={setOpenChooseChart}>
-          <PopoverTrigger>
-            <Button variant="default" size="sm">
-              Choose Chart
-            </Button>
+          <PopoverTrigger className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-8 rounded-md px-3 bg-primary text-primary-foreground hover:bg-primary/90">
+            {/* <Button variant="default" size="sm"> */}
+            Choose Chart
+            {/* </Button> */}
           </PopoverTrigger>
           <PopoverContent className="w-full ml-4">
             <ChooseChart setOpenChooseChart={setOpenChooseChart} />
