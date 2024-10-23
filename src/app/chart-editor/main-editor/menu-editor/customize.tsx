@@ -27,6 +27,7 @@ import {
   SelectValue,
 } from "@/components/custom-ui/select";
 import { titleCase } from "@/lib/utils";
+import { ColorInput } from "@/components/custom-ui/color-input";
 
 const Customize = () => {
   const { chartCustomization, setChartCustomization } = useChartStore(
@@ -134,24 +135,21 @@ const ChartCard = ({
               <div className="flex justify-between items-center">
                 <Text variant="xs">Color</Text>
                 <div className="flex items-center space-x-2">
-                  <Input
+                  <ColorInput
                     variant="sm"
-                    type="color"
-                    id="text-color"
-                    value={chartCustomization.text.title.color}
+                    value={chartCustomization.chart.background.color}
                     onChange={(e) =>
                       setChartCustomization({
                         ...chartCustomization,
-                        text: {
-                          ...chartCustomization.text,
-                          title: {
-                            ...chartCustomization.text.title,
+                        chart: {
+                          ...chartCustomization.chart,
+                          background: {
+                            ...chartCustomization.chart.background,
                             color: e.target.value,
                           },
                         },
                       })
                     }
-                    className="w-10 h-10 p-0 border rounded"
                   />
                 </div>
               </div>
@@ -210,10 +208,8 @@ const ChartCard = ({
               <div className="flex justify-between items-center">
                 <Text variant="xs">Color</Text>
                 <div className="flex items-center space-x-2">
-                  <Input
+                  <ColorInput
                     variant="sm"
-                    type="color"
-                    id="text-color"
                     value={chartCustomization.chart.border.color}
                     onChange={(e) =>
                       setChartCustomization({
@@ -227,25 +223,6 @@ const ChartCard = ({
                         },
                       })
                     }
-                    className="w-10 h-10 p-0 border rounded"
-                  />
-                  <Input
-                    variant="sm"
-                    type="text"
-                    value={chartCustomization.chart.border.color}
-                    onChange={(e) =>
-                      setChartCustomization({
-                        ...chartCustomization,
-                        chart: {
-                          ...chartCustomization.chart,
-                          border: {
-                            ...chartCustomization.chart.border,
-                            color: e.target.value,
-                          },
-                        },
-                      })
-                    }
-                    className="flex-1 bg-white text-gray-900 border-gray-300 w-[5rem]"
                   />
                 </div>
               </div>
@@ -324,10 +301,8 @@ const TextCard = ({ chartCustomization, setChartCustomization }: CardProps) => {
                 <div className="flex-1 space-y-2">
                   <Text variant="label">Text Color</Text>
                   <div className="flex items-center space-x-2">
-                    <Input
+                    <ColorInput
                       variant="sm"
-                      type="color"
-                      id="text-color"
                       value={chartCustomization.text.title.color}
                       onChange={(e) =>
                         setChartCustomization({
@@ -341,7 +316,6 @@ const TextCard = ({ chartCustomization, setChartCustomization }: CardProps) => {
                           },
                         })
                       }
-                      className="w-10 h-10 p-0 border rounded"
                     />
                     <Input
                       variant="sm"
@@ -414,10 +388,8 @@ const TextCard = ({ chartCustomization, setChartCustomization }: CardProps) => {
                 <div className="flex-1 space-y-2">
                   <Text variant="label">Text Color</Text>
                   <div className="flex items-center space-x-2">
-                    <Input
+                    <ColorInput
                       variant="sm"
-                      type="color"
-                      id="text-color"
                       value={chartCustomization.text.subtitle.color}
                       onChange={(e) =>
                         setChartCustomization({
@@ -431,7 +403,6 @@ const TextCard = ({ chartCustomization, setChartCustomization }: CardProps) => {
                           },
                         })
                       }
-                      className="w-10 h-10 p-0 border rounded"
                     />
                     <Input
                       variant="sm"
@@ -504,10 +475,8 @@ const TextCard = ({ chartCustomization, setChartCustomization }: CardProps) => {
                 <div className="flex-1 space-y-2">
                   <Text variant="label">Text Color</Text>
                   <div className="flex items-center space-x-2">
-                    <Input
+                    <ColorInput
                       variant="sm"
-                      type="color"
-                      id="text-color"
                       value={chartCustomization.text.footerTitle.color}
                       onChange={(e) =>
                         setChartCustomization({
@@ -516,12 +485,10 @@ const TextCard = ({ chartCustomization, setChartCustomization }: CardProps) => {
                             ...chartCustomization.text,
                             footerTitle: {
                               ...chartCustomization.text.footerTitle,
-                              color: e.target.value,
                             },
                           },
                         })
                       }
-                      className="w-10 h-10 p-0 border rounded"
                     />
                     <Input
                       variant="sm"
@@ -594,10 +561,8 @@ const TextCard = ({ chartCustomization, setChartCustomization }: CardProps) => {
                 <div className="flex-1 space-y-2">
                   <Text variant="label">Text Color</Text>
                   <div className="flex items-center space-x-2">
-                    <Input
+                    <ColorInput
                       variant="sm"
-                      type="color"
-                      id="text-color"
                       value={chartCustomization.text.footerSubtitle.color}
                       onChange={(e) =>
                         setChartCustomization({
@@ -606,12 +571,10 @@ const TextCard = ({ chartCustomization, setChartCustomization }: CardProps) => {
                             ...chartCustomization.text,
                             footerSubtitle: {
                               ...chartCustomization.text.footerSubtitle,
-                              color: e.target.value,
                             },
                           },
                         })
                       }
-                      className="w-10 h-10 p-0 border rounded"
                     />
                     <Input
                       variant="sm"
