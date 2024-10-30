@@ -6,9 +6,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { ChartType, useChartStore } from "@/store/chart";
-import { icons } from "lucide-react";
-import { hexToRGB } from "@/lib/utils";
+import { ChartMainType, ChartType, useChartStore } from "@/store/chart";
+import { ArrowDown, icons } from "lucide-react";
+import { hexToRGB, titleCase } from "@/lib/utils";
 import { Input } from "@/components/custom-ui/input";
 import ChartFrame from "@/components/common/chart-frame";
 import BarChartPreview from "./bar-chart";
@@ -24,8 +24,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import ChooseChart from "../choose-chart/choose-chart";
-import { Button } from "@/components/custom-ui/button";
 import { useState } from "react";
+import { Text } from "@/components/ui/text";
 
 const ChartPreview = () => {
   const { chartType, chartScreenshot, chartCustomization } = useChartStore(
@@ -34,7 +34,7 @@ const ChartPreview = () => {
 
   return (
     <div className="w-full h-full bg-gray-50 flex justify-center items-center relative">
-      <ActionMenu />
+      <ActionMenu chartType={chartType} />
       {/* Background component */}
       <div
         style={{
@@ -88,7 +88,7 @@ const ChartPreview = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <ChartTypePreview chartType={chartType} />
+                <ChartTypePreview chartType={chartType.type} />
               </CardContent>
               <CardFooter className="flex-col items-start gap-2 text-sm">
                 <div
@@ -126,19 +126,18 @@ const FooterTitleIcon = ({ iconInStr }: { iconInStr: string }) => {
   );
 };
 
-const ActionMenu = () => {
+const ActionMenu = ({ chartType }: { chartType: ChartType }) => {
   const { chartScreenshot } = useChartStore((state) => state);
 
   const [openChooseChart, setOpenChooseChart] = useState(false);
 
   return (
     <div className="w-full flex justify-between gap-2 absolute top-4 left-4 right-10 z-10">
-      <div className="relative">
+      <div className="relative space-x-2">
         <Popover open={openChooseChart} onOpenChange={setOpenChooseChart}>
           <PopoverTrigger className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-8 rounded-md px-3 bg-primary text-primary-foreground hover:bg-primary/90">
-            {/* <Button variant="default" size="sm"> */}
-            Choose Chart
-            {/* </Button> */}
+            <Text variant="xs">Type: {titleCase(chartType.type)}</Text>
+            <ArrowDown className="w-4 h-4 ml-2" />
           </PopoverTrigger>
           <PopoverContent className="w-full ml-4">
             <ChooseChart setOpenChooseChart={setOpenChooseChart} />
@@ -193,8 +192,8 @@ const ActionMenu = () => {
   );
 };
 
-const ChartTypePreview = ({ chartType }: { chartType: ChartType }) => {
-  const chartTypeToPreview: Record<ChartType, JSX.Element> = {
+const ChartTypePreview = ({ chartType }: { chartType: ChartMainType }) => {
+  const chartTypeToPreview: Record<ChartMainType, JSX.Element> = {
     bar: <BarChartPreview />,
     line: <LineChartPreview />,
     pie: <PieChartPreview />,

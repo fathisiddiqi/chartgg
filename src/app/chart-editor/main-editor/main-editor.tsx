@@ -5,7 +5,6 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
-import ChooseChart from "./choose-chart/choose-chart";
 
 const MainEditor = () => {
   return (
