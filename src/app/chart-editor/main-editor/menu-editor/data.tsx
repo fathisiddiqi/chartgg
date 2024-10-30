@@ -155,12 +155,12 @@ export default function Data() {
 
   return (
     <div className="p-0 space-y-4">
-      <div className="flex justify-end">
+      {/* <div className="flex justify-end">
         <Button variant="outline" className="text-right" onClick={handleExport}>
           <FileInput className="mr-2 h-4 w-4" />
           Export CSV/XLSX
         </Button>
-      </div>
+      </div> */}
       <div className="overflow-x-auto">
         <Table className="border border-border">
           <TableHeader>

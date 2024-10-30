@@ -1,6 +1,11 @@
 import { create } from "zustand";
 
-export type ChartType =
+export type ChartType = {
+  type: ChartMainType;
+  variant: ChartMainVariant;
+};
+
+export type ChartMainType =
   | "bar"
   | "line"
   | "pie"
@@ -8,6 +13,54 @@ export type ChartType =
   | "radar"
   | "radial"
   | "scatter";
+
+export type ChartMainVariant =
+  | BarChartVariant
+  | LineChartVariant
+  | AreaChartVariant
+  | PieChartVariant
+  | RadarChartVariant
+  | RadialChartVariant
+  | ScatterChartVariant;
+
+export type BarChartVariant =
+  | "default"
+  | "horizontal"
+  | "stacked"
+  | "horizontal_stacked";
+export const BarChartVariants: BarChartVariant[] = [
+  "default",
+  "horizontal",
+  "stacked",
+  "horizontal_stacked",
+];
+
+export type LineChartVariant = "default" | "linear" | "step";
+export const LineChartVariants: LineChartVariant[] = [
+  "default",
+  "linear",
+  "step",
+];
+
+export type AreaChartVariant = "default" | "linear" | "step" | "stacked";
+export const AreaChartVariants: AreaChartVariant[] = [
+  "default",
+  "linear",
+  "step",
+  "stacked",
+];
+
+export type PieChartVariant = "default" | "donut";
+export const PieChartVariants: PieChartVariant[] = ["default", "donut"];
+
+export type RadarChartVariant = "default" | "line";
+export const RadarChartVariants: RadarChartVariant[] = ["default", "line"];
+
+export type RadialChartVariant = "default" | "stacked";
+export const RadialChartVariants: RadialChartVariant[] = ["default", "stacked"];
+
+export type ScatterChartVariant = "default" | "line";
+export const ScatterChartVariants: ScatterChartVariant[] = ["default", "line"];
 
 export type ChartTheme =
   | "default"
@@ -257,7 +310,10 @@ interface ChartState {
 }
 
 export const useChartStore = create<ChartState>()((set) => ({
-  chartType: "bar",
+  chartType: {
+    type: "bar",
+    variant: "default",
+  },
   setChartType: (chartType: ChartType) => set({ chartType }),
   chartData: [
     {

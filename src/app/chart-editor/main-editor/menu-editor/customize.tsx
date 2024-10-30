@@ -12,11 +12,21 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Switch } from "@/components/custom-ui/switch";
 import { Text } from "@/components/ui/text";
 import {
+  AreaChartVariants,
+  BarChartVariants,
   ChartCustomization,
+  ChartMainType,
+  ChartMainVariant,
   ChartTheme,
   ChartThemes,
   ChartTooltipIndicator,
   ChartTooltipIndicators,
+  ChartType,
+  LineChartVariants,
+  PieChartVariants,
+  RadarChartVariants,
+  RadialChartVariants,
+  ScatterChartVariants,
   useChartStore,
 } from "@/store/chart";
 import {
@@ -26,13 +36,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/custom-ui/select";
-import { titleCase } from "@/lib/utils";
+import { replaceUnderscoreWithSpace, titleCase } from "@/lib/utils";
 import { ColorInput } from "@/components/custom-ui/color-input";
 
 const Customize = () => {
   const { chartCustomization, setChartCustomization } = useChartStore(
     (state) => state
   );
+  const { chartType, setChartType } = useChartStore((state) => state);
 
   return (
     <ScrollArea className="h-[calc(100vh-180px)]">
@@ -41,6 +52,8 @@ const Customize = () => {
         <ChartCard
           chartCustomization={chartCustomization}
           setChartCustomization={setChartCustomization}
+          chartType={chartType}
+          setChartType={setChartType}
         />
         {/* TextCard */}
         <TextCard
@@ -79,16 +92,64 @@ interface CardProps {
   setChartCustomization: (customization: ChartCustomization) => void;
 }
 
+const ChartVariantSelectItem = ({ chartType }: { chartType: ChartType }) => {
+  const items: Record<ChartMainType, ChartMainVariant[]> = {
+    area: AreaChartVariants,
+    bar: BarChartVariants,
+    line: LineChartVariants,
+    pie: PieChartVariants,
+    radar: RadarChartVariants,
+    radial: RadialChartVariants,
+    scatter: ScatterChartVariants,
+  };
+
+  return items[chartType.type].map((item) => (
+    <SelectItem key={item} value={item}>
+      <Text variant="sm">{titleCase(replaceUnderscoreWithSpace(item))}</Text>
+    </SelectItem>
+  ));
+};
+
 const ChartCard = ({
   chartCustomization,
   setChartCustomization,
-}: CardProps) => {
+  chartType,
+  setChartType,
+}: CardProps & {
+  chartType: ChartType;
+  setChartType: (chartType: ChartType) => void;
+}) => {
   return (
     <Card>
       <CardContent className="space-y-2">
         <Text variant="sm" className="font-bold mt-3">
           Chart
         </Text>
+        {/* <div className="flex justify-between items-center">
+          <Text variant="label" className="font-medium">
+            Variant
+          </Text>
+          <Select
+            value={chartType.variant}
+            onValueChange={(e) =>
+              setChartType({
+                ...chartType,
+                variant: e as ChartMainVariant,
+              })
+            }
+          >
+            <SelectTrigger variant="sm" className="w-[8rem]">
+              <SelectValue>
+                <Text variant="sm">
+                  {titleCase(replaceUnderscoreWithSpace(chartType.variant))}
+                </Text>
+              </SelectValue>
+            </SelectTrigger>
+            <SelectContent>
+              <ChartVariantSelectItem chartType={chartType} />
+            </SelectContent>
+          </Select>
+        </div> */}
         <Accordion type="single" collapsible>
           <AccordionItem value="chart-1">
             <AccordionTrigger>

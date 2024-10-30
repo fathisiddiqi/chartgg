@@ -3,7 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Text } from "@/components/ui/text";
-import { ChartType, useChartStore } from "@/store/chart";
+import { ChartMainType, ChartType, useChartStore } from "@/store/chart";
 import {
   AreaChart,
   BarChart,
@@ -19,17 +19,16 @@ const ChooseChart = ({
 }) => {
   const { setChartType } = useChartStore((state) => state);
 
-  const handleChangeChart = (chartType: ChartType) => {
-    setChartType(chartType);
+  const handleChangeChart = (chartType: ChartMainType) => {
+    setChartType({
+      type: chartType,
+      variant: "default",
+    });
     setOpenChooseChart(false);
   };
 
   return (
     <div className="text-center mx-auto mt-3">
-      <Text variant="base" className="font-bold">
-        Choose your chart
-      </Text>
-      <Separator className="my-3" />
       <ScrollArea>
         <div className="grid grid-cols-4 gap-4 items-center justify-center">
           <Card

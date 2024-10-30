@@ -13,7 +13,9 @@ import { useEffect, useState } from "react";
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
 const BarChartPreview = () => {
-  const { chartData, chartCustomization } = useChartStore((state) => state);
+  const { chartType, chartData, chartCustomization } = useChartStore(
+    (state) => state
+  );
   const chartColors = useChartColor(chartCustomization.chart.theme.selected);
 
   const [chartKeys, setChartKeys] = useState<string[]>([]);
@@ -109,6 +111,7 @@ const BarChartPreview = () => {
             name={key}
             fill={`var(--color-${replaceSpaceWithUnderscore(key)})`}
             radius={4}
+            width={0.1}
           />
         ))}
       </BarChart>
