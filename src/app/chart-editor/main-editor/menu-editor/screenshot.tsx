@@ -2,14 +2,13 @@ import ChartCanvasLayout from "@/components/common/chart-canvas-layout";
 import ChartFrame from "@/components/common/chart-frame";
 import { Button } from "@/components/custom-ui/button";
 import { ColorInput } from "@/components/custom-ui/color-input";
-import { Input } from "@/components/custom-ui/input";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Popover,
   PopoverContent,
@@ -26,7 +25,7 @@ import {
   ChartShadowStyles,
   useChartStore,
 } from "@/store/chart";
-import { ChevronDown, CopyIcon, Download, DownloadIcon } from "lucide-react";
+import { ChevronDown, CopyIcon, DownloadIcon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 const Screenshot = () => {
@@ -35,7 +34,7 @@ const Screenshot = () => {
   );
 
   return (
-    <ScrollArea className="h-[calc(100vh-180px)]">
+    <ScrollArea className="h-[calc(100vh-120px)]">
       <div className="p-4 space-y-4 justify-between">
         <div className="space-y-4">
           {/* General Card */}

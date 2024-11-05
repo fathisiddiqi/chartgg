@@ -11,13 +11,6 @@ import { ArrowDown, icons } from "lucide-react";
 import { hexToRGB, titleCase } from "@/lib/utils";
 import { Input } from "@/components/custom-ui/input";
 import ChartFrame from "@/components/common/chart-frame";
-import BarChartPreview from "./bar-chart";
-import LineChartPreview from "./line-chart";
-import PieChartPreview from "./pie-chart";
-import AreaChartPreview from "./area-chart";
-import RadarChartPreview from "./radar-chart";
-import RadialChartPreview from "./radial-chart";
-import ScatterChartPreview from "./scatter-chart";
 import {
   Popover,
   PopoverContent,
@@ -26,6 +19,13 @@ import {
 import ChooseChart from "../choose-chart/choose-chart";
 import { useState } from "react";
 import { Text } from "@/components/ui/text";
+import BarChartPreview from "./charts/bar-chart";
+import LineChartPreview from "./charts/line-chart";
+import PieChartPreview from "./charts/pie-chart";
+import AreaChartPreview from "./charts/area-chart";
+import RadarChartPreview from "./charts/radar-chart";
+import RadialChartPreview from "./charts/radial-chart";
+import ScatterChartPreview from "./charts/scatter-chart";
 
 const ChartPreview = () => {
   const { chartType, chartScreenshot, chartCustomization } = useChartStore(
@@ -68,7 +68,6 @@ const ChartPreview = () => {
                 borderColor: chartCustomization.chart.border.color,
                 borderRadius: chartCustomization.chart.border.radius,
                 borderWidth: chartCustomization.chart.border.width,
-
                 width: chartCustomization.chart.content.width,
               }}
               className="shadow-none"

@@ -15,6 +15,8 @@ import {
   AreaChartVariants,
   BarChartVariants,
   ChartCustomization,
+  ChartLabelistPosition,
+  ChartLabelistPositions,
   ChartMainType,
   ChartMainVariant,
   ChartTheme,
@@ -38,6 +40,7 @@ import {
 } from "@/components/custom-ui/select";
 import { replaceUnderscoreWithSpace, titleCase } from "@/lib/utils";
 import { ColorInput } from "@/components/custom-ui/color-input";
+import { Slider } from "@/components/ui/slider";
 
 const Customize = () => {
   const { chartCustomization, setChartCustomization } = useChartStore(
@@ -46,7 +49,7 @@ const Customize = () => {
   const { chartType, setChartType } = useChartStore((state) => state);
 
   return (
-    <ScrollArea className="h-[calc(100vh-180px)]">
+    <ScrollArea className="h-[calc(100vh-120px)]">
       <div className="p-4 space-y-4">
         {/* Chart Card */}
         <ChartCard
@@ -60,8 +63,18 @@ const Customize = () => {
           chartCustomization={chartCustomization}
           setChartCustomization={setChartCustomization}
         />
+        {/* X Axis Card */}
+        <XAxisCard
+          chartCustomization={chartCustomization}
+          setChartCustomization={setChartCustomization}
+        />
+        {/* Y Axis Card */}
+        <YAxisCard
+          chartCustomization={chartCustomization}
+          setChartCustomization={setChartCustomization}
+        />
         {/* Label Card */}
-        <LabelCard
+        <LabelistCard
           chartCustomization={chartCustomization}
           setChartCustomization={setChartCustomization}
         />
@@ -684,189 +697,382 @@ const TextCard = ({ chartCustomization, setChartCustomization }: CardProps) => {
   );
 };
 
-const LabelCard = ({
+const LabelistCard = ({
   chartCustomization,
   setChartCustomization,
 }: CardProps) => {
   return (
     <Card>
-      <CardContent>
+      <CardContent className="space-y-2">
         <Text variant="sm" className="font-bold mt-3">
-          Label
+          Labelist
         </Text>
         <Accordion type="single" collapsible>
-          <AccordionItem value="item-1">
+          <AccordionItem value="grid-1">
             <AccordionTrigger>
-              <Text variant="label">X-Axis</Text>
+              <Text variant="label">Label</Text>
             </AccordionTrigger>
             <AccordionContent className="space-y-4 mb-3">
               <div className="flex justify-between items-center">
                 <Text variant="xs">Show</Text>
                 <Switch
                   size="sm"
-                  checked={chartCustomization.label.xAxis.show}
-                  onCheckedChange={() => {
+                  checked={chartCustomization.labelist.key.show}
+                  onCheckedChange={() =>
                     setChartCustomization({
                       ...chartCustomization,
-                      label: {
-                        ...chartCustomization.label,
-                        xAxis: {
-                          ...chartCustomization.label.xAxis,
-                          show: !chartCustomization.label.xAxis.show,
-                        },
-                      },
-                    });
-                  }}
-                />
-              </div>
-              <div className="flex justify-between items-center">
-                <Text variant="xs">Axis Line</Text>
-                <Switch
-                  size="sm"
-                  checked={chartCustomization.label.xAxis.axisLine}
-                  onCheckedChange={() => {
-                    setChartCustomization({
-                      ...chartCustomization,
-                      label: {
-                        ...chartCustomization.label,
-                        xAxis: {
-                          ...chartCustomization.label.xAxis,
-                          axisLine: !chartCustomization.label.xAxis.axisLine,
-                        },
-                      },
-                    });
-                  }}
-                />
-              </div>
-              <div className="flex justify-between items-center">
-                <Text variant="xs">Tick Line</Text>
-                <Switch
-                  size="sm"
-                  checked={chartCustomization.label.xAxis.tickLine}
-                  onCheckedChange={() => {
-                    setChartCustomization({
-                      ...chartCustomization,
-                      label: {
-                        ...chartCustomization.label,
-                        xAxis: {
-                          ...chartCustomization.label.xAxis,
-                          tickLine: !chartCustomization.label.xAxis.tickLine,
-                        },
-                      },
-                    });
-                  }}
-                />
-              </div>
-              <div className="flex justify-between items-center">
-                <Text variant="xs">Character Length</Text>
-                <Input
-                  variant="sm"
-                  type="text"
-                  value={chartCustomization.label.xAxis.charLength}
-                  onChange={(e) =>
-                    setChartCustomization({
-                      ...chartCustomization,
-                      label: {
-                        ...chartCustomization.label,
-                        xAxis: {
-                          ...chartCustomization.label.xAxis,
-                          charLength: Number(e.target.value),
+                      labelist: {
+                        ...chartCustomization.labelist,
+                        key: {
+                          ...chartCustomization.labelist.key,
+                          show: !chartCustomization.labelist.key.show,
                         },
                       },
                     })
                   }
-                  className="flex-1 bg-white text-gray-900 border-gray-300 max-w-[2.25rem] p-1 text-center"
+                />
+              </div>
+              <div className="flex justify-between items-center">
+                <Text variant="xs" className="font-medium">
+                  Position
+                </Text>
+                <Select
+                  value={chartCustomization.labelist.key.position}
+                  onValueChange={(e) =>
+                    setChartCustomization({
+                      ...chartCustomization,
+                      labelist: {
+                        ...chartCustomization.labelist,
+                        key: {
+                          ...chartCustomization.labelist.key,
+                          position: e as ChartLabelistPosition,
+                        },
+                      },
+                    })
+                  }
+                >
+                  <SelectTrigger variant="sm" className="w-[8rem]">
+                    <SelectValue>
+                      <Text variant="sm">
+                        {titleCase(chartCustomization.labelist.key.position)}
+                      </Text>
+                    </SelectValue>
+                  </SelectTrigger>
+                  <SelectContent>
+                    {ChartLabelistPositions.map((position) => (
+                      <SelectItem
+                        key={position}
+                        value={position}
+                        onClick={() =>
+                          setChartCustomization({
+                            ...chartCustomization,
+                            labelist: {
+                              ...chartCustomization.labelist,
+                              key: {
+                                ...chartCustomization.labelist.key,
+                                position: position,
+                              },
+                            },
+                          })
+                        }
+                      >
+                        <Text variant="sm">{titleCase(position)}</Text>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="flex justify-between items-center">
+                <Text variant="xs" className="font-medium">
+                  Offset
+                </Text>
+                <Slider
+                  defaultValue={[chartCustomization.labelist.key.offset]}
+                  max={50}
+                  step={1}
+                  className="w-1/3"
+                  onValueChange={(value) =>
+                    setChartCustomization({
+                      ...chartCustomization,
+                      labelist: {
+                        ...chartCustomization.labelist,
+                        key: {
+                          ...chartCustomization.labelist.key,
+                          offset: value[0],
+                        },
+                      },
+                    })
+                  }
                 />
               </div>
             </AccordionContent>
           </AccordionItem>
         </Accordion>
-
         <Accordion type="single" collapsible>
-          <AccordionItem value="item-1">
+          <AccordionItem value="grid-1">
             <AccordionTrigger>
-              <Text variant="label">Y-Axis</Text>
+              <Text variant="label">Value</Text>
             </AccordionTrigger>
             <AccordionContent className="space-y-4 mb-3">
-              <div className="flex justify-between">
+              <div className="flex justify-between items-center">
                 <Text variant="xs">Show</Text>
                 <Switch
                   size="sm"
-                  checked={chartCustomization.label.yAxis.show}
-                  onCheckedChange={() => {
+                  checked={chartCustomization.labelist.value.show}
+                  onCheckedChange={() =>
                     setChartCustomization({
                       ...chartCustomization,
-                      label: {
-                        ...chartCustomization.label,
-                        yAxis: {
-                          ...chartCustomization.label.yAxis,
-                          show: !chartCustomization.label.yAxis.show,
+                      labelist: {
+                        ...chartCustomization.labelist,
+                        value: {
+                          ...chartCustomization.labelist.value,
+                          show: !chartCustomization.labelist.value.show,
                         },
                       },
-                    });
-                  }}
+                    })
+                  }
                 />
               </div>
-              <div className="flex justify-between">
-                <Text variant="xs">Axis Line</Text>
-                <Switch
-                  size="sm"
-                  checked={chartCustomization.label.yAxis.axisLine}
-                  onCheckedChange={() => {
+              <div className="flex justify-between items-center">
+                <Text variant="xs" className="font-medium">
+                  Position
+                </Text>
+                <Select
+                  value={chartCustomization.labelist.value.position}
+                  onValueChange={(e) =>
                     setChartCustomization({
                       ...chartCustomization,
-                      label: {
-                        ...chartCustomization.label,
-                        yAxis: {
-                          ...chartCustomization.label.yAxis,
-                          axisLine: !chartCustomization.label.yAxis.axisLine,
+                      labelist: {
+                        ...chartCustomization.labelist,
+                        value: {
+                          ...chartCustomization.labelist.value,
+                          position: e as ChartLabelistPosition,
                         },
                       },
-                    });
-                  }}
-                />
+                    })
+                  }
+                >
+                  <SelectTrigger variant="sm" className="w-[8rem]">
+                    <SelectValue>
+                      <Text variant="sm">
+                        {titleCase(chartCustomization.labelist.value.position)}
+                      </Text>
+                    </SelectValue>
+                  </SelectTrigger>
+                  <SelectContent>
+                    {ChartLabelistPositions.map((position) => (
+                      <SelectItem
+                        key={position}
+                        value={position}
+                        onClick={() =>
+                          setChartCustomization({
+                            ...chartCustomization,
+                            labelist: {
+                              ...chartCustomization.labelist,
+                              value: {
+                                ...chartCustomization.labelist.value,
+                                position: position,
+                              },
+                            },
+                          })
+                        }
+                      >
+                        <Text variant="sm">{titleCase(position)}</Text>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
-              <div className="flex justify-between">
-                <Text variant="xs">Tick Line</Text>
-                <Switch
-                  size="sm"
-                  checked={chartCustomization.label.yAxis.tickLine}
-                  onCheckedChange={() => {
+              <div className="flex justify-between items-center">
+                <Text variant="xs" className="font-medium">
+                  Offset
+                </Text>
+                <Slider
+                  defaultValue={[chartCustomization.labelist.value.offset]}
+                  max={50}
+                  step={1}
+                  className="w-1/3"
+                  onValueChange={(value) =>
                     setChartCustomization({
                       ...chartCustomization,
-                      label: {
-                        ...chartCustomization.label,
-                        yAxis: {
-                          ...chartCustomization.label.yAxis,
-                          tickLine: !chartCustomization.label.yAxis.tickLine,
+                      labelist: {
+                        ...chartCustomization.labelist,
+                        value: {
+                          ...chartCustomization.labelist.value,
+                          offset: value[0],
                         },
                       },
-                    });
-                  }}
-                />
-              </div>
-              <div className="flex justify-between">
-                <Text variant="xs">Reversed</Text>
-                <Switch
-                  size="sm"
-                  checked={chartCustomization.label.yAxis.reversed}
-                  onCheckedChange={() => {
-                    setChartCustomization({
-                      ...chartCustomization,
-                      label: {
-                        ...chartCustomization.label,
-                        yAxis: {
-                          ...chartCustomization.label.yAxis,
-                          reversed: !chartCustomization.label.yAxis.reversed,
-                        },
-                      },
-                    });
-                  }}
+                    })
+                  }
                 />
               </div>
             </AccordionContent>
           </AccordionItem>
         </Accordion>
+      </CardContent>
+    </Card>
+  );
+};
+
+const XAxisCard = ({
+  chartCustomization,
+  setChartCustomization,
+}: CardProps) => {
+  return (
+    <Card>
+      <CardHeader>
+        <Text variant="sm" className="font-bold">
+          X-Axis
+        </Text>
+      </CardHeader>
+      <CardContent className="space-y-2">
+        <div className="flex justify-between items-center">
+          <Text variant="label">Show</Text>
+          <Switch
+            size="sm"
+            checked={chartCustomization.xAxis.show}
+            onCheckedChange={() => {
+              setChartCustomization({
+                ...chartCustomization,
+                xAxis: {
+                  ...chartCustomization.xAxis,
+                  show: !chartCustomization.xAxis.show,
+                },
+              });
+            }}
+          />
+        </div>
+        <div className="flex justify-between items-center">
+          <Text variant="label">Axis Line</Text>
+          <Switch
+            size="sm"
+            checked={chartCustomization.xAxis.axisLine}
+            onCheckedChange={() => {
+              setChartCustomization({
+                ...chartCustomization,
+                xAxis: {
+                  ...chartCustomization.xAxis,
+                  axisLine: !chartCustomization.xAxis.axisLine,
+                },
+              });
+            }}
+          />
+        </div>
+        <div className="flex justify-between items-center">
+          <Text variant="label">Tick Line</Text>
+          <Switch
+            size="sm"
+            checked={chartCustomization.xAxis.tickLine}
+            onCheckedChange={() => {
+              setChartCustomization({
+                ...chartCustomization,
+                xAxis: {
+                  ...chartCustomization.xAxis,
+                  tickLine: !chartCustomization.xAxis.tickLine,
+                },
+              });
+            }}
+          />
+        </div>
+        <div className="flex justify-between items-center">
+          <Text variant="label">Character Length</Text>
+          <Input
+            variant="sm"
+            type="text"
+            value={chartCustomization.xAxis.charLength}
+            onChange={(e) =>
+              setChartCustomization({
+                ...chartCustomization,
+                xAxis: {
+                  ...chartCustomization.xAxis,
+                  charLength: Number(e.target.value),
+                },
+              })
+            }
+            className="flex-1 bg-white text-gray-900 border-gray-300 max-w-[2.25rem] p-1 text-center"
+          />
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
+
+const YAxisCard = ({
+  chartCustomization,
+  setChartCustomization,
+}: CardProps) => {
+  return (
+    <Card>
+      <CardHeader>
+        <Text variant="sm" className="font-bold">
+          Y-Axis
+        </Text>
+      </CardHeader>
+      <CardContent className="space-y-2">
+        <div className="flex justify-between">
+          <Text variant="label">Show</Text>
+          <Switch
+            size="sm"
+            checked={chartCustomization.yAxis.show}
+            onCheckedChange={() => {
+              setChartCustomization({
+                ...chartCustomization,
+                yAxis: {
+                  ...chartCustomization.yAxis,
+                  show: !chartCustomization.yAxis.show,
+                },
+              });
+            }}
+          />
+        </div>
+        <div className="flex justify-between">
+          <Text variant="label">Axis Line</Text>
+          <Switch
+            size="sm"
+            checked={chartCustomization.yAxis.axisLine}
+            onCheckedChange={() => {
+              setChartCustomization({
+                ...chartCustomization,
+                yAxis: {
+                  ...chartCustomization.yAxis,
+                  axisLine: !chartCustomization.yAxis.axisLine,
+                },
+              });
+            }}
+          />
+        </div>
+        <div className="flex justify-between">
+          <Text variant="label">Tick Line</Text>
+          <Switch
+            size="sm"
+            checked={chartCustomization.yAxis.tickLine}
+            onCheckedChange={() => {
+              setChartCustomization({
+                ...chartCustomization,
+                yAxis: {
+                  ...chartCustomization.yAxis,
+                  tickLine: !chartCustomization.yAxis.tickLine,
+                },
+              });
+            }}
+          />
+        </div>
+        <div className="flex justify-between">
+          <Text variant="label">Reversed</Text>
+          <Switch
+            size="sm"
+            checked={chartCustomization.yAxis.reversed}
+            onCheckedChange={() => {
+              setChartCustomization({
+                ...chartCustomization,
+                yAxis: {
+                  ...chartCustomization.yAxis,
+                  reversed: !chartCustomization.yAxis.reversed,
+                },
+              });
+            }}
+          />
+        </div>
       </CardContent>
     </Card>
   );

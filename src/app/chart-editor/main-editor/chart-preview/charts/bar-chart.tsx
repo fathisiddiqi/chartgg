@@ -10,7 +10,14 @@ import useChartColor from "@/hook/use-chart-colors";
 import { replaceSpaceWithUnderscore } from "@/lib/utils";
 import { ChartCustomization, ChartData, useChartStore } from "@/store/chart";
 import { useEffect, useState } from "react";
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  LabelList,
+  XAxis,
+  YAxis,
+} from "recharts";
 
 const BarChartPreview = () => {
   const { chartType, chartData, chartCustomization } = useChartStore(
@@ -51,24 +58,36 @@ const BarChartPreview = () => {
 
   return (
     <ChartContainer config={chartConfig}>
-      <BarChart accessibilityLayer data={chartData}>
+      <BarChart
+        accessibilityLayer
+        data={chartData}
+        margin={{
+          left: 20,
+          right: 10,
+          top: 20,
+          bottom: 12,
+        }}
+      >
         <CartesianGrid
           vertical={chartCustomization.grid.vertical.show}
           horizontal={chartCustomization.grid.horizontal.show}
         />
-        {chartCustomization.label.xAxis.show && (
+        {chartCustomization.xAxis.show && (
           <XAxis
             dataKey="label"
-            tickLine={chartCustomization.label.xAxis.tickLine}
+            tickLine={chartCustomization.xAxis.tickLine}
             tickMargin={10}
-            axisLine={chartCustomization.label.xAxis.axisLine}
+            axisLine={chartCustomization.xAxis.axisLine}
             tickFormatter={(value) =>
-              value.slice(0, chartCustomization.label.xAxis.charLength)
+              value.slice(0, chartCustomization.xAxis.charLength)
             }
           />
         )}
-        {chartCustomization.label.yAxis.show && (
-          <YAxis axisLine={false} tickLine={false} reversed={false} />
+        {chartCustomization.yAxis.show && (
+          <YAxis
+            tickLine={chartCustomization.yAxis.tickLine}
+            reversed={chartCustomization.yAxis.reversed}
+          />
         )}
         <ChartTooltip
           cursor={chartCustomization.tooltip.focused}
@@ -111,8 +130,27 @@ const BarChartPreview = () => {
             name={key}
             fill={`var(--color-${replaceSpaceWithUnderscore(key)})`}
             radius={4}
-            width={0.1}
-          />
+            width={10}
+          >
+            {chartCustomization.labelist.value.show && (
+              <LabelList
+                dataKey={key}
+                position={chartCustomization.labelist.value.position}
+                offset={chartCustomization.labelist.value.offset}
+                className="fill-foreground"
+                fontSize={10}
+              />
+            )}
+            {chartCustomization.labelist.key.show && (
+              <LabelList
+                dataKey="label"
+                position={chartCustomization.labelist.key.position}
+                offset={chartCustomization.labelist.key.offset}
+                fill="#fff"
+                fontSize={10}
+              />
+            )}
+          </Bar>
         ))}
       </BarChart>
     </ChartContainer>
