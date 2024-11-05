@@ -8,7 +8,7 @@ import Screenshot from "./screenshot";
 
 const MenuEditor = () => {
   return (
-    <div className="m-6">
+    <div className="mb-4 mx-4 mt-3">
       <Tabs defaultValue="data" className="w-full max-w-full">
         <TabsList className="grid w-full grid-cols-3 rounded-md bg-muted p-1">
           <TabsTrigger

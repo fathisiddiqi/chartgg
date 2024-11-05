@@ -1,3 +1,4 @@
+import { LabelPosition } from "recharts/types/component/Label";
 import { create } from "zustand";
 
 export type ChartType = {
@@ -89,6 +90,136 @@ export const ChartTooltipIndicators: ChartTooltipIndicator[] = [
   "dashed",
   "none",
 ];
+
+export type ChartLabelistPosition =
+  | "top"
+  | "left"
+  | "right"
+  | "bottom"
+  | "inside"
+  | "outside"
+  | "insideLeft"
+  | "insideRight"
+  | "insideTop"
+  | "insideBottom"
+  | "insideTopLeft"
+  | "insideBottomLeft"
+  | "insideTopRight"
+  | "insideBottomRight"
+  | "insideStart"
+  | "insideEnd"
+  | "end"
+  | "center"
+  | "centerTop"
+  | "centerBottom"
+  | "middle";
+
+export const ChartLabelistPositions: ChartLabelistPosition[] = [
+  "top",
+  "left",
+  "right",
+  "bottom",
+  "inside",
+  "outside",
+  "insideLeft",
+  "insideRight",
+  "insideTop",
+  "insideBottom",
+  "insideTopLeft",
+  "insideBottomLeft",
+  "insideTopRight",
+  "insideBottomRight",
+  "insideStart",
+  "insideEnd",
+  "end",
+  "center",
+  "centerTop",
+  "centerBottom",
+  "middle",
+];
+
+export interface ChartCustomization {
+  chart: {
+    theme: {
+      type: "light" | "dark";
+      selected: ChartTheme;
+    };
+    background: {
+      color: string;
+    };
+    border: {
+      width: number;
+      radius: number;
+      color: string;
+    };
+    content: {
+      width: number;
+    };
+  };
+  text: {
+    title: {
+      text: string;
+      color: string;
+      align: "left" | "center" | "right";
+    };
+    subtitle: {
+      text: string;
+      color: string;
+      align: "left" | "center" | "right";
+    };
+    footerTitle: {
+      text: string;
+      color: string;
+      align: "left" | "center" | "right";
+    };
+    footerSubtitle: {
+      text: string;
+      color: string;
+      align: "left" | "center" | "right";
+    };
+  };
+  labelist: {
+    key: {
+      show: boolean;
+      position: ChartLabelistPosition;
+      offset: number;
+    };
+    value: {
+      show: boolean;
+      position: ChartLabelistPosition;
+      offset: number;
+    };
+  };
+  xAxis: {
+    show: boolean;
+    charLength: number;
+    tickLine: boolean;
+    axisLine: boolean;
+  };
+  yAxis: {
+    show: boolean;
+    tickLine: boolean;
+    axisLine: boolean;
+    reversed: boolean;
+  };
+  legend: {
+    show: boolean;
+  };
+  tooltip: {
+    show: boolean;
+    showTooltipIndex: number;
+    indicator: ChartTooltipIndicator;
+    focused: boolean;
+  };
+  grid: {
+    horizontal: {
+      show: boolean;
+    };
+    vertical: {
+      show: boolean;
+    };
+  };
+}
 
 export type ChartBackgroundLayout = {
   id: string;
@@ -199,79 +330,6 @@ export const ChartFrames: ChartFrame[] = [
   // "chrome_dark",
 ];
 
-export interface ChartCustomization {
-  chart: {
-    theme: {
-      type: "light" | "dark";
-      selected: ChartTheme;
-    };
-    background: {
-      color: string;
-    };
-    border: {
-      width: number;
-      radius: number;
-      color: string;
-    };
-    content: {
-      width: number;
-    };
-  };
-  text: {
-    title: {
-      text: string;
-      color: string;
-      align: "left" | "center" | "right";
-    };
-    subtitle: {
-      text: string;
-      color: string;
-      align: "left" | "center" | "right";
-    };
-    footerTitle: {
-      text: string;
-      color: string;
-      align: "left" | "center" | "right";
-    };
-    footerSubtitle: {
-      text: string;
-      color: string;
-      align: "left" | "center" | "right";
-    };
-  };
-  label: {
-    xAxis: {
-      show: boolean;
-      charLength: number;
-      tickLine: boolean;
-      axisLine: boolean;
-    };
-    yAxis: {
-      show: boolean;
-      tickLine: boolean;
-      axisLine: boolean;
-      reversed: boolean;
-    };
-  };
-  legend: {
-    show: boolean;
-  };
-  tooltip: {
-    show: boolean;
-    showTooltipIndex: number;
-    indicator: ChartTooltipIndicator;
-    focused: boolean;
-  };
-  grid: {
-    horizontal: {
-      show: boolean;
-    };
-    vertical: {
-      show: boolean;
-    };
-  };
-}
-
 export interface ChartScreenshot {
   content: {
     frame: ChartFrame;
@@ -373,19 +431,29 @@ export const useChartStore = create<ChartState>()((set) => ({
         align: "left",
       },
     },
-    label: {
-      xAxis: {
-        show: true,
-        charLength: 3,
-        tickLine: false,
-        axisLine: false,
-      },
-      yAxis: {
+    labelist: {
+      key: {
         show: false,
-        axisLine: false,
-        tickLine: false,
-        reversed: false,
+        position: "outside",
+        offset: 12,
       },
+      value: {
+        show: false,
+        position: "top",
+        offset: 12,
+      },
+    },
+    xAxis: {
+      show: true,
+      charLength: 3,
+      tickLine: false,
+      axisLine: false,
+    },
+    yAxis: {
+      show: false,
+      axisLine: false,
+      tickLine: false,
+      reversed: false,
     },
     legend: {
       show: true,
