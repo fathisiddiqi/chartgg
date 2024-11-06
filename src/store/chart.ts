@@ -152,17 +152,6 @@ export interface ChartCustomization {
       type: "light" | "dark";
       selected: ChartTheme;
     };
-    background: {
-      color: string;
-    };
-    border: {
-      width: number;
-      radius: number;
-      color: string;
-    };
-    content: {
-      width: number;
-    };
     active: {
       show: boolean;
       index: number;
@@ -353,7 +342,16 @@ export interface ChartScreenshot {
     frame: ChartFrame;
     scale: number;
     rotate: number;
+    width: number;
     shadow: string;
+    background: {
+      color: string;
+    };
+    border: {
+      width: number;
+      radius: number;
+      color: string;
+    };
   };
   canvas: {
     width: number;
@@ -414,17 +412,6 @@ export const useChartStore = create<ChartState>()((set) => ({
       theme: {
         type: "light",
         selected: "default",
-      },
-      background: {
-        color: "#fff",
-      },
-      border: {
-        width: 0,
-        radius: 8,
-        color: "#fff",
-      },
-      content: {
-        width: 500,
       },
       active: {
         show: false,
@@ -509,6 +496,15 @@ export const useChartStore = create<ChartState>()((set) => ({
       scale: 100,
       rotate: 0,
       shadow: "0 0 #0000",
+      width: 500,
+      background: {
+        color: "#fff",
+      },
+      border: {
+        width: 0,
+        radius: 8,
+        color: "#fff",
+      },
     },
     canvas: {
       background: {

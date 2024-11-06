@@ -64,11 +64,11 @@ const ChartPreview = () => {
             {/* Chart Content */}
             <Card
               style={{
-                backgroundColor: chartCustomization.chart.background.color,
-                borderColor: chartCustomization.chart.border.color,
-                borderRadius: chartCustomization.chart.border.radius,
-                borderWidth: chartCustomization.chart.border.width,
-                width: chartCustomization.chart.content.width,
+                backgroundColor: chartScreenshot.content.background.color,
+                borderColor: chartScreenshot.content.border.color,
+                borderRadius: chartScreenshot.content.border.radius,
+                borderWidth: chartScreenshot.content.border.width,
+                width: chartScreenshot.content.width,
               }}
               className="shadow-none"
             >
