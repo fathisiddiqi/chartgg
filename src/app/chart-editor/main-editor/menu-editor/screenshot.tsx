@@ -105,6 +105,7 @@ const ContentCard = ({ chartScreenshot, setChartScreenshot }: CardProps) => {
             </AccordionContent>
           </AccordionItem>
         </Accordion>
+
         <div className="flex justify-between">
           <Text variant="label" className="font-medium">
             Scale
@@ -139,6 +140,124 @@ const ContentCard = ({ chartScreenshot, setChartScreenshot }: CardProps) => {
             }
           />
         </div>
+        <div className="flex justify-between items-center">
+          <Text variant="label" className="font-medium">
+            Background Color
+          </Text>
+          <div className="flex items-center space-x-2">
+            <ColorInput
+              variant="sm"
+              value={chartScreenshot.content.background.color}
+              onChange={(e) =>
+                setChartScreenshot({
+                  ...chartScreenshot,
+                  content: {
+                    ...chartScreenshot.content,
+                    background: {
+                      ...chartScreenshot.content.background,
+                      color: e.target.value,
+                    },
+                  },
+                })
+              }
+            />
+          </div>
+        </div>
+
+        <div className="flex justify-between items-center">
+          <Text variant="label" className="font-medium">
+            Width
+          </Text>
+          <Slider
+            defaultValue={[chartScreenshot.content.width]}
+            max={600}
+            min={300}
+            step={100}
+            className="w-1/3"
+            onValueChange={(value) =>
+              setChartScreenshot({
+                ...chartScreenshot,
+                content: { ...chartScreenshot.content, width: value[0] },
+              })
+            }
+          />
+        </div>
+
+        <Accordion type="single" collapsible>
+          <AccordionItem value="chart-2">
+            <AccordionTrigger>
+              <Text variant="label">Border</Text>
+            </AccordionTrigger>
+            <AccordionContent className="space-y-2 pt-2">
+              <div className="flex justify-between items-center">
+                <Text variant="xs">Width</Text>
+                <Slider
+                  defaultValue={[chartScreenshot.content.border.width]}
+                  max={15}
+                  min={1}
+                  step={1}
+                  className="w-1/3"
+                  onValueChange={(value) =>
+                    setChartScreenshot({
+                      ...chartScreenshot,
+                      content: {
+                        ...chartScreenshot.content,
+                        border: {
+                          ...chartScreenshot.content.border,
+                          width: value[0],
+                        },
+                      },
+                    })
+                  }
+                />
+              </div>
+              <div className="flex justify-between items-center">
+                <Text variant="xs">Radius</Text>
+                <Slider
+                  defaultValue={[chartScreenshot.content.border.radius]}
+                  max={30}
+                  min={1}
+                  step={1}
+                  className="w-1/3"
+                  onValueChange={(value) =>
+                    setChartScreenshot({
+                      ...chartScreenshot,
+                      content: {
+                        ...chartScreenshot.content,
+                        border: {
+                          ...chartScreenshot.content.border,
+                          width: value[0],
+                        },
+                      },
+                    })
+                  }
+                />
+              </div>
+              <div className="flex justify-between items-center">
+                <Text variant="xs">Color</Text>
+                <div className="flex items-center space-x-2">
+                  <ColorInput
+                    variant="sm"
+                    value={chartScreenshot.content.border.color}
+                    onChange={(e) =>
+                      setChartScreenshot({
+                        ...chartScreenshot,
+                        content: {
+                          ...chartScreenshot.content,
+                          border: {
+                            ...chartScreenshot.content.border,
+                            color: e.target.value,
+                          },
+                        },
+                      })
+                    }
+                  />
+                </div>
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+
         <Accordion type="single" collapsible>
           <AccordionItem value="general-1">
             <AccordionTrigger>
