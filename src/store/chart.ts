@@ -138,6 +138,14 @@ export const ChartLabelistPositions: ChartLabelistPosition[] = [
   "middle",
 ];
 
+export type ChartStrokeStyle = "solid" | "dashed" | "dotted" | "none";
+export const ChartStrokeStyles: ChartStrokeStyle[] = [
+  "solid",
+  "dashed",
+  "dotted",
+  "none",
+];
+
 export interface ChartCustomization {
   chart: {
     theme: {
@@ -154,6 +162,16 @@ export interface ChartCustomization {
     };
     content: {
       width: number;
+    };
+    active: {
+      show: boolean;
+      index: number;
+      fill: string;
+      fillOpacity: number;
+      strokeColor: string;
+      strokeOpacity: number;
+      strokeWidth: number;
+      strokeStyle: ChartStrokeStyle;
     };
   };
   text: {
@@ -407,6 +425,16 @@ export const useChartStore = create<ChartState>()((set) => ({
       },
       content: {
         width: 500,
+      },
+      active: {
+        show: false,
+        index: 0,
+        fill: "#000",
+        fillOpacity: 0.5,
+        strokeStyle: "solid",
+        strokeColor: "#fff",
+        strokeOpacity: 1,
+        strokeWidth: 2,
       },
     },
     text: {

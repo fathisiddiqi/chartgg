@@ -15,6 +15,7 @@ import {
   BarChart,
   CartesianGrid,
   LabelList,
+  Rectangle,
   XAxis,
   YAxis,
 } from "recharts";
@@ -131,6 +132,27 @@ const BarChartPreview = () => {
             fill={`var(--color-${replaceSpaceWithUnderscore(key)})`}
             radius={4}
             width={10}
+            activeIndex={chartCustomization.chart.active.index}
+            activeBar={({ ...props }) => {
+              return (
+                <Rectangle
+                  {...props}
+                  fillOpacity={chartCustomization.chart.active.fillOpacity}
+                  fill={chartCustomization.chart.active.fill}
+                  stroke={chartCustomization.chart.active.strokeColor}
+                  strokeWidth={chartCustomization.chart.active.strokeWidth}
+                  strokeOpacity={chartCustomization.chart.active.strokeOpacity}
+                  strokeDasharray={
+                    chartCustomization.chart.active.strokeStyle === "dashed"
+                      ? "8 8"
+                      : chartCustomization.chart.active.strokeStyle === "dotted"
+                      ? "1 2"
+                      : undefined
+                  }
+                  strokeDashoffset="2"
+                />
+              );
+            }}
           >
             {chartCustomization.labelist.value.show && (
               <LabelList
