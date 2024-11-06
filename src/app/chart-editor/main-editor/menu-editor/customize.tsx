@@ -238,47 +238,49 @@ const ChartCard = ({
             <AccordionTrigger>
               <Text variant="label">Border</Text>
             </AccordionTrigger>
-            <AccordionContent className="space-y-2">
+            <AccordionContent className="space-y-2 pt-2">
               <div className="flex justify-between items-center">
                 <Text variant="xs">Width</Text>
-                <Input
-                  variant="sm"
-                  type="text"
-                  value={chartCustomization.chart.border.width}
-                  onChange={(e) =>
+                <Slider
+                  defaultValue={[chartCustomization.chart.border.width]}
+                  max={15}
+                  min={1}
+                  step={1}
+                  className="w-1/3"
+                  onValueChange={(value) =>
                     setChartCustomization({
                       ...chartCustomization,
                       chart: {
                         ...chartCustomization.chart,
                         border: {
                           ...chartCustomization.chart.border,
-                          width: Number(e.target.value),
+                          width: value[0],
                         },
                       },
                     })
                   }
-                  className="flex-1 bg-white text-gray-900 border-gray-300 max-w-[2.25rem] p-1 text-center"
                 />
               </div>
               <div className="flex justify-between items-center">
                 <Text variant="xs">Radius</Text>
-                <Input
-                  variant="sm"
-                  type="text"
-                  value={chartCustomization.chart.border.radius}
-                  onChange={(e) =>
+                <Slider
+                  defaultValue={[chartCustomization.chart.border.radius]}
+                  max={30}
+                  min={1}
+                  step={1}
+                  className="w-1/3"
+                  onValueChange={(value) =>
                     setChartCustomization({
                       ...chartCustomization,
                       chart: {
                         ...chartCustomization.chart,
                         border: {
                           ...chartCustomization.chart.border,
-                          radius: Number(e.target.value),
+                          radius: value[0],
                         },
                       },
                     })
                   }
-                  className="flex-1 bg-white text-gray-900 border-gray-300 max-w-[2.25rem] p-1 text-center"
                 />
               </div>
               <div className="flex justify-between items-center">
@@ -311,8 +313,8 @@ const ChartCard = ({
             <AccordionTrigger>
               <Text variant="label">Content</Text>
             </AccordionTrigger>
-            <AccordionContent className="space-y-2">
-              <div className="flex justify-between items-center mt-2">
+            <AccordionContent className="space-y-2 pt-2">
+              <div className="flex justify-between items-center">
                 <Text variant="xs">Width</Text>
                 <Slider
                   defaultValue={[chartCustomization.chart.content.width]}
