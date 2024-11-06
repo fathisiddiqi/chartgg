@@ -311,26 +311,27 @@ const ChartCard = ({
             <AccordionTrigger>
               <Text variant="label">Content</Text>
             </AccordionTrigger>
-            <AccordionContent>
-              <div className="flex justify-between items-center">
+            <AccordionContent className="space-y-2">
+              <div className="flex justify-between items-center mt-2">
                 <Text variant="xs">Width</Text>
-                <Input
-                  variant="sm"
-                  type="text"
-                  value={chartCustomization.chart.content.width}
-                  onChange={(e) =>
+                <Slider
+                  defaultValue={[chartCustomization.chart.content.width]}
+                  max={600}
+                  min={300}
+                  step={100}
+                  className="w-1/3"
+                  onValueChange={(value) =>
                     setChartCustomization({
                       ...chartCustomization,
                       chart: {
                         ...chartCustomization.chart,
                         content: {
                           ...chartCustomization.chart.content,
-                          width: Number(e.target.value),
+                          width: value[0],
                         },
                       },
                     })
                   }
-                  className="flex-1 bg-white text-gray-900 border-gray-300 max-w-[2.5rem] p-1 text-center"
                 />
               </div>
             </AccordionContent>
