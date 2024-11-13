@@ -9,6 +9,7 @@ import TooltipCard from "./customize/tooltip-card";
 import GridCard from "./customize/grid-card";
 import YAxisCard from "./customize/y-axis-card";
 import DotCard from "./customize/dot-card";
+import ActiveCard from "./customize/active-card";
 
 const Customize = () => {
   const { chartCustomization, setChartCustomization } = useChartStore(
@@ -58,6 +59,10 @@ const Customize = () => {
         />
         {/* Grid Card */}
         <GridCard
+          chartCustomization={chartCustomization}
+          setChartCustomization={setChartCustomization}
+        />
+        <ActiveCard
           chartCustomization={chartCustomization}
           setChartCustomization={setChartCustomization}
         />

@@ -152,16 +152,6 @@ export interface ChartCustomization {
       type: "light" | "dark";
       selected: ChartTheme;
     };
-    active: {
-      show: boolean;
-      index: number;
-      fill: string;
-      fillOpacity: number;
-      strokeColor: string;
-      strokeOpacity: number;
-      strokeWidth: number;
-      strokeStyle: ChartStrokeStyle;
-    };
   };
   text: {
     title: {
@@ -229,6 +219,16 @@ export interface ChartCustomization {
   dot: {
     show: boolean;
     activeSize: number;
+  };
+  active: {
+    show: boolean;
+    index: number;
+    fill: string;
+    fillOpacity: number;
+    strokeColor: string;
+    strokeOpacity: number;
+    strokeWidth: number;
+    strokeStyle: ChartStrokeStyle;
   };
 }
 
@@ -417,16 +417,6 @@ export const useChartStore = create<ChartState>()((set) => ({
         type: "light",
         selected: "default",
       },
-      active: {
-        show: false,
-        index: 0,
-        fill: "#000",
-        fillOpacity: 0.5,
-        strokeStyle: "solid",
-        strokeColor: "#fff",
-        strokeOpacity: 1,
-        strokeWidth: 2,
-      },
     },
     text: {
       title: {
@@ -494,6 +484,16 @@ export const useChartStore = create<ChartState>()((set) => ({
     dot: {
       show: false,
       activeSize: 2,
+    },
+    active: {
+      show: false,
+      index: 0,
+      fill: "#000",
+      fillOpacity: 0.5,
+      strokeStyle: "solid",
+      strokeColor: "#fff",
+      strokeOpacity: 1,
+      strokeWidth: 2,
     },
   },
   setChartCustomization: (customization: ChartCustomization) =>
