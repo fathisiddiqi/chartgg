@@ -226,6 +226,10 @@ export interface ChartCustomization {
       show: boolean;
     };
   };
+  dot: {
+    show: boolean;
+    activeSize: number;
+  };
 }
 
 export type ChartBackgroundLayout = {
@@ -486,6 +490,10 @@ export const useChartStore = create<ChartState>()((set) => ({
       vertical: {
         show: false,
       },
+    },
+    dot: {
+      show: false,
+      activeSize: 2,
     },
   },
   setChartCustomization: (customization: ChartCustomization) =>
