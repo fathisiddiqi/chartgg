@@ -132,20 +132,20 @@ const BarChartPreview = () => {
             fill={`var(--color-${replaceSpaceWithUnderscore(key)})`}
             radius={4}
             width={10}
-            activeIndex={chartCustomization.chart.active.index}
+            activeIndex={chartCustomization.active.index}
             activeBar={({ ...props }) => {
               return (
                 <Rectangle
                   {...props}
-                  fillOpacity={chartCustomization.chart.active.fillOpacity}
-                  fill={chartCustomization.chart.active.fill}
-                  stroke={chartCustomization.chart.active.strokeColor}
-                  strokeWidth={chartCustomization.chart.active.strokeWidth}
-                  strokeOpacity={chartCustomization.chart.active.strokeOpacity}
+                  fillOpacity={chartCustomization.active.fillOpacity}
+                  fill={chartCustomization.active.fill}
+                  stroke={chartCustomization.active.strokeColor}
+                  strokeWidth={chartCustomization.active.strokeWidth}
+                  strokeOpacity={chartCustomization.active.strokeOpacity}
                   strokeDasharray={
-                    chartCustomization.chart.active.strokeStyle === "dashed"
+                    chartCustomization.active.strokeStyle === "dashed"
                       ? "8 8"
-                      : chartCustomization.chart.active.strokeStyle === "dotted"
+                      : chartCustomization.active.strokeStyle === "dotted"
                       ? "1 2"
                       : undefined
                   }
