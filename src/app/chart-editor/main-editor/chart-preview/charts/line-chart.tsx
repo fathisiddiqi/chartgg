@@ -120,12 +120,15 @@ const LineChartPreview = () => {
         {chartKeys.map((key) => (
           <Line
             key={key}
-            type="monotone"
+            type="natural"
             dataKey={key}
             name={key}
             stroke={`var(--color-${replaceSpaceWithUnderscore(key)})`}
             strokeWidth={2}
-            dot={false}
+            dot={chartCustomization.dot.show}
+            activeDot={{
+              r: chartCustomization.dot.activeSize,
+            }}
           >
             {chartCustomization.labelist.value.show && (
               <LabelList
