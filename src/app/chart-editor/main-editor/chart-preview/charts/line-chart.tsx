@@ -8,9 +8,16 @@ import {
 } from "@/components/ui/chart";
 import useChartColor from "@/hook/use-chart-colors";
 import { replaceSpaceWithUnderscore } from "@/lib/utils";
-import { ChartCustomization, ChartData, useChartStore } from "@/store/chart";
+import { useChartStore } from "@/store/chart";
 import { useEffect, useState } from "react";
-import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
+import {
+  CartesianGrid,
+  LabelList,
+  Line,
+  LineChart,
+  XAxis,
+  YAxis,
+} from "recharts";
 
 const LineChartPreview = () => {
   const { chartData, chartCustomization } = useChartStore((state) => state);
@@ -53,9 +60,9 @@ const LineChartPreview = () => {
         accessibilityLayer
         data={chartData}
         margin={{
-          left: 12,
-          right: 12,
-          top: 12,
+          left: 20,
+          right: 30,
+          top: 20,
         }}
       >
         <CartesianGrid
@@ -117,7 +124,26 @@ const LineChartPreview = () => {
             dataKey={key}
             name={key}
             fill={`var(--color-${replaceSpaceWithUnderscore(key)})`}
-          />
+          >
+            {chartCustomization.labelist.value.show && (
+              <LabelList
+                dataKey={key}
+                position={chartCustomization.labelist.value.position}
+                offset={chartCustomization.labelist.value.offset}
+                className="fill-foreground"
+                fontSize={10}
+              />
+            )}
+            {chartCustomization.labelist.key.show && (
+              <LabelList
+                dataKey="label"
+                position={chartCustomization.labelist.key.position}
+                offset={chartCustomization.labelist.key.offset}
+                fill="fill-foreground"
+                fontSize={10}
+              />
+            )}
+          </Line>
         ))}
       </LineChart>
     </ChartContainer>
