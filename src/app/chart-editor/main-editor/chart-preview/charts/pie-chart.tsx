@@ -10,7 +10,7 @@ import useChartColor from "@/hook/use-chart-colors";
 import { replaceSpaceWithUnderscore } from "@/lib/utils";
 import { ChartCustomization, ChartData, useChartStore } from "@/store/chart";
 import { useEffect, useState } from "react";
-import { Pie, PieChart, Sector } from "recharts";
+import { LabelList, Pie, PieChart, Sector } from "recharts";
 import { PieSectorDataItem } from "recharts/types/polar/Pie";
 
 const PieChartPreview = () => {
@@ -119,7 +119,26 @@ const PieChartPreview = () => {
                 ),
               }
             : {})}
-        />
+        >
+          {chartCustomization.labelist.value.show && (
+            <LabelList
+              dataKey={chartKeys[0]}
+              position={chartCustomization.labelist.value.position}
+              offset={chartCustomization.labelist.value.offset}
+              className="fill-foreground"
+              fontSize={10}
+            />
+          )}
+          {chartCustomization.labelist.key.show && (
+            <LabelList
+              dataKey="label"
+              position={chartCustomization.labelist.key.position}
+              offset={chartCustomization.labelist.key.offset}
+              fill="#000000"
+              fontSize={10}
+            />
+          )}
+        </Pie>
       </PieChart>
     </ChartContainer>
   );
