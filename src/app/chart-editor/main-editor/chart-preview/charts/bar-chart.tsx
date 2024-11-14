@@ -132,27 +132,29 @@ const BarChartPreview = () => {
             fill={`var(--color-${replaceSpaceWithUnderscore(key)})`}
             radius={4}
             width={10}
-            activeIndex={chartCustomization.active.index}
-            activeBar={({ ...props }) => {
-              return (
-                <Rectangle
-                  {...props}
-                  fillOpacity={chartCustomization.active.fillOpacity}
-                  fill={chartCustomization.active.fill}
-                  stroke={chartCustomization.active.strokeColor}
-                  strokeWidth={chartCustomization.active.strokeWidth}
-                  strokeOpacity={chartCustomization.active.strokeOpacity}
-                  strokeDasharray={
-                    chartCustomization.active.strokeStyle === "dashed"
-                      ? "8 8"
-                      : chartCustomization.active.strokeStyle === "dotted"
-                      ? "1 2"
-                      : undefined
-                  }
-                  strokeDashoffset="2"
-                />
-              );
-            }}
+            {...(chartCustomization.active.show
+              ? {
+                  activeIndex: chartCustomization.active.index,
+                  activeBar: (props: any) => (
+                    <Rectangle
+                      {...props}
+                      fillOpacity={chartCustomization.active.fillOpacity}
+                      fill={chartCustomization.active.fill}
+                      stroke={chartCustomization.active.strokeColor}
+                      strokeWidth={chartCustomization.active.strokeWidth}
+                      strokeOpacity={chartCustomization.active.strokeOpacity}
+                      strokeDasharray={
+                        chartCustomization.active.strokeStyle === "dashed"
+                          ? "8 8"
+                          : chartCustomization.active.strokeStyle === "dotted"
+                          ? "1 2"
+                          : undefined
+                      }
+                      strokeDashoffset="2"
+                    />
+                  ),
+                }
+              : {})}
           >
             {chartCustomization.labelist.value.show && (
               <LabelList

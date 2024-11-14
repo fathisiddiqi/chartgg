@@ -491,7 +491,7 @@ export const useChartStore = create<ChartState>()((set) => ({
       fill: "#000",
       fillOpacity: 0.5,
       strokeStyle: "solid",
-      strokeColor: "#fff",
+      strokeColor: "#ffffff",
       strokeOpacity: 1,
       strokeWidth: 2,
     },
@@ -506,12 +506,12 @@ export const useChartStore = create<ChartState>()((set) => ({
       shadow: "0 0 #0000",
       width: 500,
       background: {
-        color: "#fff",
+        color: "#ffffff",
       },
       border: {
         width: 0,
         radius: 8,
-        color: "#fff",
+        color: "#ffffff",
       },
     },
     canvas: {

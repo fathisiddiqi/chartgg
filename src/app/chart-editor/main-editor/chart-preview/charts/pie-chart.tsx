@@ -10,7 +10,8 @@ import useChartColor from "@/hook/use-chart-colors";
 import { replaceSpaceWithUnderscore } from "@/lib/utils";
 import { ChartCustomization, ChartData, useChartStore } from "@/store/chart";
 import { useEffect, useState } from "react";
-import { Pie, PieChart } from "recharts";
+import { LabelList, Pie, PieChart, Sector } from "recharts";
+import { PieSectorDataItem } from "recharts/types/polar/Pie";
 
 const PieChartPreview = () => {
   const { chartData, chartCustomization } = useChartStore((state) => state);
@@ -87,7 +88,57 @@ const PieChartPreview = () => {
           }
         />
         <ChartLegend content={<ChartLegendContent nameKey="label" />} />
-        <Pie data={pieChartData} dataKey={chartKeys[0]} nameKey="label" />
+        <Pie
+          data={pieChartData}
+          dataKey={chartKeys[0]}
+          nameKey="label"
+          {...(chartCustomization.active.show
+            ? {
+                activeIndex: chartCustomization.active.index,
+                activeShape: ({
+                  outerRadius = 0,
+                  ...props
+                }: PieSectorDataItem) => (
+                  <Sector
+                    {...props}
+                    outerRadius={outerRadius + 10}
+                    fillOpacity={chartCustomization.active.fillOpacity}
+                    fill={chartCustomization.active.fill}
+                    stroke={chartCustomization.active.strokeColor}
+                    strokeWidth={chartCustomization.active.strokeWidth}
+                    strokeOpacity={chartCustomization.active.strokeOpacity}
+                    strokeDasharray={
+                      chartCustomization.active.strokeStyle === "dashed"
+                        ? "8 8"
+                        : chartCustomization.active.strokeStyle === "dotted"
+                        ? "1 2"
+                        : undefined
+                    }
+                    strokeDashoffset="2"
+                  />
+                ),
+              }
+            : {})}
+        >
+          {chartCustomization.labelist.value.show && (
+            <LabelList
+              dataKey={chartKeys[0]}
+              position={chartCustomization.labelist.value.position}
+              offset={chartCustomization.labelist.value.offset}
+              className="fill-foreground"
+              fontSize={10}
+            />
+          )}
+          {chartCustomization.labelist.key.show && (
+            <LabelList
+              dataKey="label"
+              position={chartCustomization.labelist.key.position}
+              offset={chartCustomization.labelist.key.offset}
+              fill="#000000"
+              fontSize={10}
+            />
+          )}
+        </Pie>
       </PieChart>
     </ChartContainer>
   );
