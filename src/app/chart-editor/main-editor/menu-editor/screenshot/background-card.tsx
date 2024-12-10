@@ -11,9 +11,12 @@ import { Slider } from "@/components/ui/slider";
 import { Text } from "@/components/ui/text";
 import { replaceUnderscoreWithSpace, titleCase } from "@/lib/utils";
 import { ChartBackgroundLayouts } from "@/store/chart";
-import { CardProps } from "./props";
+import { ScreenshotCardProps } from "@/types";
 
-const BackgroundCard = ({ chartScreenshot, setChartScreenshot }: CardProps) => {
+const BackgroundCard = ({
+  chartScreenshot,
+  setChartScreenshot,
+}: ScreenshotCardProps) => {
   return (
     <Card>
       <CardContent className="space-y-3">

@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { CardProps } from "./props";
+import { CustomizationCardProps } from "@/types";
 import { Text } from "@/components/ui/text";
 import { Switch } from "@/components/custom-ui/switch";
 import { Input } from "@/components/custom-ui/input";
@@ -17,7 +17,7 @@ import { Slider } from "@/components/ui/slider";
 const ActiveCard = ({
   chartCustomization,
   setChartCustomization,
-}: CardProps) => {
+}: CustomizationCardProps) => {
   return (
     <Card>
       <CardHeader>

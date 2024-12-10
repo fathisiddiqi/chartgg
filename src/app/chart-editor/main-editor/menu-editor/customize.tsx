@@ -10,6 +10,9 @@ import GridCard from "./customize/grid-card";
 import YAxisCard from "./customize/y-axis-card";
 import DotCard from "./customize/dot-card";
 import ActiveCard from "./customize/active-card";
+import PolarGridCard from "./customize/polar-grid-card";
+import PolarRadiusAxisCard from "./customize/polar-radius-axis-card";
+import PolarAngleAxisCard from "./customize/polar-angle-axis-card";
 
 const Customize = () => {
   const { chartCustomization, setChartCustomization } = useChartStore(
@@ -42,6 +45,16 @@ const Customize = () => {
           chartCustomization={chartCustomization}
           setChartCustomization={setChartCustomization}
         />
+        {/* Polar Angle Axis Card */}
+        <PolarAngleAxisCard
+          chartCustomization={chartCustomization}
+          setChartCustomization={setChartCustomization}
+        />
+        {/* Polar Radius Axis Card */}
+        <PolarRadiusAxisCard
+          chartCustomization={chartCustomization}
+          setChartCustomization={setChartCustomization}
+        />
         {/* Label Card */}
         <LabelistCard
           chartCustomization={chartCustomization}
@@ -59,6 +72,10 @@ const Customize = () => {
         />
         {/* Grid Card */}
         <GridCard
+          chartCustomization={chartCustomization}
+          setChartCustomization={setChartCustomization}
+        />
+        <PolarGridCard
           chartCustomization={chartCustomization}
           setChartCustomization={setChartCustomization}
         />

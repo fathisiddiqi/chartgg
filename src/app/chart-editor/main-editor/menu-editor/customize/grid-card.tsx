@@ -1,4 +1,4 @@
-import { CardProps } from "./props";
+import { CustomizationCardProps } from "@/types";
 import {
   Accordion,
   AccordionItem,
@@ -9,7 +9,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Switch } from "@/components/custom-ui/switch";
 import { Text } from "@/components/ui/text";
 
-const GridCard = ({ chartCustomization, setChartCustomization }: CardProps) => {
+const GridCard = ({ chartCustomization, setChartCustomization }: CustomizationCardProps) => {
   return (
     <Card>
       <CardHeader>

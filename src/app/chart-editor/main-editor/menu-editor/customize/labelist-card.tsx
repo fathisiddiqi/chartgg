@@ -1,4 +1,4 @@
-import { CardProps } from "./props";
+import { CustomizationCardProps } from "@/types";
 import {
   Accordion,
   AccordionItem,
@@ -22,7 +22,7 @@ import { Slider } from "@/components/ui/slider";
 const LabelistCard = ({
   chartCustomization,
   setChartCustomization,
-}: CardProps) => {
+}: CustomizationCardProps) => {
   return (
     <Card>
       <CardContent className="space-y-2">

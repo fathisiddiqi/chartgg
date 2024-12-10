@@ -1,9 +1,10 @@
 import { CustomizationCardProps } from "@/types";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Input } from "@/components/custom-ui/input";
 import { Switch } from "@/components/custom-ui/switch";
 import { Text } from "@/components/ui/text";
 
-const LegendCard = ({
+const PolarGridCard = ({
   chartCustomization,
   setChartCustomization,
 }: CustomizationCardProps) => {
@@ -11,26 +12,24 @@ const LegendCard = ({
     <Card>
       <CardHeader>
         <Text variant="sm" className="font-bold">
-          Legend
+          Polar Grid
         </Text>
       </CardHeader>
-      <CardContent>
-        <div className="flex justify-between">
-          <Text variant="label" className="font-medium">
-            Show
-          </Text>
+      <CardContent className="space-y-2">
+        <div className="flex justify-between items-center">
+          <Text variant="label">Show</Text>
           <Switch
             size="sm"
-            checked={chartCustomization.legend.show}
-            onCheckedChange={() =>
+            checked={chartCustomization.polarGrid.show}
+            onCheckedChange={() => {
               setChartCustomization({
                 ...chartCustomization,
-                legend: {
-                  ...chartCustomization.legend,
-                  show: !chartCustomization.legend.show,
+                polarGrid: {
+                  ...chartCustomization.polarGrid,
+                  show: !chartCustomization.polarGrid.show,
                 },
-              })
-            }
+              });
+            }}
           />
         </div>
       </CardContent>
@@ -38,4 +37,4 @@ const LegendCard = ({
   );
 };
 
-export default LegendCard;
+export default PolarGridCard;
