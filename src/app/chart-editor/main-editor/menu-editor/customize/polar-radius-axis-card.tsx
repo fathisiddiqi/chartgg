@@ -4,7 +4,7 @@ import { Input } from "@/components/custom-ui/input";
 import { Switch } from "@/components/custom-ui/switch";
 import { Text } from "@/components/ui/text";
 
-const XAxisCard = ({
+const PolarRadiusAxisCard = ({
   chartCustomization,
   setChartCustomization,
 }: CustomizationCardProps) => {
@@ -12,7 +12,7 @@ const XAxisCard = ({
     <Card>
       <CardHeader>
         <Text variant="sm" className="font-bold">
-          X-Axis
+          Polar Radius Axis
         </Text>
       </CardHeader>
       <CardContent className="space-y-2">
@@ -20,13 +20,13 @@ const XAxisCard = ({
           <Text variant="label">Show</Text>
           <Switch
             size="sm"
-            checked={chartCustomization.xAxis.show}
+            checked={chartCustomization.polarRadiusAxis.show}
             onCheckedChange={() => {
               setChartCustomization({
                 ...chartCustomization,
-                xAxis: {
-                  ...chartCustomization.xAxis,
-                  show: !chartCustomization.xAxis.show,
+                polarRadiusAxis: {
+                  ...chartCustomization.polarRadiusAxis,
+                  show: !chartCustomization.polarRadiusAxis.show,
                 },
               });
             }}
@@ -36,13 +36,13 @@ const XAxisCard = ({
           <Text variant="label">Axis Line</Text>
           <Switch
             size="sm"
-            checked={chartCustomization.xAxis.axisLine}
+            checked={chartCustomization.polarRadiusAxis.axisLine}
             onCheckedChange={() => {
               setChartCustomization({
                 ...chartCustomization,
-                xAxis: {
-                  ...chartCustomization.xAxis,
-                  axisLine: !chartCustomization.xAxis.axisLine,
+                polarRadiusAxis: {
+                  ...chartCustomization.polarRadiusAxis,
+                  axisLine: !chartCustomization.polarRadiusAxis.axisLine,
                 },
               });
             }}
@@ -52,34 +52,32 @@ const XAxisCard = ({
           <Text variant="label">Tick Line</Text>
           <Switch
             size="sm"
-            checked={chartCustomization.xAxis.tickLine}
+            checked={chartCustomization.polarRadiusAxis.tickLine}
             onCheckedChange={() => {
               setChartCustomization({
                 ...chartCustomization,
-                xAxis: {
-                  ...chartCustomization.xAxis,
-                  tickLine: !chartCustomization.xAxis.tickLine,
+                polarRadiusAxis: {
+                  ...chartCustomization.polarRadiusAxis,
+                  tickLine: !chartCustomization.polarRadiusAxis.tickLine,
                 },
               });
             }}
           />
         </div>
-        <div className="flex justify-between items-center">
-          <Text variant="label">Character Length</Text>
-          <Input
-            variant="sm"
-            type="text"
-            value={chartCustomization.xAxis.charLength}
-            onChange={(e) =>
+        <div className="flex justify-between">
+          <Text variant="label">Reversed</Text>
+          <Switch
+            size="sm"
+            checked={chartCustomization.polarRadiusAxis.reversed}
+            onCheckedChange={() => {
               setChartCustomization({
                 ...chartCustomization,
-                xAxis: {
-                  ...chartCustomization.xAxis,
-                  charLength: Number(e.target.value),
+                polarRadiusAxis: {
+                  ...chartCustomization.polarRadiusAxis,
+                  reversed: !chartCustomization.polarRadiusAxis.reversed,
                 },
-              })
-            }
-            className="flex-1 bg-white text-gray-900 border-gray-300 max-w-[2.25rem] p-1 text-center"
+              });
+            }}
           />
         </div>
       </CardContent>
@@ -87,4 +85,4 @@ const XAxisCard = ({
   );
 };
 
-export default XAxisCard;
+export default PolarRadiusAxisCard;

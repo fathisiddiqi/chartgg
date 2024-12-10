@@ -62,18 +62,18 @@ const AreaChartPreview = () => {
           vertical={chartCustomization.grid.vertical.show}
           horizontal={chartCustomization.grid.horizontal.show}
         />
-        {chartCustomization.label.xAxis.show && (
+        {chartCustomization.xAxis.show && (
           <XAxis
             dataKey="label"
-            tickLine={chartCustomization.label.xAxis.tickLine}
+            tickLine={chartCustomization.xAxis.tickLine}
             tickMargin={10}
-            axisLine={chartCustomization.label.xAxis.axisLine}
+            axisLine={chartCustomization.xAxis.axisLine}
             tickFormatter={(value) =>
-              value.slice(0, chartCustomization.label.xAxis.charLength)
+              value.slice(0, chartCustomization.xAxis.charLength)
             }
           />
         )}
-        {chartCustomization.label.yAxis.show && (
+        {chartCustomization.yAxis.show && (
           <YAxis axisLine={false} tickLine={false} reversed={false} />
         )}
         <ChartTooltip

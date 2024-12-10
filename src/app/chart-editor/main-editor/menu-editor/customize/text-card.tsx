@@ -1,4 +1,4 @@
-import { CardProps } from "./props";
+import { CustomizationCardProps } from "@/types";
 import TextAlign from "@/components/common/text-align";
 import {
   Accordion,
@@ -11,7 +11,7 @@ import { Input } from "@/components/custom-ui/input";
 import { Text } from "@/components/ui/text";
 import { ColorInput } from "@/components/custom-ui/color-input";
 
-const TextCard = ({ chartCustomization, setChartCustomization }: CardProps) => {
+const TextCard = ({ chartCustomization, setChartCustomization }: CustomizationCardProps) => {
   return (
     <Card>
       <CardContent>

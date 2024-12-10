@@ -10,9 +10,12 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Slider } from "@/components/ui/slider";
 import { Text } from "@/components/ui/text";
 import { ChartFrames, ChartShadowStyles } from "@/store/chart";
-import { CardProps } from "./props";
+import { ScreenshotCardProps } from "@/types";
 
-const ContentCard = ({ chartScreenshot, setChartScreenshot }: CardProps) => {
+const ContentCard = ({
+  chartScreenshot,
+  setChartScreenshot,
+}: ScreenshotCardProps) => {
   return (
     <Card>
       <CardContent className="space-y-3">

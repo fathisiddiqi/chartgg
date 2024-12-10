@@ -4,7 +4,7 @@ import { Input } from "@/components/custom-ui/input";
 import { Switch } from "@/components/custom-ui/switch";
 import { Text } from "@/components/ui/text";
 
-const XAxisCard = ({
+const PolarAngleAxisCard = ({
   chartCustomization,
   setChartCustomization,
 }: CustomizationCardProps) => {
@@ -12,7 +12,7 @@ const XAxisCard = ({
     <Card>
       <CardHeader>
         <Text variant="sm" className="font-bold">
-          X-Axis
+          Polar Angle Axis
         </Text>
       </CardHeader>
       <CardContent className="space-y-2">
@@ -20,13 +20,13 @@ const XAxisCard = ({
           <Text variant="label">Show</Text>
           <Switch
             size="sm"
-            checked={chartCustomization.xAxis.show}
+            checked={chartCustomization.polarAngleAxis.show}
             onCheckedChange={() => {
               setChartCustomization({
                 ...chartCustomization,
-                xAxis: {
-                  ...chartCustomization.xAxis,
-                  show: !chartCustomization.xAxis.show,
+                polarAngleAxis: {
+                  ...chartCustomization.polarAngleAxis,
+                  show: !chartCustomization.polarAngleAxis.show,
                 },
               });
             }}
@@ -36,13 +36,13 @@ const XAxisCard = ({
           <Text variant="label">Axis Line</Text>
           <Switch
             size="sm"
-            checked={chartCustomization.xAxis.axisLine}
+            checked={chartCustomization.polarAngleAxis.axisLine}
             onCheckedChange={() => {
               setChartCustomization({
                 ...chartCustomization,
-                xAxis: {
-                  ...chartCustomization.xAxis,
-                  axisLine: !chartCustomization.xAxis.axisLine,
+                polarAngleAxis: {
+                  ...chartCustomization.polarAngleAxis,
+                  axisLine: !chartCustomization.polarAngleAxis.axisLine,
                 },
               });
             }}
@@ -52,13 +52,13 @@ const XAxisCard = ({
           <Text variant="label">Tick Line</Text>
           <Switch
             size="sm"
-            checked={chartCustomization.xAxis.tickLine}
+            checked={chartCustomization.polarAngleAxis.tickLine}
             onCheckedChange={() => {
               setChartCustomization({
                 ...chartCustomization,
-                xAxis: {
-                  ...chartCustomization.xAxis,
-                  tickLine: !chartCustomization.xAxis.tickLine,
+                polarAngleAxis: {
+                  ...chartCustomization.polarAngleAxis,
+                  tickLine: !chartCustomization.polarAngleAxis.tickLine,
                 },
               });
             }}
@@ -69,12 +69,12 @@ const XAxisCard = ({
           <Input
             variant="sm"
             type="text"
-            value={chartCustomization.xAxis.charLength}
+            value={chartCustomization.polarAngleAxis.charLength}
             onChange={(e) =>
               setChartCustomization({
                 ...chartCustomization,
-                xAxis: {
-                  ...chartCustomization.xAxis,
+                polarAngleAxis: {
+                  ...chartCustomization.polarAngleAxis,
                   charLength: Number(e.target.value),
                 },
               })
@@ -87,4 +87,4 @@ const XAxisCard = ({
   );
 };
 
-export default XAxisCard;
+export default PolarAngleAxisCard;

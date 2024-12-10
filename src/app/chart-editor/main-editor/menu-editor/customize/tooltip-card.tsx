@@ -1,4 +1,4 @@
-import { CardProps } from "./props";
+import { CustomizationCardProps } from "@/types";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/custom-ui/input";
 import { Switch } from "@/components/custom-ui/switch";
@@ -16,7 +16,7 @@ import { titleCase } from "@/lib/utils";
 const TooltipCard = ({
   chartCustomization,
   setChartCustomization,
-}: CardProps) => {
+}: CustomizationCardProps) => {
   return (
     <Card>
       <CardHeader>

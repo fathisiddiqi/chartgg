@@ -199,6 +199,18 @@ export interface ChartCustomization {
     axisLine: boolean;
     reversed: boolean;
   };
+  polarAngleAxis: {
+    show: boolean;
+    tickLine: boolean;
+    axisLine: boolean;
+    charLength: number;
+  };
+  polarRadiusAxis: {
+    show: boolean;
+    tickLine: boolean;
+    axisLine: boolean;
+    reversed: boolean;
+  };
   legend: {
     show: boolean;
   };
@@ -215,6 +227,9 @@ export interface ChartCustomization {
     vertical: {
       show: boolean;
     };
+  };
+  polarGrid: {
+    show: boolean;
   };
   dot: {
     show: boolean;
@@ -464,6 +479,18 @@ export const useChartStore = create<ChartState>()((set) => ({
       tickLine: false,
       reversed: false,
     },
+    polarAngleAxis: {
+      show: false,
+      axisLine: false,
+      tickLine: false,
+      charLength: 3,
+    },
+    polarRadiusAxis: {
+      show: false,
+      axisLine: false,
+      tickLine: false,
+      reversed: false,
+    },
     legend: {
       show: true,
     },
@@ -480,6 +507,9 @@ export const useChartStore = create<ChartState>()((set) => ({
       vertical: {
         show: false,
       },
+    },
+    polarGrid: {
+      show: true,
     },
     dot: {
       show: false,

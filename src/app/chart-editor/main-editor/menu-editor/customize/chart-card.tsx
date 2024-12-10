@@ -12,7 +12,7 @@ import {
   RadialChartVariants,
   ScatterChartVariants,
 } from "@/store/chart";
-import { CardProps } from "./props";
+import { CustomizationCardProps } from "@/types";
 import { SelectItem } from "@/components/custom-ui/select";
 import { Text } from "@/components/ui/text";
 import { replaceUnderscoreWithSpace, titleCase } from "@/lib/utils";
@@ -48,7 +48,7 @@ const ChartCard = ({
   setChartCustomization,
   chartType,
   setChartType,
-}: CardProps & {
+}: CustomizationCardProps & {
   chartType: ChartType;
   setChartType: (chartType: ChartType) => void;
 }) => {

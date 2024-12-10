@@ -10,7 +10,14 @@ import useChartColor from "@/hook/use-chart-colors";
 import { replaceSpaceWithUnderscore } from "@/lib/utils";
 import { useChartStore } from "@/store/chart";
 import { useEffect, useState } from "react";
-import { CartesianGrid, Radar, RadarChart } from "recharts";
+import {
+  CartesianGrid,
+  PolarAngleAxis,
+  PolarGrid,
+  PolarRadiusAxis,
+  Radar,
+  RadarChart,
+} from "recharts";
 
 const RadarChartPreview = () => {
   const { chartData, chartCustomization } = useChartStore((state) => state);
@@ -73,6 +80,24 @@ const RadarChartPreview = () => {
               : undefined
           }
         />
+        {chartCustomization.polarAngleAxis.show && (
+          <PolarAngleAxis
+            dataKey="label"
+            tickLine={chartCustomization.polarAngleAxis.tickLine}
+            axisLine={chartCustomization.polarAngleAxis.axisLine}
+            tickFormatter={(value: string) =>
+              value.slice(0, chartCustomization.polarAngleAxis.charLength)
+            }
+          />
+        )}
+        {chartCustomization.polarRadiusAxis.show && (
+          <PolarRadiusAxis
+            axisLine={chartCustomization.polarRadiusAxis.axisLine}
+            tickLine={chartCustomization.polarRadiusAxis.tickLine}
+            reversed={chartCustomization.polarRadiusAxis.reversed}
+          />
+        )}
+        {chartCustomization.polarGrid.show && <PolarGrid />}
         {chartCustomization.legend.show && (
           <>
             {chartKeys.length > 0 &&
@@ -95,7 +120,12 @@ const RadarChartPreview = () => {
             name={key}
             fill={`var(--color-${replaceSpaceWithUnderscore(key)})`}
             radius={4}
-          />
+            fillOpacity={0.5}
+            dot={chartCustomization.dot.show}
+            activeDot={{
+              r: chartCustomization.dot.activeSize,
+            }}
+          ></Radar>
         ))}
       </RadarChart>
     </ChartContainer>

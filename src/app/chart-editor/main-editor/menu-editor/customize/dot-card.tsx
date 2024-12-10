@@ -1,10 +1,10 @@
-import { CardProps } from "./props";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Switch } from "@/components/custom-ui/switch";
 import { Text } from "@/components/ui/text";
 import { Slider } from "@/components/ui/slider";
+import { CustomizationCardProps } from "@/types";
 
-const DotCard = ({ chartCustomization, setChartCustomization }: CardProps) => {
+const DotCard = ({ chartCustomization, setChartCustomization }: CustomizationCardProps) => {
   return (
     <Card>
       <CardHeader>
