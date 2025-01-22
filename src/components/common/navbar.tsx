@@ -4,7 +4,6 @@ import {
   NavigationMenuList,
 } from "../ui/navigation-menu";
 import Link from "next/link";
-import { Button } from "../custom-ui/button";
 import Image from "next/image";
 
 const Navbar = () => {

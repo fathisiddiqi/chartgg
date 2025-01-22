@@ -63,7 +63,7 @@ export const RadialChartVariants: RadialChartVariant[] = ["default", "stacked"];
 export type ScatterChartVariant = "default" | "line";
 export const ScatterChartVariants: ScatterChartVariant[] = ["default", "line"];
 
-export type ChartTheme =
+export type ChartColorPalette =
   | "default"
   | "palette"
   | "shappire"
@@ -72,7 +72,7 @@ export type ChartTheme =
   | "daylight"
   | "midnight";
 
-export const ChartThemes: ChartTheme[] = [
+export const ChartColorPalette: ChartColorPalette[] = [
   "default",
   "palette",
   "shappire",
@@ -147,11 +147,11 @@ export const ChartStrokeStyles: ChartStrokeStyle[] = [
 ];
 
 export interface ChartCustomization {
-  chart: {
-    theme: {
-      type: "light" | "dark";
-      selected: ChartTheme;
+  theme: {
+    palette: {
+      selected: ChartColorPalette;
     };
+    type: "light" | "dark";
   };
   text: {
     title: {
@@ -427,11 +427,11 @@ export const useChartStore = create<ChartState>()((set) => ({
   ],
   setChartData: (data: ChartData[]) => set({ chartData: data }),
   chartCustomization: {
-    chart: {
-      theme: {
-        type: "light",
+    theme: {
+      palette: {
         selected: "default",
       },
+      type: "light",
     },
     text: {
       title: {

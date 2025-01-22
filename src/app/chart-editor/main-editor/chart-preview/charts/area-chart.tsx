@@ -22,7 +22,7 @@ import {
 
 const AreaChartPreview = () => {
   const { chartData, chartCustomization } = useChartStore((state) => state);
-  const chartColors = useChartColor(chartCustomization.chart.theme.selected);
+  const chartColors = useChartColor(chartCustomization.theme.palette.selected);
 
   const [chartKeys, setChartKeys] = useState<string[]>([]);
   const [chartConfig, setChartConfig] = useState<ChartConfig>({});
@@ -53,7 +53,7 @@ const AreaChartPreview = () => {
       }));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chartKeys, chartCustomization.chart.theme.selected]);
+  }, [chartKeys, chartCustomization.theme.palette.selected]);
 
   return (
     <ChartContainer config={chartConfig}>

@@ -1,6 +1,6 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useChartStore } from "@/store/chart";
-import ChartCard from "./customize/chart-card";
+import ChartCard from "./customize/color-palette-card";
 import TextCard from "./customize/text-card";
 import XAxisCard from "./customize/x-axis-card";
 import LabelistCard from "./customize/labelist-card";

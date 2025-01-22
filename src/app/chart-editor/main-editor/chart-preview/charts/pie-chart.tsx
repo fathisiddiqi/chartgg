@@ -15,7 +15,7 @@ import { PieSectorDataItem } from "recharts/types/polar/Pie";
 
 const PieChartPreview = () => {
   const { chartData, chartCustomization } = useChartStore((state) => state);
-  const chartColors = useChartColor(chartCustomization.chart.theme.selected);
+  const chartColors = useChartColor(chartCustomization.theme.palette.selected);
 
   const [chartKeys, setChartKeys] = useState<string[]>([]);
   const [chartConfig, setChartConfig] = useState<ChartConfig>({});
@@ -56,7 +56,7 @@ const PieChartPreview = () => {
       }))
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pieChartKeys, chartCustomization.chart.theme.selected]);
+  }, [pieChartKeys, chartCustomization.theme.palette.selected]);
 
   return (
     <ChartContainer config={chartConfig}>

@@ -14,7 +14,7 @@ import { RadialBar, RadialBarChart } from "recharts";
 
 const RadialChartPreview = () => {
   const { chartData, chartCustomization } = useChartStore((state) => state);
-  const chartColors = useChartColor(chartCustomization.chart.theme.selected);
+  const chartColors = useChartColor(chartCustomization.theme.palette.selected);
 
   const [chartKeys, setChartKeys] = useState<string[]>([]);
   const [chartConfig, setChartConfig] = useState<ChartConfig>({});
@@ -55,7 +55,7 @@ const RadialChartPreview = () => {
       }))
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [radialChartKeys, chartCustomization.chart.theme.selected]);
+  }, [radialChartKeys, chartCustomization.theme.palette.selected]);
 
   return (
     <ChartContainer config={chartConfig}>
