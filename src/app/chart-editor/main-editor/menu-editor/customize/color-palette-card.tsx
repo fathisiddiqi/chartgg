@@ -1,10 +1,9 @@
 import {
   AreaChartVariants,
   BarChartVariants,
+  ChartColorPalette,
   ChartMainType,
   ChartMainVariant,
-  ChartTheme,
-  ChartThemes,
   ChartType,
   LineChartVariants,
   PieChartVariants,
@@ -43,7 +42,7 @@ const ChartVariantSelectItem = ({ chartType }: { chartType: ChartType }) => {
   ));
 };
 
-const ChartCard = ({
+const ColorPaletteCard = ({
   chartCustomization,
   setChartCustomization,
   chartType,
@@ -56,7 +55,7 @@ const ChartCard = ({
     <Card>
       <CardContent className="space-y-2">
         <Text variant="sm" className="font-bold mt-3">
-          Chart
+          Theme
         </Text>
         {/* <div className="flex justify-between items-center">
             <Text variant="label" className="font-medium">
@@ -86,31 +85,31 @@ const ChartCard = ({
         <Accordion type="single" collapsible>
           <AccordionItem value="chart-1">
             <AccordionTrigger>
-              <Text variant="label">Theme</Text>
+              <Text variant="label">Color Palette</Text>
             </AccordionTrigger>
             <AccordionContent className="space-y-4 mb-3 p-3">
               <div className="grid grid-cols-5 gap-4">
-                {ChartThemes.map((theme, index) => (
+                {ChartColorPalette.map((palette, index) => (
                   <div
                     className="cursor-pointer"
                     key={index}
                     onClick={() =>
                       setChartCustomization({
                         ...chartCustomization,
-                        chart: {
-                          ...chartCustomization.chart,
-                          theme: {
-                            ...chartCustomization.chart.theme,
-                            selected: theme,
+                        theme: {
+                          ...chartCustomization.theme,
+                          palette: {
+                            ...chartCustomization.theme.palette,
+                            selected: palette,
                           },
                         },
                       })
                     }
                   >
                     <ThemeIcon
-                      variant={theme as ChartTheme}
+                      variant={palette as ChartColorPalette}
                       isActive={
-                        chartCustomization.chart.theme.selected === theme
+                        chartCustomization.theme.palette.selected === palette
                       }
                     />
                   </div>
@@ -124,4 +123,4 @@ const ChartCard = ({
   );
 };
 
-export default ChartCard;
+export default ColorPaletteCard;
