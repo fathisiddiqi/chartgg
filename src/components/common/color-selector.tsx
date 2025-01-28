@@ -64,8 +64,13 @@ const simpleColors = [
   "#50E3C2",
 ];
 
-export default function ColorSelector() {
-  const [selectedColor, setSelectedColor] = useState("#000000");
+export default function ColorSelector({
+  selectedColor,
+  setSelectedColor,
+}: {
+  selectedColor: string;
+  setSelectedColor: (color: string) => void;
+}) {
   const [isCustom, setIsCustom] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -83,7 +88,7 @@ export default function ColorSelector() {
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
-        <Button variant="outline" className="w-[180px] justify-between">
+        <Button variant="outline" size="sm" className="w-32 justify-between">
           <div className="flex items-center">
             {selectedColor === "none" ? (
               <Ban className="w-4 h-4 mr-2 text-muted-foreground" />
@@ -101,7 +106,6 @@ export default function ColorSelector() {
                 : selectedColor}
             </span>
           </div>
-          <ChevronDown className="h-4 w-4 ml-2" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-64 p-0">

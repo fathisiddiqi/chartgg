@@ -1,4 +1,4 @@
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { useChartStore } from "@/store/chart";
 import ContentCard from "./screenshot/content-card";
 import BackgroundCard from "./screenshot/background-card";
@@ -25,10 +25,8 @@ const Screenshot = () => {
             setChartScreenshot={setChartScreenshot}
           />
         </div>
-
-        {/* Download Card */}
-        <DownloadCard />
       </div>
+      <ScrollBar hidden />
     </ScrollArea>
   );
 };

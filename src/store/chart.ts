@@ -69,8 +69,7 @@ export type ChartColorPalette =
   | "shappire"
   | "ruby"
   | "emerald"
-  | "daylight"
-  | "midnight";
+  | "daylight";
 
 export const ChartColorPalette: ChartColorPalette[] = [
   "default",
@@ -79,7 +78,6 @@ export const ChartColorPalette: ChartColorPalette[] = [
   "ruby",
   "emerald",
   "daylight",
-  "midnight",
 ];
 
 export type ChartTooltipIndicator = "line" | "dot" | "dashed" | "none";
@@ -146,6 +144,13 @@ export const ChartStrokeStyles: ChartStrokeStyle[] = [
   "none",
 ];
 
+export type ChartTextFontFamily = "inter" | "poppins" | "roboto";
+export const ChartTextFontFamilies: ChartTextFontFamily[] = [
+  "inter",
+  "poppins",
+  "roboto",
+];
+
 export interface ChartCustomization {
   theme: {
     palette: {
@@ -155,24 +160,44 @@ export interface ChartCustomization {
   };
   text: {
     title: {
+      show: boolean;
       text: string;
       color: string;
-      align: "left" | "center" | "right";
+      textAlign: "left" | "center" | "right";
+      textDecoration: "none" | "underline";
+      fontFamily: ChartTextFontFamily;
+      fontStyle: "normal" | "italic";
+      fontWeight: "normal" | "bold";
     };
     subtitle: {
+      show: boolean;
       text: string;
       color: string;
-      align: "left" | "center" | "right";
+      textAlign: "left" | "center" | "right";
+      textDecoration: "none" | "underline";
+      fontFamily: ChartTextFontFamily;
+      fontStyle: "normal" | "italic";
+      fontWeight: "normal" | "bold";
     };
     footerTitle: {
+      show: boolean;
       text: string;
       color: string;
-      align: "left" | "center" | "right";
+      textAlign: "left" | "center" | "right";
+      textDecoration: "none" | "underline";
+      fontFamily: ChartTextFontFamily;
+      fontStyle: "bold" | "normal" | "italic" | "oblique";
+      fontWeight: "normal" | "bold";
     };
     footerSubtitle: {
+      show: boolean;
       text: string;
       color: string;
-      align: "left" | "center" | "right";
+      textAlign: "left" | "center" | "right";
+      textDecoration: "none" | "underline";
+      fontFamily: ChartTextFontFamily;
+      fontStyle: "bold" | "normal" | "italic" | "oblique";
+      fontWeight: "normal" | "bold";
     };
   };
   labelist: {
@@ -435,24 +460,44 @@ export const useChartStore = create<ChartState>()((set) => ({
     },
     text: {
       title: {
+        show: true,
         text: "Report Title",
         color: "#000000",
-        align: "left",
+        textAlign: "left",
+        textDecoration: "none",
+        fontFamily: "inter",
+        fontStyle: "normal",
+        fontWeight: "bold",
       },
       subtitle: {
+        show: true,
         text: "20 June - 12 August 2024",
         color: "#000000",
-        align: "left",
+        textAlign: "left",
+        textDecoration: "none",
+        fontFamily: "inter",
+        fontStyle: "normal",
+        fontWeight: "normal",
       },
       footerTitle: {
+        show: true,
         text: "Trending up 20% since last month",
         color: "#000000",
-        align: "left",
+        textAlign: "left",
+        textDecoration: "none",
+        fontFamily: "inter",
+        fontStyle: "normal",
+        fontWeight: "normal",
       },
       footerSubtitle: {
+        show: true,
         text: "Showing total visitors for the last 6 months",
         color: "#000000",
-        align: "left",
+        textAlign: "left",
+        textDecoration: "none",
+        fontFamily: "inter",
+        fontStyle: "normal",
+        fontWeight: "normal",
       },
     },
     labelist: {
