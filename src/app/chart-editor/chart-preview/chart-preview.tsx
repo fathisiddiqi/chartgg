@@ -16,7 +16,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import ChooseChart from "../menu-editor/chart";
+import ChooseChart from "../editor/chart/chart";
 import { useState } from "react";
 import { Text } from "@/components/ui/text";
 import BarChartPreview from "./charts/bar-chart";

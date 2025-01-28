@@ -1,8 +1,8 @@
 import { Separator } from "@/components/ui/separator";
 import { useChartStore } from "@/store/chart";
-import ColorPaletteCard from "./chart/color-palette-card";
-import ChooseChartType from "./chart/choose-chart-type";
-import TextCard from "./chart/text-card";
+import ColorPaletteCard from "./color-palette-card";
+import ChooseChartType from "./choose-chart-type";
+import TextCard from "./text-card";
 import { ScrollArea, ScrollBar } from "@/components/custom-ui/scroll-area";
 
 const Chart = () => {

@@ -1,8 +1,7 @@
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { useChartStore } from "@/store/chart";
-import ContentCard from "./screenshot/content-card";
-import BackgroundCard from "./screenshot/background-card";
-import DownloadCard from "./screenshot/download-card";
+import ContentCard from "./content-card";
+import BackgroundCard from "./background-card";
 
 const Screenshot = () => {
   const { setChartScreenshot, chartScreenshot } = useChartStore(

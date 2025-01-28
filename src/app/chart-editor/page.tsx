@@ -3,12 +3,19 @@
 import Link from "next/link";
 import MainEditor from "./main-editor/main-editor";
 import Image from "next/image";
+import Editor from "./editor/editor";
+import ChartPreview from "./chart-preview/chart-preview";
 
 export default function ChartEditor() {
   return (
     <main className="flex h-screen flex-col w-full">
       <Navbar />
-      <MainEditor />
+      <div className="flex flex-row gap-4 p-4">
+        <Editor />
+        <div className="w-full">
+          <ChartPreview />
+        </div>
+      </div>
     </main>
   );
 }

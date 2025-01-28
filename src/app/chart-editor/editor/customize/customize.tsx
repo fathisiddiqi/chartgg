@@ -1,17 +1,17 @@
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { useChartStore } from "@/store/chart";
-import TextCard from "./chart/text-card";
-import XAxisCard from "./customize/x-axis-card";
-import LabelistCard from "./customize/labelist-card";
-import LegendCard from "./customize/legend-card";
-import TooltipCard from "./customize/tooltip-card";
-import GridCard from "./customize/grid-card";
-import YAxisCard from "./customize/y-axis-card";
-import DotCard from "./customize/dot-card";
-import ActiveCard from "./customize/active-card";
-import PolarGridCard from "./customize/polar-grid-card";
-import PolarRadiusAxisCard from "./customize/polar-radius-axis-card";
-import PolarAngleAxisCard from "./customize/polar-angle-axis-card";
+import TextCard from "../chart/text-card";
+import XAxisCard from "./x-axis-card";
+import LabelistCard from "./labelist-card";
+import LegendCard from "./legend-card";
+import TooltipCard from "./tooltip-card";
+import GridCard from "./grid-card";
+import YAxisCard from "./y-axis-card";
+import DotCard from "./dot-card";
+import ActiveCard from "./active-card";
+import PolarGridCard from "./polar-grid-card";
+import PolarRadiusAxisCard from "./polar-radius-axis-card";
+import PolarAngleAxisCard from "./polar-angle-axis-card";
 
 const Customize = () => {
   const { chartCustomization, setChartCustomization } = useChartStore(
