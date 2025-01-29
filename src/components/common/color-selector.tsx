@@ -9,6 +9,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
 
 const colorGroups = [
   [
@@ -67,9 +68,13 @@ const simpleColors = [
 export default function ColorSelector({
   selectedColor,
   setSelectedColor,
+  triggerClassName,
+  disabled,
 }: {
   selectedColor: string;
   setSelectedColor: (color: string) => void;
+  triggerClassName?: string;
+  disabled?: boolean;
 }) {
   const [isCustom, setIsCustom] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -88,7 +93,12 @@ export default function ColorSelector({
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
-        <Button variant="outline" size="sm" className="w-32 justify-between">
+        <Button
+          variant="outline"
+          size="sm"
+          className={cn("w-32 justify-between", triggerClassName)}
+          disabled={disabled}
+        >
           <div className="flex items-center">
             {selectedColor === "none" ? (
               <Ban className="w-4 h-4 mr-2 text-muted-foreground" />

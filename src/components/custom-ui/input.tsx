@@ -23,12 +23,65 @@ export interface InputProps
     VariantProps<typeof inputVariants> {}
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, variant, type, ...props }, ref) => {
+  ({ className, variant, type, max, onChange, onKeyDown, ...props }, ref) => {
+    const handleKeyDownNumber = (e: React.KeyboardEvent<HTMLInputElement>) => {
+      // Allow: backspace, delete, tab, escape, enter, arrows
+      if (
+        [
+          "Backspace",
+          "Delete",
+          "Tab",
+          "Escape",
+          "Enter",
+          "ArrowLeft",
+          "ArrowRight",
+        ].includes(e.key)
+      ) {
+        return;
+      }
+
+      // Prevent non-numeric characters
+      if (!/[0-9]/.test(e.key)) {
+        e.preventDefault();
+      }
+
+      // Call any existing onKeyDown handler
+      if (onKeyDown) {
+        onKeyDown(e);
+      }
+    };
+
+    const handleChangeNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
+      // Sanitize value by removing non-numeric characters
+      const sanitizedValue = e.target.value.replace(/[^0-9]/g, "");
+
+      if (max && Number(sanitizedValue) > Number(max)) {
+        return;
+      }
+
+      // Create a new event with sanitized value
+      const sanitizedEvent = {
+        ...e,
+        target: {
+          ...e.target,
+          value: sanitizedValue,
+        },
+      };
+
+      // Call any existing onChange handler
+      if (onChange) {
+        onChange(sanitizedEvent as React.ChangeEvent<HTMLInputElement>);
+      }
+    };
+
     return (
       <input
-        type={type}
+        type={type === "number" ? "text" : type}
         className={cn(inputVariants({ variant, className }))}
         ref={ref}
+        onKeyDown={type === "number" ? handleKeyDownNumber : undefined}
+        onChange={type === "number" ? handleChangeNumber : undefined}
+        inputMode="numeric"
         {...props}
       />
     );

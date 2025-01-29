@@ -8,33 +8,26 @@ const LegendCard = ({
   setChartCustomization,
 }: CustomizationCardProps) => {
   return (
-    <Card>
-      <CardHeader>
+    <div className="space-y-2">
+      <div className="flex justify-between">
         <Text variant="sm" className="font-bold">
           Legend
         </Text>
-      </CardHeader>
-      <CardContent>
-        <div className="flex justify-between">
-          <Text variant="label" className="font-medium">
-            Show
-          </Text>
-          <Switch
-            size="sm"
-            checked={chartCustomization.legend.show}
-            onCheckedChange={() =>
-              setChartCustomization({
-                ...chartCustomization,
-                legend: {
-                  ...chartCustomization.legend,
-                  show: !chartCustomization.legend.show,
-                },
-              })
-            }
-          />
-        </div>
-      </CardContent>
-    </Card>
+        <Switch
+          size="sm"
+          checked={chartCustomization.legend.show}
+          onCheckedChange={() =>
+            setChartCustomization({
+              ...chartCustomization,
+              legend: {
+                ...chartCustomization.legend,
+                show: !chartCustomization.legend.show,
+              },
+            })
+          }
+        />
+      </div>
+    </div>
   );
 };
 

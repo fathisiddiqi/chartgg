@@ -1,9 +1,7 @@
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { CustomizationCardProps } from "@/types";
 import { Text } from "@/components/ui/text";
 import { Switch } from "@/components/custom-ui/switch";
 import { Input } from "@/components/custom-ui/input";
-import { ColorInput } from "@/components/custom-ui/color-input";
 import {
   Select,
   SelectContent,
@@ -11,80 +9,99 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/custom-ui/select";
-import { ChartStrokeStyle, ChartStrokeStyles } from "@/store/chart";
+import { ChartData, ChartStrokeStyle, ChartStrokeStyles } from "@/store/chart";
 import { titleCase } from "@/lib/utils";
 import { Slider } from "@/components/ui/slider";
+import ColorSelector from "@/components/common/color-selector";
+
 const ActiveCard = ({
   chartCustomization,
   setChartCustomization,
-}: CustomizationCardProps) => {
+  chartData,
+}: CustomizationCardProps & { chartData: ChartData[] }) => {
   return (
-    <Card>
-      <CardHeader>
+    <div className="space-y-2">
+      <div className="flex justify-between items-center">
         <Text variant="sm" className="font-bold">
           Active
         </Text>
-      </CardHeader>
-      <CardContent className="space-y-2">
-        <div className="flex justify-between items-center">
-          <Text variant="label">Show</Text>
-          <Switch
-            size="sm"
-            checked={chartCustomization.active.show}
-            onCheckedChange={() =>
+        <Switch
+          size="sm"
+          checked={chartCustomization.active.show}
+          onCheckedChange={() =>
+            setChartCustomization({
+              ...chartCustomization,
+              active: {
+                ...chartCustomization.active,
+                show: !chartCustomization.active.show,
+              },
+            })
+          }
+        />
+      </div>
+      <div className="flex flex-col">
+        <Text variant="label">Index</Text>
+        <div className="flex">
+          <Slider
+            value={[chartCustomization.active.index + 1]}
+            min={0}
+            max={Number(chartData.length - 1)}
+            step={1}
+            onValueChange={(value) =>
               setChartCustomization({
                 ...chartCustomization,
                 active: {
                   ...chartCustomization.active,
-                  show: !chartCustomization.active.show,
+                  index: value[0] - 1,
                 },
               })
             }
+            className="flex-1"
+            disabled={!chartCustomization.active.show}
           />
-        </div>
-        <div className="flex justify-between items-center">
-          <Text variant="label">Active Index</Text>
           <Input
             variant="sm"
-            type="text"
-            value={chartCustomization.active.index}
-            onChange={(e) =>
+            type="number"
+            value={chartCustomization.active.index + 1}
+            onChange={(e) => {
               setChartCustomization({
                 ...chartCustomization,
                 active: {
                   ...chartCustomization.active,
-                  index: Number(e.target.value),
+                  index: Number(e.target.value) - 1,
                 },
-              })
-            }
-            className="flex-1 bg-white text-gray-900 border-gray-300 max-w-[2.5rem] p-1 text-center"
+              });
+            }}
+            max={10}
+            className="ml-2 w-10 p-0 text-center"
+            disabled={!chartCustomization.active.show}
           />
         </div>
-        <div className="flex justify-between items-center">
-          <Text variant="label">Fill Color</Text>
-          <ColorInput
-            variant="sm"
-            value={chartCustomization.active.fill}
-            onChange={(e) =>
-              setChartCustomization({
-                ...chartCustomization,
-                active: {
-                  ...chartCustomization.active,
-                  fill: e.target.value,
-                },
-              })
-            }
-          />
-        </div>
-        <div className="flex justify-between items-center">
-          <Text variant="label" className="font-medium">
-            Fill Opacity
-          </Text>
+      </div>
+      <div className="flex justify-between items-center">
+        <Text variant="label">Fill Color</Text>
+        <ColorSelector
+          selectedColor={chartCustomization.active.fill}
+          setSelectedColor={(color) =>
+            setChartCustomization({
+              ...chartCustomization,
+              active: {
+                ...chartCustomization.active,
+                fill: color,
+              },
+            })
+          }
+          triggerClassName="w-28"
+          disabled={!chartCustomization.active.show}
+        />
+      </div>
+      <div className="flex flex-col">
+        <Text variant="label">Fill Opacity</Text>
+        <div className="flex">
           <Slider
-            defaultValue={[chartCustomization.active.fillOpacity]}
+            value={[chartCustomization.active.fillOpacity]}
             max={1}
             step={0.1}
-            className="w-1/3"
             onValueChange={(value) =>
               setChartCustomization({
                 ...chartCustomization,
@@ -94,61 +111,95 @@ const ActiveCard = ({
                 },
               })
             }
+            className="flex-1"
+            disabled={!chartCustomization.active.show}
           />
-        </div>
-        <div className="flex justify-between items-center">
-          <Text variant="label" className="font-medium">
-            Stroke Style
-          </Text>
-          <Select
-            value={chartCustomization.active.strokeStyle}
-            onValueChange={(e) =>
+          <Input
+            variant="sm"
+            type="number"
+            value={chartCustomization.active.fillOpacity}
+            onChange={(e) => {
               setChartCustomization({
                 ...chartCustomization,
                 active: {
                   ...chartCustomization.active,
-                  strokeStyle: e as ChartStrokeStyle,
+                  fillOpacity: Number(e.target.value),
                 },
-              })
-            }
-          >
-            <SelectTrigger variant="sm" className="w-[8rem]">
-              <SelectValue>
-                <Text variant="sm">
-                  {titleCase(chartCustomization.active.strokeStyle)}
-                </Text>
-              </SelectValue>
-            </SelectTrigger>
-            <SelectContent>
-              {ChartStrokeStyles.map((style) => (
-                <SelectItem
-                  key={style}
-                  value={style}
-                  onClick={() =>
-                    setChartCustomization({
-                      ...chartCustomization,
-                      active: {
-                        ...chartCustomization.active,
-                        strokeStyle: style,
-                      },
-                    })
-                  }
-                >
-                  <Text variant="sm">{titleCase(style)}</Text>
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+              });
+            }}
+            max={1}
+            className="ml-2 w-10 p-0 text-center"
+            disabled={!chartCustomization.active.show}
+          />
         </div>
-        <div className="flex justify-between items-center">
-          <Text variant="label" className="font-medium">
-            Stroke Opacity
-          </Text>
+      </div>
+      <div className="flex flex-col space-y-2">
+        <Text variant="label">Stroke Style</Text>
+        <Select
+          value={chartCustomization.active.strokeStyle}
+          onValueChange={(e) =>
+            setChartCustomization({
+              ...chartCustomization,
+              active: {
+                ...chartCustomization.active,
+                strokeStyle: e as ChartStrokeStyle,
+              },
+            })
+          }
+          disabled={!chartCustomization.active.show}
+        >
+          <SelectTrigger variant="sm" className="w-full">
+            <SelectValue>
+              <Text variant="xs">
+                {titleCase(chartCustomization.active.strokeStyle)}
+              </Text>
+            </SelectValue>
+          </SelectTrigger>
+          <SelectContent>
+            {ChartStrokeStyles.map((style) => (
+              <SelectItem
+                key={style}
+                value={style}
+                onClick={() =>
+                  setChartCustomization({
+                    ...chartCustomization,
+                    active: {
+                      ...chartCustomization.active,
+                      strokeStyle: style,
+                    },
+                  })
+                }
+              >
+                <Text variant="xs">{titleCase(style)}</Text>
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+      <div className="flex justify-between items-center">
+        <Text variant="label">Stroke Color</Text>
+        <ColorSelector
+          selectedColor={chartCustomization.active.strokeColor}
+          setSelectedColor={(color) =>
+            setChartCustomization({
+              ...chartCustomization,
+              active: {
+                ...chartCustomization.active,
+                strokeColor: color,
+              },
+            })
+          }
+          triggerClassName="w-28"
+          disabled={!chartCustomization.active.show}
+        />
+      </div>
+      <div className="flex flex-col">
+        <Text variant="label">Stroke Opacity</Text>
+        <div className="flex">
           <Slider
-            defaultValue={[chartCustomization.active.strokeOpacity]}
+            value={[chartCustomization.active.strokeOpacity]}
             max={1}
             step={0.1}
-            className="w-1/3"
             onValueChange={(value) =>
               setChartCustomization({
                 ...chartCustomization,
@@ -158,17 +209,36 @@ const ActiveCard = ({
                 },
               })
             }
+            className="flex-1"
+            disabled={!chartCustomization.active.show}
+          />
+          <Input
+            variant="sm"
+            type="number"
+            value={chartCustomization.active.strokeOpacity}
+            onChange={(e) => {
+              setChartCustomization({
+                ...chartCustomization,
+                active: {
+                  ...chartCustomization.active,
+                  strokeOpacity: Number(e.target.value),
+                },
+              });
+            }}
+            max={1}
+            className="ml-2 w-10 p-0 text-center"
+            disabled={!chartCustomization.active.show}
           />
         </div>
-        <div className="flex justify-between items-center">
-          <Text variant="label" className="font-medium">
-            Stroke Width
-          </Text>
+      </div>
+      <div className="flex flex-col">
+        <Text variant="label">Stroke Width</Text>
+        <div className="flex">
           <Slider
-            defaultValue={[chartCustomization.active.strokeWidth]}
+            value={[chartCustomization.active.strokeWidth]}
+            min={0}
             max={10}
             step={1}
-            className="w-1/3"
             onValueChange={(value) =>
               setChartCustomization({
                 ...chartCustomization,
@@ -178,26 +248,29 @@ const ActiveCard = ({
                 },
               })
             }
+            className="flex-1"
+            disabled={!chartCustomization.active.show}
           />
-        </div>
-        <div className="flex justify-between items-center">
-          <Text variant="label">Stroke Color</Text>
-          <ColorInput
+          <Input
             variant="sm"
-            value={chartCustomization.active.strokeColor}
-            onChange={(e) =>
+            type="number"
+            value={chartCustomization.active.strokeWidth}
+            onChange={(e) => {
               setChartCustomization({
                 ...chartCustomization,
                 active: {
                   ...chartCustomization.active,
-                  strokeColor: e.target.value,
+                  strokeWidth: Number(e.target.value),
                 },
-              })
-            }
+              });
+            }}
+            max={10}
+            className="ml-2 w-10 p-0 text-center"
+            disabled={!chartCustomization.active.show}
           />
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 

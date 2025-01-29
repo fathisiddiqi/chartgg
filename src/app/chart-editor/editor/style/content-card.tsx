@@ -10,12 +10,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Slider } from "@/components/ui/slider";
 import { Text } from "@/components/ui/text";
 import { ChartFrames, ChartShadowStyles } from "@/store/chart";
-import { ScreenshotCardProps } from "@/types";
+import { StyleCardProps } from "@/types";
 
-const ContentCard = ({
-  chartScreenshot,
-  setChartScreenshot,
-}: ScreenshotCardProps) => {
+const ContentCard = ({ chartStyle, setChartStyle }: StyleCardProps) => {
   return (
     <Card>
       <CardContent className="space-y-3">
@@ -33,16 +30,16 @@ const ContentCard = ({
                   <div
                     key={frame}
                     onClick={() =>
-                      setChartScreenshot({
-                        ...chartScreenshot,
+                      setChartStyle({
+                        ...chartStyle,
                         content: {
-                          ...chartScreenshot.content,
+                          ...chartStyle.content,
                           frame: frame,
                         },
                       })
                     }
                     className={
-                      chartScreenshot.content.frame === frame
+                      chartStyle.content.frame === frame
                         ? `cursor-pointer border border-black rounded-md w-36 h-32 flex items-center justify-center`
                         : `cursor-pointer w-36 h-32 flex items-center justify-center`
                     }
@@ -62,14 +59,14 @@ const ContentCard = ({
             Scale
           </Text>
           <Slider
-            defaultValue={[chartScreenshot.content.scale]}
+            defaultValue={[chartStyle.content.scale]}
             max={150}
             step={1}
             className="w-1/3"
             onValueChange={(value) =>
-              setChartScreenshot({
-                ...chartScreenshot,
-                content: { ...chartScreenshot.content, scale: value[0] },
+              setChartStyle({
+                ...chartStyle,
+                content: { ...chartStyle.content, scale: value[0] },
               })
             }
           />
@@ -79,14 +76,14 @@ const ContentCard = ({
             Rotate
           </Text>
           <Slider
-            defaultValue={[chartScreenshot.content.rotate]}
+            defaultValue={[chartStyle.content.rotate]}
             max={360}
             step={1}
             className="w-1/3"
             onValueChange={(value) =>
-              setChartScreenshot({
-                ...chartScreenshot,
-                content: { ...chartScreenshot.content, rotate: value[0] },
+              setChartStyle({
+                ...chartStyle,
+                content: { ...chartStyle.content, rotate: value[0] },
               })
             }
           />
@@ -98,14 +95,14 @@ const ContentCard = ({
           <div className="flex items-center space-x-2">
             <ColorInput
               variant="sm"
-              value={chartScreenshot.content.background.color}
+              value={chartStyle.content.background.color}
               onChange={(e) =>
-                setChartScreenshot({
-                  ...chartScreenshot,
+                setChartStyle({
+                  ...chartStyle,
                   content: {
-                    ...chartScreenshot.content,
+                    ...chartStyle.content,
                     background: {
-                      ...chartScreenshot.content.background,
+                      ...chartStyle.content.background,
                       color: e.target.value,
                     },
                   },
@@ -120,15 +117,15 @@ const ContentCard = ({
             Width
           </Text>
           <Slider
-            defaultValue={[chartScreenshot.content.width]}
+            defaultValue={[chartStyle.content.width]}
             max={600}
             min={300}
             step={100}
             className="w-1/3"
             onValueChange={(value) =>
-              setChartScreenshot({
-                ...chartScreenshot,
-                content: { ...chartScreenshot.content, width: value[0] },
+              setChartStyle({
+                ...chartStyle,
+                content: { ...chartStyle.content, width: value[0] },
               })
             }
           />
@@ -143,18 +140,18 @@ const ContentCard = ({
               <div className="flex justify-between items-center">
                 <Text variant="xs">Width</Text>
                 <Slider
-                  defaultValue={[chartScreenshot.content.border.width]}
+                  defaultValue={[chartStyle.content.border.width]}
                   max={15}
                   min={1}
                   step={1}
                   className="w-1/3"
                   onValueChange={(value) =>
-                    setChartScreenshot({
-                      ...chartScreenshot,
+                    setChartStyle({
+                      ...chartStyle,
                       content: {
-                        ...chartScreenshot.content,
+                        ...chartStyle.content,
                         border: {
-                          ...chartScreenshot.content.border,
+                          ...chartStyle.content.border,
                           width: value[0],
                         },
                       },
@@ -165,19 +162,19 @@ const ContentCard = ({
               <div className="flex justify-between items-center">
                 <Text variant="xs">Radius</Text>
                 <Slider
-                  defaultValue={[chartScreenshot.content.border.radius]}
+                  defaultValue={[chartStyle.content.border.radius]}
                   max={30}
                   min={1}
                   step={1}
                   className="w-1/3"
                   onValueChange={(value) =>
-                    setChartScreenshot({
-                      ...chartScreenshot,
+                    setChartStyle({
+                      ...chartStyle,
                       content: {
-                        ...chartScreenshot.content,
+                        ...chartStyle.content,
                         border: {
-                          ...chartScreenshot.content.border,
-                          width: value[0],
+                          ...chartStyle.content.border,
+                          radius: value[0],
                         },
                       },
                     })
@@ -189,14 +186,14 @@ const ContentCard = ({
                 <div className="flex items-center space-x-2">
                   <ColorInput
                     variant="sm"
-                    value={chartScreenshot.content.border.color}
+                    value={chartStyle.content.border.color}
                     onChange={(e) =>
-                      setChartScreenshot({
-                        ...chartScreenshot,
+                      setChartStyle({
+                        ...chartStyle,
                         content: {
-                          ...chartScreenshot.content,
+                          ...chartStyle.content,
                           border: {
-                            ...chartScreenshot.content.border,
+                            ...chartStyle.content.border,
                             color: e.target.value,
                           },
                         },
@@ -220,15 +217,15 @@ const ContentCard = ({
                   <div
                     key={id}
                     className={
-                      chartScreenshot.content.shadow === property
+                      chartStyle.content.shadow === property
                         ? `w-12 h-12 bg-white ${className} rounded-lg flex justify-center items-center cursor-pointer border border-black`
                         : `w-12 h-12 bg-white ${className} rounded-lg flex justify-center items-center cursor-pointer`
                     }
                     onClick={() =>
-                      setChartScreenshot({
-                        ...chartScreenshot,
+                      setChartStyle({
+                        ...chartStyle,
                         content: {
-                          ...chartScreenshot.content,
+                          ...chartStyle.content,
                           shadow: property,
                         },
                       })

@@ -381,7 +381,7 @@ export const ChartFrames: ChartFrame[] = [
   // "chrome_dark",
 ];
 
-export interface ChartScreenshot {
+export interface ChartStyle {
   content: {
     frame: ChartFrame;
     scale: number;
@@ -423,8 +423,8 @@ interface ChartState {
   setChartData: (data: ChartData[]) => void;
   chartCustomization: ChartCustomization;
   setChartCustomization: (customization: ChartCustomization) => void;
-  chartScreenshot: ChartScreenshot;
-  setChartScreenshot: (screenshot: ChartScreenshot) => void;
+  chartStyle: ChartStyle;
+  setChartStyle: (style: ChartStyle) => void;
 }
 
 export const useChartStore = create<ChartState>()((set) => ({
@@ -563,17 +563,17 @@ export const useChartStore = create<ChartState>()((set) => ({
     active: {
       show: false,
       index: 0,
-      fill: "#000",
+      fill: "#000000",
       fillOpacity: 0.5,
       strokeStyle: "solid",
-      strokeColor: "#ffffff",
+      strokeColor: "#000000",
       strokeOpacity: 1,
       strokeWidth: 2,
     },
   },
   setChartCustomization: (customization: ChartCustomization) =>
     set({ chartCustomization: customization }),
-  chartScreenshot: {
+  chartStyle: {
     content: {
       frame: "none",
       scale: 100,
@@ -601,6 +601,5 @@ export const useChartStore = create<ChartState>()((set) => ({
       },
     },
   },
-  setChartScreenshot: (screenshot: ChartScreenshot) =>
-    set({ chartScreenshot: screenshot }),
+  setChartStyle: (style: ChartStyle) => set({ chartStyle: style }),
 }));

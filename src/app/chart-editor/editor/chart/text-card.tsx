@@ -13,11 +13,6 @@ import {
 import ColorSelector from "@/components/common/color-selector";
 import { titleCase } from "@/lib/utils";
 import { ChartTextFontFamilies, ChartTextFontFamily } from "@/store/chart";
-import {
-  ToggleGroup,
-  ToggleGroupItem,
-} from "@/components/custom-ui/toggle-group";
-import { Bold, Italic, Underline } from "lucide-react";
 import FontStyle from "@/components/common/font-style";
 
 const TextCard = ({
@@ -296,11 +291,14 @@ const TextCard = ({
               }
             >
               <SelectTrigger variant="sm">
-                {titleCase(chartCustomization.text.title.fontFamily)}
+                <Text variant="xs">
+                  {titleCase(chartCustomization.text.title.fontFamily)}
+                </Text>
               </SelectTrigger>
               <SelectContent>
-                {ChartTextFontFamilies.map((fontFamily) => (
+                {ChartTextFontFamilies.map((fontFamily, index) => (
                   <SelectItem
+                    key={index}
                     value={fontFamily}
                     onClick={() =>
                       setChartCustomization({
@@ -327,7 +325,7 @@ const TextCard = ({
                       })
                     }
                   >
-                    {titleCase(fontFamily)}
+                    <Text variant="xs">{titleCase(fontFamily)}</Text>
                   </SelectItem>
                 ))}
               </SelectContent>

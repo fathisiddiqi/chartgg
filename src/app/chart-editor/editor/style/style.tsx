@@ -4,27 +4,15 @@ import ContentCard from "./content-card";
 import BackgroundCard from "./background-card";
 
 const Screenshot = () => {
-  const { setChartScreenshot, chartScreenshot } = useChartStore(
-    (state) => state
-  );
+  const { setChartStyle, chartStyle } = useChartStore((state) => state);
 
   return (
-    <ScrollArea className="h-[calc(100vh-120px)]">
-      <div className="p-4 space-y-4 justify-between">
-        <div className="space-y-4">
-          {/* General Card */}
-          <ContentCard
-            chartScreenshot={chartScreenshot}
-            setChartScreenshot={setChartScreenshot}
-          />
+    <ScrollArea className="h-[calc(100vh-130px)]">
+      {/* General Card */}
+      <ContentCard chartStyle={chartStyle} setChartStyle={setChartStyle} />
 
-          {/* Background Card */}
-          <BackgroundCard
-            chartScreenshot={chartScreenshot}
-            setChartScreenshot={setChartScreenshot}
-          />
-        </div>
-      </div>
+      {/* Background Card */}
+      <BackgroundCard chartStyle={chartStyle} setChartStyle={setChartStyle} />
       <ScrollBar hidden />
     </ScrollArea>
   );

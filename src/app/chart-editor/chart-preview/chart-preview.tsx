@@ -6,19 +6,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { ChartMainType, ChartType, useChartStore } from "@/store/chart";
-import { ArrowDown, icons } from "lucide-react";
-import { cn, hexToRGB, titleCase } from "@/lib/utils";
+import { ChartMainType, useChartStore } from "@/store/chart";
+import { icons } from "lucide-react";
+import { cn, hexToRGB } from "@/lib/utils";
 import { Input } from "@/components/custom-ui/input";
 import ChartFrame from "@/components/common/chart-frame";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import ChooseChart from "../editor/chart/chart";
-import { useState } from "react";
-import { Text } from "@/components/ui/text";
 import BarChartPreview from "./charts/bar-chart";
 import LineChartPreview from "./charts/line-chart";
 import PieChartPreview from "./charts/pie-chart";
@@ -28,7 +20,7 @@ import RadialChartPreview from "./charts/radial-chart";
 import ScatterChartPreview from "./charts/scatter-chart";
 
 const ChartPreview = () => {
-  const { chartType, chartScreenshot, chartCustomization } = useChartStore(
+  const { chartType, chartStyle, chartCustomization } = useChartStore(
     (state) => state
   );
 
@@ -38,32 +30,32 @@ const ChartPreview = () => {
         style={{
           objectFit: "contain",
           backgroundColor: `rgba(${hexToRGB(
-            chartScreenshot.canvas.background.color
-          )}, ${chartScreenshot.canvas.background.opacity})`,
-          borderRadius: chartScreenshot.canvas.border.radius,
+            chartStyle.canvas.background.color
+          )}, ${chartStyle.canvas.background.opacity})`,
+          borderRadius: chartStyle.canvas.border.radius,
         }}
         className="flex items-center justify-center mx-auto scale-50"
       >
         {/* Chart Container */}
         <div
           style={{
-            transform: `scale(${chartScreenshot.content.scale / 60}) rotate(${
-              chartScreenshot.content.rotate
+            transform: `scale(${chartStyle.content.scale / 60}) rotate(${
+              chartStyle.content.rotate
             }deg)`,
-            boxShadow: chartScreenshot.content.shadow,
+            boxShadow: chartStyle.content.shadow,
             padding: 0,
           }}
         >
           {/* Chart Frame */}
-          <ChartFrame frame={chartScreenshot.content.frame}>
+          <ChartFrame frame={chartStyle.content.frame}>
             {/* Chart Content */}
             <Card
               style={{
-                backgroundColor: chartScreenshot.content.background.color,
-                borderColor: chartScreenshot.content.border.color,
-                borderRadius: chartScreenshot.content.border.radius,
-                borderWidth: chartScreenshot.content.border.width,
-                width: chartScreenshot.content.width,
+                backgroundColor: chartStyle.content.background.color,
+                borderColor: chartStyle.content.border.color,
+                borderRadius: chartStyle.content.border.radius,
+                borderWidth: chartStyle.content.border.width,
+                width: chartStyle.content.width,
               }}
               className="shadow-none"
             >
@@ -190,7 +182,7 @@ const FooterTitleIcon = ({ iconInStr }: { iconInStr: string }) => {
 };
 
 const ActionMenu = () => {
-  const { chartScreenshot } = useChartStore((state) => state);
+  const { chartStyle } = useChartStore((state) => state);
 
   return (
     <div className="w-full flex justify-between gap-2 absolute top-4 left-4 right-10 z-10">
@@ -199,13 +191,13 @@ const ActionMenu = () => {
           <Input
             variant="sm"
             type="numeric"
-            value={chartScreenshot.canvas.width || ""}
+            value={chartStyle.canvas.width || ""}
             onChange={(e) =>
               useChartStore.setState({
-                chartScreenshot: {
-                  ...chartScreenshot,
+                chartStyle: {
+                  ...chartStyle,
                   canvas: {
-                    ...chartScreenshot.canvas,
+                    ...chartStyle.canvas,
                     width: parseInt(e.target.value),
                   },
                 },
@@ -220,13 +212,13 @@ const ActionMenu = () => {
           <Input
             variant="sm"
             type="numeric"
-            value={chartScreenshot.canvas.height}
+            value={chartStyle.canvas.height}
             onChange={(e) =>
               useChartStore.setState({
-                chartScreenshot: {
-                  ...chartScreenshot,
+                chartStyle: {
+                  ...chartStyle,
                   canvas: {
-                    ...chartScreenshot.canvas,
+                    ...chartStyle.canvas,
                     height: parseInt(e.target.value),
                   },
                 },
