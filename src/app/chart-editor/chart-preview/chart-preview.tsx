@@ -19,6 +19,8 @@ import RadarChartPreview from "./charts/radar-chart";
 import RadialChartPreview from "./charts/radial-chart";
 import ScatterChartPreview from "./charts/scatter-chart";
 import useChartTheme from "@/hook/use-chart-theme";
+import { Text } from "@/components/ui/text";
+import Image from "next/image";
 
 const ChartPreview = () => {
   const { chartType, chartStyle, chartCustomization } = useChartStore(
@@ -36,6 +38,16 @@ const ChartPreview = () => {
         borderRadius: chartStyle.canvas.border.radius,
       }}
     >
+      <div className="absolute bottom-10 rounded-md bg-white/50 p-2 shadow-md z-10 opacity-70">
+        <div className="flex gap-2 items-center">
+          <Text variant="sm">made with</Text>
+          <Image src="/logo.svg" alt="logo" width={14} height={14} />
+          <Text variant="sm" className="font-bold">
+            ChartSS
+          </Text>
+        </div>
+        <Text variant="sm"></Text>
+      </div>
       <div
         style={{
           objectFit: "contain",
