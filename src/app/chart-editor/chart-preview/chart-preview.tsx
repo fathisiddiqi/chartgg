@@ -62,11 +62,13 @@ const ChartPreview = () => {
             }deg)`,
             boxShadow: chartStyle.content.shadow,
             padding: 0,
-            width: chartStyle.content.width,
           }}
         >
           {/* Chart Frame */}
-          <ChartFrame frame={chartStyle.content.frame}>
+          <ChartFrame
+            frame={chartStyle.content.frame}
+            width={chartStyle.content.width}
+          >
             {/* Chart Content */}
             <Card
               className="shadow-none border-none rounded-none"

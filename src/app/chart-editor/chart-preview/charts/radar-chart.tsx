@@ -60,78 +60,84 @@ const RadarChartPreview = () => {
 
   return (
     <ChartContainer config={chartConfig}>
-      <RadarChart accessibilityLayer data={chartData}>
-        <CartesianGrid
-          vertical={chartCustomization.grid.vertical.show}
-          horizontal={chartCustomization.grid.horizontal.show}
-        />
-        <ChartTooltip
-          cursor={chartCustomization.tooltip.focused}
-          content={
-            <ChartTooltipContent
-              indicator={
-                chartCustomization.tooltip.indicator !== "none"
-                  ? chartCustomization.tooltip.indicator
-                  : undefined
-              }
-              hideIndicator={chartCustomization.tooltip.indicator === "none"}
-            />
-          }
-          active={!!chartCustomization.tooltip.show}
-          defaultIndex={
-            chartCustomization.tooltip.show
-              ? chartCustomization.tooltip.showTooltipIndex
-              : undefined
-          }
-        />
-        {chartCustomization.polarAngleAxis.show && (
-          <PolarAngleAxis
-            dataKey="label"
-            tickLine={chartCustomization.polarAngleAxis.tickLine}
-            axisLine={chartCustomization.polarAngleAxis.axisLine}
-            tickFormatter={(value: string) =>
-              value.slice(0, chartCustomization.polarAngleAxis.charLength)
+      {!chartData || chartData.length === 0 ? (
+        <div className="flex h-full items-center justify-center">
+          <p className="text-muted-foreground">No data available</p>
+        </div>
+      ) : (
+        <RadarChart accessibilityLayer data={chartData}>
+          <CartesianGrid
+            vertical={chartCustomization.grid.vertical.show}
+            horizontal={chartCustomization.grid.horizontal.show}
+          />
+          <ChartTooltip
+            cursor={chartCustomization.tooltip.focused}
+            content={
+              <ChartTooltipContent
+                indicator={
+                  chartCustomization.tooltip.indicator !== "none"
+                    ? chartCustomization.tooltip.indicator
+                    : undefined
+                }
+                hideIndicator={chartCustomization.tooltip.indicator === "none"}
+              />
+            }
+            active={!!chartCustomization.tooltip.show}
+            defaultIndex={
+              chartCustomization.tooltip.show
+                ? chartCustomization.tooltip.showTooltipIndex
+                : undefined
             }
           />
-        )}
-        {chartCustomization.polarRadiusAxis.show && (
-          <PolarRadiusAxis
-            axisLine={chartCustomization.polarRadiusAxis.axisLine}
-            tickLine={chartCustomization.polarRadiusAxis.tickLine}
-            reversed={chartCustomization.polarRadiusAxis.reversed}
-          />
-        )}
-        {chartCustomization.polarGrid.show && <PolarGrid />}
-        {chartCustomization.legend.show && (
-          <>
-            {chartKeys.length > 0 &&
-              chartKeys.map((key) => (
-                <ChartLegend
-                  key={key}
-                  content={
-                    <ChartLegendContent
-                      nameKey={replaceSpaceWithUnderscore(key)}
-                    />
-                  }
-                />
-              ))}
-          </>
-        )}
-        {chartKeys.map((key) => (
-          <Radar
-            key={key}
-            dataKey={key}
-            name={key}
-            fill={`var(--color-${replaceSpaceWithUnderscore(key)})`}
-            radius={4}
-            fillOpacity={0.5}
-            dot={chartCustomization.dot.show}
-            activeDot={{
-              r: chartCustomization.dot.activeSize,
-            }}
-          ></Radar>
-        ))}
-      </RadarChart>
+          {chartCustomization.polarAngleAxis.show && (
+            <PolarAngleAxis
+              dataKey="label"
+              tickLine={chartCustomization.polarAngleAxis.tickLine}
+              axisLine={chartCustomization.polarAngleAxis.axisLine}
+              tickFormatter={(value: string) =>
+                value.slice(0, chartCustomization.polarAngleAxis.charLength)
+              }
+            />
+          )}
+          {chartCustomization.polarRadiusAxis.show && (
+            <PolarRadiusAxis
+              axisLine={chartCustomization.polarRadiusAxis.axisLine}
+              tickLine={chartCustomization.polarRadiusAxis.tickLine}
+              reversed={chartCustomization.polarRadiusAxis.reversed}
+            />
+          )}
+          {chartCustomization.polarGrid.show && <PolarGrid />}
+          {chartCustomization.legend.show && (
+            <>
+              {chartKeys.length > 0 &&
+                chartKeys.map((key) => (
+                  <ChartLegend
+                    key={key}
+                    content={
+                      <ChartLegendContent
+                        nameKey={replaceSpaceWithUnderscore(key)}
+                      />
+                    }
+                  />
+                ))}
+            </>
+          )}
+          {chartKeys.map((key) => (
+            <Radar
+              key={key}
+              dataKey={key}
+              name={key}
+              fill={`var(--color-${replaceSpaceWithUnderscore(key)})`}
+              radius={4}
+              fillOpacity={0.5}
+              dot={chartCustomization.dot.show}
+              activeDot={{
+                r: chartCustomization.dot.activeSize,
+              }}
+            ></Radar>
+          ))}
+        </RadarChart>
+      )}
     </ChartContainer>
   );
 };

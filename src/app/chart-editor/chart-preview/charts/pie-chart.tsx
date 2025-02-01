@@ -64,86 +64,92 @@ const PieChartPreview = () => {
 
   return (
     <ChartContainer config={chartConfig}>
-      <PieChart
-        accessibilityLayer
-        margin={{
-          left: 12,
-          right: 12,
-          top: 12,
-        }}
-      >
-        <ChartTooltip
-          cursor={chartCustomization.tooltip.focused}
-          content={
-            <ChartTooltipContent
-              indicator={
-                chartCustomization.tooltip.indicator !== "none"
-                  ? chartCustomization.tooltip.indicator
-                  : undefined
-              }
-              hideIndicator={chartCustomization.tooltip.indicator === "none"}
-            />
-          }
-          active={!!chartCustomization.tooltip.show}
-          defaultIndex={
-            chartCustomization.tooltip.show
-              ? chartCustomization.tooltip.showTooltipIndex
-              : undefined
-          }
-        />
-        <ChartLegend content={<ChartLegendContent nameKey="label" />} />
-        <Pie
-          data={pieChartData}
-          dataKey={chartKeys[0]}
-          nameKey="label"
-          {...(chartCustomization.active.show
-            ? {
-                activeIndex: chartCustomization.active.index,
-                activeShape: ({
-                  outerRadius = 0,
-                  ...props
-                }: PieSectorDataItem) => (
-                  <Sector
-                    {...props}
-                    outerRadius={outerRadius + 10}
-                    fillOpacity={chartCustomization.active.fillOpacity}
-                    fill={chartCustomization.active.fill}
-                    stroke={chartCustomization.active.strokeColor}
-                    strokeWidth={chartCustomization.active.strokeWidth}
-                    strokeOpacity={chartCustomization.active.strokeOpacity}
-                    strokeDasharray={
-                      chartCustomization.active.strokeStyle === "dashed"
-                        ? "8 8"
-                        : chartCustomization.active.strokeStyle === "dotted"
-                        ? "1 2"
-                        : undefined
-                    }
-                    strokeDashoffset="2"
-                  />
-                ),
-              }
-            : {})}
+      {!chartData || chartData.length === 0 ? (
+        <div className="flex h-full items-center justify-center">
+          <p className="text-muted-foreground">No data available</p>
+        </div>
+      ) : (
+        <PieChart
+          accessibilityLayer
+          margin={{
+            left: 12,
+            right: 12,
+            top: 12,
+          }}
         >
-          {chartCustomization.labelist.value.show && (
-            <LabelList
-              dataKey={chartKeys[0]}
-              position={chartCustomization.labelist.value.position}
-              offset={chartCustomization.labelist.value.offset}
-              className="fill-foreground"
-              fontSize={10}
-            />
-          )}
-          {chartCustomization.labelist.key.show && (
-            <LabelList
-              dataKey="label"
-              position={chartCustomization.labelist.key.position}
-              offset={chartCustomization.labelist.key.offset}
-              fill="#000000"
-              fontSize={10}
-            />
-          )}
-        </Pie>
-      </PieChart>
+          <ChartTooltip
+            cursor={chartCustomization.tooltip.focused}
+            content={
+              <ChartTooltipContent
+                indicator={
+                  chartCustomization.tooltip.indicator !== "none"
+                    ? chartCustomization.tooltip.indicator
+                    : undefined
+                }
+                hideIndicator={chartCustomization.tooltip.indicator === "none"}
+              />
+            }
+            active={!!chartCustomization.tooltip.show}
+            defaultIndex={
+              chartCustomization.tooltip.show
+                ? chartCustomization.tooltip.showTooltipIndex
+                : undefined
+            }
+          />
+          <ChartLegend content={<ChartLegendContent nameKey="label" />} />
+          <Pie
+            data={pieChartData}
+            dataKey={chartKeys[0]}
+            nameKey="label"
+            {...(chartCustomization.active.show
+              ? {
+                  activeIndex: chartCustomization.active.index,
+                  activeShape: ({
+                    outerRadius = 0,
+                    ...props
+                  }: PieSectorDataItem) => (
+                    <Sector
+                      {...props}
+                      outerRadius={outerRadius + 10}
+                      fillOpacity={chartCustomization.active.fillOpacity}
+                      fill={chartCustomization.active.fill}
+                      stroke={chartCustomization.active.strokeColor}
+                      strokeWidth={chartCustomization.active.strokeWidth}
+                      strokeOpacity={chartCustomization.active.strokeOpacity}
+                      strokeDasharray={
+                        chartCustomization.active.strokeStyle === "dashed"
+                          ? "8 8"
+                          : chartCustomization.active.strokeStyle === "dotted"
+                          ? "1 2"
+                          : undefined
+                      }
+                      strokeDashoffset="2"
+                    />
+                  ),
+                }
+              : {})}
+          >
+            {chartCustomization.labelist.value.show && (
+              <LabelList
+                dataKey={chartKeys[0]}
+                position={chartCustomization.labelist.value.position}
+                offset={chartCustomization.labelist.value.offset}
+                className="fill-foreground"
+                fontSize={10}
+              />
+            )}
+            {chartCustomization.labelist.key.show && (
+              <LabelList
+                dataKey="label"
+                position={chartCustomization.labelist.key.position}
+                offset={chartCustomization.labelist.key.offset}
+                fill="#000000"
+                fontSize={10}
+              />
+            )}
+          </Pie>
+        </PieChart>
+      )}
     </ChartContainer>
   );
 };

@@ -2,11 +2,16 @@ import React from "react";
 
 export default function MacDarkFrame({
   children,
+  width,
 }: {
   children: React.ReactNode;
+  width?: number;
 }) {
   return (
-    <div className="w-full max-w-2xl mx-auto overflow-hidden rounded-lg shadow-lg bg-gray-900">
+    <div
+      className="w-full mx-auto overflow-hidden rounded-lg shadow-lg bg-gray-900"
+      style={{ width }}
+    >
       {/* Window frame */}
       <div className="flex items-center px-4 py-2 bg-gray-800">
         <div className="flex space-x-2">

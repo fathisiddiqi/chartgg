@@ -1,4 +1,3 @@
-import { LabelPosition } from "recharts/types/component/Label";
 import { create } from "zustand";
 
 export type ChartType = {
@@ -133,6 +132,20 @@ export const ChartTextFontFamilies: ChartTextFontFamily[] = [
   "poppins",
   "roboto",
 ];
+
+export type ChartCustomizationFeature =
+  | "text"
+  | "labelist"
+  | "xAxis"
+  | "yAxis"
+  | "polarAngleAxis"
+  | "polarRadiusAxis"
+  | "legend"
+  | "tooltip"
+  | "grid"
+  | "polarGrid"
+  | "dot"
+  | "active";
 
 export interface ChartCustomization {
   text: {

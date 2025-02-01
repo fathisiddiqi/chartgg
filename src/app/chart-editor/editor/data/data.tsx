@@ -333,12 +333,22 @@ const TableModal = ({
     }
   };
 
+  const handleClearData = () => {
+    setHeaders([]);
+    setChartData([]);
+  };
+
   return (
     <Dialog open={open} onOpenChange={setIsOpen}>
       <DialogContent className="max-w-6xl">
         <DialogHeader>
           <DialogTitle>Chart Data</DialogTitle>
           <DialogDescription>A table of your chart data.</DialogDescription>
+          <div className="flex justify-end">
+            <Button variant="destructive" size="sm" onClick={handleClearData}>
+              Clear data
+            </Button>
+          </div>
         </DialogHeader>
         <div className="w-full overflow-x-auto">
           <Table className="border border-border min-w-full">
