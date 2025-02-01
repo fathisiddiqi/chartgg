@@ -6,9 +6,9 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import useChartColor from "@/hook/use-chart-colors";
+import useChartTheme from "@/hook/use-chart-theme";
 import { replaceSpaceWithUnderscore } from "@/lib/utils";
-import { ChartCustomization, ChartData, useChartStore } from "@/store/chart";
+import { useChartStore } from "@/store/chart";
 import { useEffect, useState } from "react";
 import {
   Bar,
@@ -21,10 +21,12 @@ import {
 } from "recharts";
 
 const BarChartPreview = () => {
-  const { chartType, chartData, chartCustomization } = useChartStore(
+  const { chartData, chartCustomization, chartStyle } = useChartStore(
     (state) => state
   );
-  const chartColors = useChartColor(chartCustomization.theme.palette.selected);
+  const { colors: chartColors } = useChartTheme(
+    chartStyle.content.theme.selected
+  );
 
   const [chartKeys, setChartKeys] = useState<string[]>([]);
   const [chartConfig, setChartConfig] = useState<ChartConfig>({});
@@ -55,7 +57,7 @@ const BarChartPreview = () => {
       }));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chartKeys, chartCustomization.theme.palette.selected]);
+  }, [chartKeys, chartStyle.content.theme.selected]);
 
   return (
     <ChartContainer config={chartConfig}>

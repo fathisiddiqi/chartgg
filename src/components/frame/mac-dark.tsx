@@ -16,7 +16,7 @@ export default function MacDarkFrame({
         </div>
       </div>
       {/* Code content */}
-      <div className="p-4 bg-gray-900 text-gray-300 font-mono text-sm">
+      <div className="p-0 bg-gray-900 text-gray-300 font-mono text-sm">
         {children}
       </div>
     </div>

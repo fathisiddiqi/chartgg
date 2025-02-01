@@ -132,7 +132,7 @@ const LabelistCard = ({
                 });
               }}
               max={30}
-              className="ml-2 w-10"
+              className="ml-2 w-10 p-0 text-center"
               disabled={!chartCustomization.labelist.key.show}
             />
           </div>
@@ -248,7 +248,7 @@ const LabelistCard = ({
                 });
               }}
               max={50}
-              className="ml-2 w-10"
+              className="ml-2 w-10 p-0 text-center"
               disabled={!chartCustomization.labelist.value.show}
             />
           </div>

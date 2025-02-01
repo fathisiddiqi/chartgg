@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import MainEditor from "./main-editor/main-editor";
 import Image from "next/image";
 import Editor from "./editor/editor";
 import ChartPreview from "./chart-preview/chart-preview";

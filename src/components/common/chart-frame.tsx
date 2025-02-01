@@ -5,6 +5,8 @@ import MackLigthFrame from "../frame/mac-light";
 import ChromeLightFrame from "../frame/chrome-light";
 import MackDarkFrame from "../frame/mac-dark";
 import ChromeDarkFrame from "../frame/chrome-dark";
+import ArcFrame from "../frame/arc";
+import StrokeFrame from "../frame/stroke";
 
 const ChartFrame = ({
   frame,
@@ -16,28 +18,11 @@ const ChartFrame = ({
   children: React.ReactNode;
 }) => {
   const frameMap: Record<ChartFrame, JSX.Element> = {
-    none: (
-      <div className="w-full max-w-2xl mx-auto overflow-hidden rounded-lg shadow-lg bg-white border border-gray-200">
-        {/* Window frame */}
-        <div className="flex items-center px-4 py-2">
-          <div className="flex space-x-2">
-            <div className="w-3 h-3"></div>
-            <div className="w-3 h-3"></div>
-            <div className="w-3 h-3"></div>
-          </div>
-        </div>
-        {/* Code content */}
-        <div className="p-4 bg-white text-gray-800 font-mono text-sm">
-          {children}
-        </div>
-      </div>
-    ),
-    window_light: <WindowsLightFrame>{children}</WindowsLightFrame>,
-    window_dark: <WindowsDarkFrame>{children}</WindowsDarkFrame>,
+    none: <>{children}</>,
     macos_light: <MackLigthFrame>{children}</MackLigthFrame>,
     macos_dark: <MackDarkFrame>{children}</MackDarkFrame>,
-    chrome_light: <ChromeLightFrame>{children}</ChromeLightFrame>,
-    chrome_dark: <ChromeDarkFrame size={size}>{children}</ChromeDarkFrame>,
+    arc: <ArcFrame>{children}</ArcFrame>,
+    stroke: <StrokeFrame>{children}</StrokeFrame>,
   };
 
   return frameMap[frame];

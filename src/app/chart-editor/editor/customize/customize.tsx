@@ -12,6 +12,7 @@ import PolarGridCard from "./polar-grid-card";
 import PolarRadiusAxisCard from "./polar-radius-axis-card";
 import PolarAngleAxisCard from "./polar-angle-axis-card";
 import { Separator } from "@/components/ui/separator";
+import TextCard from "./text-card";
 
 const Customize = () => {
   const { chartCustomization, setChartCustomization } = useChartStore(
@@ -22,6 +23,13 @@ const Customize = () => {
 
   return (
     <ScrollArea className="h-[calc(100vh-130px)]" isThumbHidden>
+      <TextCard
+        chartCustomization={chartCustomization}
+        setChartCustomization={setChartCustomization}
+      />
+
+      <Separator className="my-4" />
+
       {/* X Axis Card */}
       <XAxisCard
         chartCustomization={chartCustomization}

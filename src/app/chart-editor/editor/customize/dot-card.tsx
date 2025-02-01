@@ -65,7 +65,7 @@ const DotCard = ({
               });
             }}
             max={10}
-            className="ml-2 w-10"
+            className="ml-2 w-10 p-0 text-center"
             disabled={!chartCustomization.dot.show}
           />
         </div>

@@ -63,23 +63,6 @@ export const RadialChartVariants: RadialChartVariant[] = ["default", "stacked"];
 export type ScatterChartVariant = "default" | "line";
 export const ScatterChartVariants: ScatterChartVariant[] = ["default", "line"];
 
-export type ChartColorPalette =
-  | "default"
-  | "palette"
-  | "shappire"
-  | "ruby"
-  | "emerald"
-  | "daylight";
-
-export const ChartColorPalette: ChartColorPalette[] = [
-  "default",
-  "palette",
-  "shappire",
-  "ruby",
-  "emerald",
-  "daylight",
-];
-
 export type ChartTooltipIndicator = "line" | "dot" | "dashed" | "none";
 
 export const ChartTooltipIndicators: ChartTooltipIndicator[] = [
@@ -152,12 +135,6 @@ export const ChartTextFontFamilies: ChartTextFontFamily[] = [
 ];
 
 export interface ChartCustomization {
-  theme: {
-    palette: {
-      selected: ChartColorPalette;
-    };
-    type: "light" | "dark";
-  };
   text: {
     title: {
       show: boolean;
@@ -364,38 +341,47 @@ export const ChartShadowStyles: {
 
 export type ChartFrame =
   | "none"
-  | "window_light"
-  | "window_dark"
   | "macos_light"
   | "macos_dark"
-  | "chrome_light"
-  | "chrome_dark";
+  | "arc"
+  | "stroke";
 
 export const ChartFrames: ChartFrame[] = [
   "none",
-  "window_light",
-  "window_dark",
   "macos_light",
   "macos_dark",
-  // "chrome_light",
-  // "chrome_dark",
+  "stroke",
+  "arc",
+];
+
+export type ChartTheme =
+  | "default"
+  | "palette"
+  | "shappire"
+  | "ruby"
+  | "emerald"
+  | "daylight";
+
+export const ChartThemes: ChartTheme[] = [
+  "default",
+  "palette",
+  "shappire",
+  "ruby",
+  "emerald",
+  "daylight",
 ];
 
 export interface ChartStyle {
   content: {
+    theme: {
+      selected: ChartTheme;
+      type: "light" | "dark";
+    };
     frame: ChartFrame;
     scale: number;
     rotate: number;
     width: number;
     shadow: string;
-    background: {
-      color: string;
-    };
-    border: {
-      width: number;
-      radius: number;
-      color: string;
-    };
   };
   canvas: {
     width: number;
@@ -433,31 +419,9 @@ export const useChartStore = create<ChartState>()((set) => ({
     variant: "default",
   },
   setChartType: (chartType: ChartType) => set({ chartType }),
-  chartData: [
-    {
-      id: 1,
-      label: "January",
-      "Data 1": 1000,
-    },
-    {
-      id: 2,
-      label: "February",
-      "Data 1": 2000,
-    },
-    {
-      id: 3,
-      label: "March",
-      "Data 1": 1000,
-    },
-  ],
+  chartData: [],
   setChartData: (data: ChartData[]) => set({ chartData: data }),
   chartCustomization: {
-    theme: {
-      palette: {
-        selected: "default",
-      },
-      type: "light",
-    },
     text: {
       title: {
         show: true,
@@ -575,29 +539,25 @@ export const useChartStore = create<ChartState>()((set) => ({
     set({ chartCustomization: customization }),
   chartStyle: {
     content: {
+      theme: {
+        selected: "default",
+        type: "light",
+      },
       frame: "none",
       scale: 100,
       rotate: 0,
       shadow: "0 0 #0000",
       width: 500,
-      background: {
-        color: "#ffffff",
-      },
-      border: {
-        width: 0,
-        radius: 8,
-        color: "#ffffff",
-      },
     },
     canvas: {
       background: {
         color: "#e5e7eb",
-        opacity: 0.1,
+        opacity: 0.8,
       },
       width: 1616,
       height: 1414,
       border: {
-        radius: 8,
+        radius: 0,
       },
     },
   },

@@ -27,9 +27,187 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ChartData, useChartStore } from "@/store/chart";
+import { Text } from "@/components/ui/text";
+import { ScrollArea, ScrollBar } from "@/components/custom-ui/scroll-area";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 export default function Data() {
-  const [headers, setHeaders] = useState<string[]>(["Data 1"]);
+  const { chartData, setChartData } = useChartStore((state) => state);
+  const [openTableModal, setOpenTableModal] = useState<boolean>(false);
+
+  const handleTryData = () => {
+    setChartData([
+      {
+        id: 1,
+        label: "January",
+        Shoes: "1000",
+        Clothing: "2000",
+        Accessories: "500",
+        Hat: "150",
+      },
+      {
+        id: 2,
+        label: "February",
+        Shoes: "1200",
+        Clothing: "2200",
+        Accessories: "600",
+        Hat: "160",
+      },
+      {
+        id: 3,
+        label: "March",
+        Shoes: "1400",
+        Clothing: "2400",
+        Accessories: "700",
+        Hat: "170",
+      },
+      {
+        id: 4,
+        label: "April",
+        Shoes: "1600",
+        Clothing: "2600",
+        Accessories: "800",
+        Hat: "180",
+      },
+      {
+        id: 5,
+        label: "May",
+        Shoes: "1800",
+        Clothing: "2800",
+        Accessories: "900",
+        Hat: "190",
+      },
+    ]);
+  };
+
+  return (
+    <ScrollArea className="h-[calc(100vh-130px)] w-full">
+      <div className="space-y-4 w-full">
+        <Text variant="sm" className="font-bold">
+          Data
+        </Text>
+        <div>
+          {chartData.length > 0 ? (
+            <TablePreview
+              chartData={chartData.slice(0, 5)}
+              setOpenTableModal={setOpenTableModal}
+            />
+          ) : (
+            <div className="w-full mt-24 flex flex-col items-center justify-center align-center gap-4">
+              <Button
+                variant="default"
+                className="w-3/4"
+                onClick={() => setOpenTableModal(true)}
+              >
+                Create Data
+              </Button>
+              <Text variant="sm">
+                or{" "}
+                <span
+                  className="text-blue-500 cursor-pointer"
+                  onClick={handleTryData}
+                >
+                  try an example data
+                </span>
+              </Text>
+            </div>
+          )}
+        </div>
+
+        <TableModal open={openTableModal} setIsOpen={setOpenTableModal} />
+      </div>
+    </ScrollArea>
+  );
+}
+
+const TablePreview = ({
+  chartData,
+  setOpenTableModal,
+}: {
+  chartData: ChartData[];
+  setOpenTableModal: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
+  const [headers, setHeaders] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (chartData?.length > 0) {
+      setHeaders(
+        Object.keys(chartData[0]).filter(
+          (key) => key !== "id" && key !== "label"
+        )
+      );
+    }
+  }, [chartData]);
+
+  return (
+    <div className="space-y-4">
+      <div className="w-[300px]">
+        <ScrollArea className="w-full whitespace-nowrap">
+          <Table className="border border-border w-full">
+            <TableHeader>
+              <TableRow className="border-b border-border">
+                <TableCell className="font-bold text-center border-r border-border p-3">
+                  Label
+                </TableCell>
+                {headers.map((header) => (
+                  <TableCell
+                    key={header}
+                    className="font-bold text-center border-r border-border p-3"
+                  >
+                    {header}
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {chartData.map((row, index) => (
+                <TableRow key={index}>
+                  <TableCell className="text-center border-r border-border p-3">
+                    {row.label}
+                  </TableCell>
+                  {headers.map((header) => (
+                    <TableCell
+                      key={header}
+                      className="text-center border-r border-border p-3"
+                    >
+                      {row[header]}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+          <ScrollBar orientation="horizontal" />
+        </ScrollArea>
+      </div>
+      <div className="flex justify-center">
+        <Button
+          variant="default"
+          size="sm"
+          onClick={() => setOpenTableModal(true)}
+        >
+          See more
+        </Button>
+      </div>
+    </div>
+  );
+};
+
+const TableModal = ({
+  open,
+  setIsOpen,
+}: {
+  open: boolean;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
+  const [headers, setHeaders] = useState<string[]>([]);
   const [triggerWidth, setTriggerWidth] = useState<number>(0);
   const [editingHeaderMode, setEditingHeaderMode] = useState<string | null>(
     null
@@ -37,6 +215,7 @@ export default function Data() {
   const [newHeaderName, setNewHeaderName] = useState<string>("");
   const triggerRef = useRef<HTMLTableCellElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const [openAddColumnModal, setOpenAddColumnModal] = useState<boolean>(false);
 
   const { chartData, setChartData } = useChartStore((state) => state);
 
@@ -110,6 +289,7 @@ export default function Data() {
     }));
     setChartData(updatedData);
     setNewHeaderName("");
+    setOpenAddColumnModal(false);
   };
 
   const handleRemoveColumn = (header: string) => {
@@ -154,28 +334,108 @@ export default function Data() {
   };
 
   return (
-    <div className="p-0 space-y-4 w-full py-4">
-      {/* <div className="flex justify-end">
-        <Button variant="outline" className="text-right" onClick={handleExport}>
-          <FileInput className="mr-2 h-4 w-4" />
-          Export CSV/XLSX
-        </Button>
-      </div> */}
-      <div className="overflow-x-auto">
-        <Table className="border border-border">
-          <TableHeader>
-            <TableRow className="border-b border-border">
-              <TableCell className="font-bold text-center border-r border-border p-0">
-                Label
-              </TableCell>
-              {headers.map((header) => (
-                <TableCell
-                  key={header}
-                  className="font-bold border-r border-border p-0"
-                  ref={triggerRef}
-                >
-                  {editingHeaderMode === header ? (
-                    <div className="flex items-center gap-2 p-2">
+    <Dialog open={open} onOpenChange={setIsOpen}>
+      <DialogContent className="max-w-6xl">
+        <DialogHeader>
+          <DialogTitle>Chart Data</DialogTitle>
+          <DialogDescription>A table of your chart data.</DialogDescription>
+        </DialogHeader>
+        <div className="w-full overflow-x-auto">
+          <Table className="border border-border min-w-full">
+            <TableHeader>
+              <TableRow className="border-b border-border">
+                <TableCell className="font-bold text-center border-r border-border p-0">
+                  Label
+                </TableCell>
+                {headers.map((header) => (
+                  <TableCell
+                    key={header}
+                    className="font-bold border-r border-border p-0"
+                    ref={triggerRef}
+                  >
+                    {editingHeaderMode === header ? (
+                      <div className="flex items-center gap-2 p-2">
+                        <Input
+                          ref={inputRef}
+                          size={12}
+                          value={newHeaderName}
+                          onChange={(e) => setNewHeaderName(e.target.value)}
+                          onKeyUp={(e) => {
+                            if (e.key === "Enter") {
+                              handleSaveColumnHeader();
+                            } else if (e.key === "Escape") {
+                              setEditingHeaderMode(null);
+                            }
+                          }}
+                          className="flex-grow"
+                        />
+                        <Button
+                          size="icon"
+                          variant="ghost"
+                          onClick={handleSaveColumnHeader}
+                        >
+                          <Check className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          size="icon"
+                          variant="ghost"
+                          onClick={() => setEditingHeaderMode(null)}
+                        >
+                          <X className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    ) : (
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button
+                            variant="ghost"
+                            className="w-full justify-between font-bold focus:outline-none focus:ring-0 focus:ring-offset-0 ring-offset-0 ring-0 outline-none m-0"
+                            style={{ boxShadow: "none", outline: "none" }}
+                          >
+                            {header}
+                            <ChevronDown className="h-4 w-4 ml-2" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent
+                          align="center"
+                          style={{ width: `${triggerWidth}px` }}
+                        >
+                          <DropdownMenuItem
+                            onClick={() => handleEditColumnHeader(header)}
+                          >
+                            <Pencil className="mr-2 h-4 w-4" />
+                            <span className="text-sm cursor-pointer">
+                              Edit column
+                            </span>
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            onClick={() => handleRemoveColumn(header)}
+                          >
+                            <Trash2 className="mr-2 h-4 w-4" />
+                            <span className="text-sm text-red-500 cursor-pointer">
+                              Delete column
+                            </span>
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    )}
+                  </TableCell>
+                ))}
+                <TableCell className="w-12">
+                  <Dialog
+                    open={openAddColumnModal}
+                    onOpenChange={setOpenAddColumnModal}
+                  >
+                    <DialogTrigger asChild>
+                      <PlusCircle className="h-4 w-4 cursor-pointer" />
+                    </DialogTrigger>
+                    <DialogContent className="max-w-xs">
+                      <DialogHeader>
+                        <DialogTitle>Add Column</DialogTitle>
+                        <DialogDescription>
+                          Enter the name of the new column.
+                        </DialogDescription>
+                      </DialogHeader>
                       <Input
                         ref={inputRef}
                         size={12}
@@ -183,121 +443,26 @@ export default function Data() {
                         onChange={(e) => setNewHeaderName(e.target.value)}
                         onKeyUp={(e) => {
                           if (e.key === "Enter") {
-                            handleSaveColumnHeader();
-                          } else if (e.key === "Escape") {
-                            setEditingHeaderMode(null);
+                            handleAddColumn();
                           }
                         }}
                         className="flex-grow"
+                        placeholder="Column name"
                       />
-                      <Button
-                        size="icon"
-                        variant="ghost"
-                        onClick={handleSaveColumnHeader}
-                      >
-                        <Check className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        size="icon"
-                        variant="ghost"
-                        onClick={() => setEditingHeaderMode(null)}
-                      >
-                        <X className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  ) : (
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button
-                          variant="ghost"
-                          className="w-full justify-between font-bold focus:outline-none focus:ring-0 focus:ring-offset-0 ring-offset-0 ring-0 outline-none m-0"
-                          style={{ boxShadow: "none", outline: "none" }}
-                        >
-                          {header}
-                          <ChevronDown className="h-4 w-4 ml-2" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent
-                        align="start"
-                        style={{ width: `${triggerWidth}px` }}
-                      >
-                        <DropdownMenuItem
-                          onClick={() => handleEditColumnHeader(header)}
-                        >
-                          <Pencil className="mr-2 h-4 w-4" />
-                          <span className="text-sm">Edit column</span>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem
-                          onClick={() => handleRemoveColumn(header)}
-                        >
-                          <Trash2 className="mr-2 h-4 w-4" />
-                          <span className="text-sm text-red-500">
-                            Delete column
-                          </span>
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  )}
+                      <Button onClick={handleAddColumn}>Save</Button>
+                    </DialogContent>
+                  </Dialog>
                 </TableCell>
-              ))}
-              <TableCell className="w-12">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <PlusCircle className="h-4 w-4 cursor-pointer" />
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent
-                    align="start"
-                    style={{ width: `${triggerWidth}px` }}
-                    className="p-3"
-                  >
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {chartData.map((item) => (
+                <TableRow key={item.id} className="border-b border-border">
+                  <TableCell key="label" className="border-r border-border p-0">
                     <Input
-                      ref={inputRef}
-                      size={12}
-                      value={newHeaderName}
-                      onChange={(e) => setNewHeaderName(e.target.value)}
-                      onKeyUp={(e) => {
-                        if (e.key === "Enter") {
-                          handleAddColumn();
-                        }
-                      }}
-                      className="flex-grow"
-                      placeholder="Column name"
-                    />
-
-                    <div className="flex justify-end mt-3">
-                      <DropdownMenuItem
-                        onClick={() => handleAddColumn()}
-                        className="bg-primary text-primary-foreground cursor-pointer hover:!bg-primary/90 hover:!text-primary-foreground"
-                      >
-                        Save
-                      </DropdownMenuItem>
-                    </div>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </TableCell>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {chartData.map((item) => (
-              <TableRow key={item.id} className="border-b border-border">
-                <TableCell key="label" className="border-r border-border p-0">
-                  <Input
-                    value={item.label}
-                    onChange={(e) =>
-                      handleChange(item.id, "label", e.target.value)
-                    }
-                    className="bg-transparent hover:bg-secondary focus:bg-secondary transition-colors shadow-none outline-none border-none rounded-none"
-                    style={{
-                      boxShadow: "none",
-                    }}
-                  />
-                </TableCell>
-                {headers.map((field) => (
-                  <TableCell key={field} className="border-r border-border p-0">
-                    <Input
-                      value={item[field] as string}
+                      value={item.label}
                       onChange={(e) =>
-                        handleChange(item.id, field, e.target.value)
+                        handleChange(item.id, "label", e.target.value)
                       }
                       className="bg-transparent hover:bg-secondary focus:bg-secondary transition-colors shadow-none outline-none border-none rounded-none"
                       style={{
@@ -305,21 +470,38 @@ export default function Data() {
                       }}
                     />
                   </TableCell>
-                ))}
-                <TableCell className="p-0 text-center">
-                  <Trash2
-                    className="h-4 w-4 cursor-pointer text-red-500 mx-auto"
-                    onClick={() => handleDelete(item.id)}
-                  />
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
-      <Button onClick={handleAddRow} className="mt-4">
-        <PlusCircle className="mr-2 h-4 w-4" /> Add Row
-      </Button>
-    </div>
+                  {headers.map((field) => (
+                    <TableCell
+                      key={field}
+                      className="border-r border-border p-0"
+                    >
+                      <Input
+                        value={item[field] as string}
+                        onChange={(e) =>
+                          handleChange(item.id, field, e.target.value)
+                        }
+                        className="bg-transparent hover:bg-secondary focus:bg-secondary transition-colors shadow-none outline-none border-none rounded-none"
+                        style={{
+                          boxShadow: "none",
+                        }}
+                      />
+                    </TableCell>
+                  ))}
+                  <TableCell className="p-0 text-center">
+                    <Trash2
+                      className="h-4 w-4 cursor-pointer text-red-500 mx-auto"
+                      onClick={() => handleDelete(item.id)}
+                    />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+        <Button onClick={handleAddRow} className="mt-4">
+          <PlusCircle className="mr-2 h-4 w-4" /> Add Row
+        </Button>
+      </DialogContent>
+    </Dialog>
   );
-}
+};

@@ -1,6 +1,6 @@
 import { ChartTheme } from "@/store/chart";
 
-const useChartColor = (theme: ChartTheme) => {
+const useChartTheme = (theme: ChartTheme) => {
   const themeColorsMap: Record<ChartTheme, Record<number, string>> = {
     default: {
       1: "173 58% 39%",
@@ -44,16 +44,21 @@ const useChartColor = (theme: ChartTheme) => {
       4: "31 41% 48%",
       5: "35 43% 53%",
     },
-    midnight: {
-      1: "359 2% 90%",
-      2: "240 1% 74%",
-      3: "240 1% 58%",
-      4: "240 1% 42%",
-      5: "240 2% 26%",
-    },
   };
 
-  return themeColorsMap[theme];
+  const themeBackgroundColorsMap: Record<ChartTheme, string> = {
+    default: "hsl(0 0% 100%)",
+    palette: "hsl(0 0% 100%)",
+    shappire: "hsl(0 0% 100%)",
+    ruby: "hsl(0 0% 100%)",
+    emerald: "hsl(0 0% 100%)",
+    daylight: "hsl(36 46% 82%)",
+  };
+
+  return {
+    colors: themeColorsMap[theme],
+    backgroundColor: themeBackgroundColorsMap[theme],
+  };
 };
 
-export default useChartColor;
+export default useChartTheme;

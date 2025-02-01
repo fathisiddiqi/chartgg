@@ -18,21 +18,27 @@ import AreaChartPreview from "./charts/area-chart";
 import RadarChartPreview from "./charts/radar-chart";
 import RadialChartPreview from "./charts/radial-chart";
 import ScatterChartPreview from "./charts/scatter-chart";
+import useChartTheme from "@/hook/use-chart-theme";
 
 const ChartPreview = () => {
   const { chartType, chartStyle, chartCustomization } = useChartStore(
     (state) => state
   );
+  const { backgroundColor } = useChartTheme(chartStyle.content.theme.selected);
 
   return (
-    <div className="h-[calc(100vh-100px)] w-full bg-gray-50 flex justify-center items-center relative ">
+    <div
+      className="h-[calc(100vh-100px)] w-full flex justify-center items-center relative rounded-md"
+      style={{
+        backgroundColor: `rgba(${hexToRGB(
+          chartStyle.canvas.background.color
+        )}, ${chartStyle.canvas.background.opacity})`,
+        borderRadius: chartStyle.canvas.border.radius,
+      }}
+    >
       <div
         style={{
           objectFit: "contain",
-          backgroundColor: `rgba(${hexToRGB(
-            chartStyle.canvas.background.color
-          )}, ${chartStyle.canvas.background.opacity})`,
-          borderRadius: chartStyle.canvas.border.radius,
         }}
         className="flex items-center justify-center mx-auto scale-50"
       >
@@ -44,20 +50,17 @@ const ChartPreview = () => {
             }deg)`,
             boxShadow: chartStyle.content.shadow,
             padding: 0,
+            width: chartStyle.content.width,
           }}
         >
           {/* Chart Frame */}
           <ChartFrame frame={chartStyle.content.frame}>
             {/* Chart Content */}
             <Card
+              className="shadow-none border-none rounded-none"
               style={{
-                backgroundColor: chartStyle.content.background.color,
-                borderColor: chartStyle.content.border.color,
-                borderRadius: chartStyle.content.border.radius,
-                borderWidth: chartStyle.content.border.width,
-                width: chartStyle.content.width,
+                backgroundColor,
               }}
-              className="shadow-none"
             >
               <CardHeader>
                 {chartCustomization.text.title.show && (

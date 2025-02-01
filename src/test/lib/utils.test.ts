@@ -1,3 +1,4 @@
+import { describe, it, expect } from "vitest";
 import {
   cn,
   titleCase,
@@ -6,7 +7,7 @@ import {
   replaceSpaceWithUnderscore,
   replaceUnderscoreWithSpace,
   hexToRGB,
-} from "@/lib/utils";
+} from "../../lib/utils";
 
 describe("Utility Functions", () => {
   describe("cn (Classname Merger)", () => {
@@ -59,10 +60,22 @@ describe("Utility Functions", () => {
   });
 
   describe("hexToRGB", () => {
-    it("should convert hex to RGB", () => {
+    it("should convert hex color to RGB format", () => {
       expect(hexToRGB("#FF0000")).toBe("255, 0, 0");
       expect(hexToRGB("#00FF00")).toBe("0, 255, 0");
       expect(hexToRGB("#0000FF")).toBe("0, 0, 255");
+      expect(hexToRGB("#FFFFFF")).toBe("255, 255, 255");
+      expect(hexToRGB("#000000")).toBe("0, 0, 0");
+    });
+
+    it("should handle hex colors without # prefix", () => {
+      expect(hexToRGB("FF0000")).toBe("255, 0, 0");
+    });
+
+    it("should return null for invalid input", () => {
+      expect(hexToRGB("")).toBe(null);
+      expect(hexToRGB(undefined as any)).toBe(null);
+      expect(hexToRGB(null as any)).toBe(null);
     });
   });
 });

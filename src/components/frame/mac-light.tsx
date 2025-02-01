@@ -16,7 +16,7 @@ export default function MackLigthFrame({
         </div>
       </div>
       {/* Code content */}
-      <div className="p-4 bg-white text-gray-800 font-mono text-sm">
+      <div className="p-0 bg-white text-gray-800 font-mono text-sm">
         {children}
       </div>
     </div>

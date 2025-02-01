@@ -97,7 +97,7 @@ const XAxisCard = ({
               });
             }}
             max={8}
-            className="ml-2 w-10"
+            className="ml-2 w-10 p-0 text-center"
             disabled={!chartCustomization.xAxis.show}
           />
         </div>

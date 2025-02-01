@@ -1,6 +1,4 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Text } from "@/components/ui/text";
-import { ChartMainType, ChartType } from "@/store/chart";
 import {
   AreaChart,
   BarChart,
@@ -9,6 +7,21 @@ import {
   ScatterChart,
 } from "lucide-react";
 import { RadarChart, RadialChart } from "@/components/icon/chart-icon";
+import {
+  AreaChartVariants,
+  BarChartVariants,
+  ChartMainType,
+  ChartMainVariant,
+  ChartType,
+  LineChartVariants,
+  PieChartVariants,
+  RadarChartVariants,
+  RadialChartVariants,
+  ScatterChartVariants,
+} from "@/store/chart";
+import { SelectItem } from "@/components/custom-ui/select";
+import { Text } from "@/components/ui/text";
+import { replaceUnderscoreWithSpace, titleCase } from "@/lib/utils";
 
 const ChooseChartType = ({
   chartType,
@@ -133,3 +146,21 @@ const ChooseChartType = ({
 };
 
 export default ChooseChartType;
+
+const ChartVariantSelectItem = ({ chartType }: { chartType: ChartType }) => {
+  const items: Record<ChartMainType, ChartMainVariant[]> = {
+    area: AreaChartVariants,
+    bar: BarChartVariants,
+    line: LineChartVariants,
+    pie: PieChartVariants,
+    radar: RadarChartVariants,
+    radial: RadialChartVariants,
+    scatter: ScatterChartVariants,
+  };
+
+  return items[chartType.type].map((item) => (
+    <SelectItem key={item} value={item}>
+      <Text variant="sm">{titleCase(replaceUnderscoreWithSpace(item))}</Text>
+    </SelectItem>
+  ));
+};
