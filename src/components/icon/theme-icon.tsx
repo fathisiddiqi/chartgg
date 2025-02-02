@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import { ChartTheme } from "@/store/chart";
 import React from "react";
 
-const Color = ({
+const ColorPalette = ({
   colors,
   isActive,
 }: {
@@ -18,7 +18,7 @@ const Color = ({
       xmlns="http://www.w3.org/2000/svg"
       className={cn(
         "cursor-pointer",
-        isActive && "ring-2 ring-blue-500 ring-offset-1 rounded-sm"
+        isActive && "ring-2 ring-black ring-offset-1 rounded-sm"
       )}
     >
       <rect width="40" height="40" rx="8" fill="white" />
@@ -50,7 +50,9 @@ const ThemeIcon = ({
   variant: ChartTheme;
   isActive?: boolean;
 }) => {
-  return <Color colors={iconColors[variant]} isActive={isActive ?? false} />;
+  return (
+    <ColorPalette colors={iconColors[variant]} isActive={isActive ?? false} />
+  );
 };
 
 export default ThemeIcon;

@@ -1,4 +1,3 @@
-import { LabelPosition } from "recharts/types/component/Label";
 import { create } from "zustand";
 
 export type ChartType = {
@@ -63,25 +62,6 @@ export const RadialChartVariants: RadialChartVariant[] = ["default", "stacked"];
 export type ScatterChartVariant = "default" | "line";
 export const ScatterChartVariants: ScatterChartVariant[] = ["default", "line"];
 
-export type ChartColorPalette =
-  | "default"
-  | "palette"
-  | "shappire"
-  | "ruby"
-  | "emerald"
-  | "daylight"
-  | "midnight";
-
-export const ChartColorPalette: ChartColorPalette[] = [
-  "default",
-  "palette",
-  "shappire",
-  "ruby",
-  "emerald",
-  "daylight",
-  "midnight",
-];
-
 export type ChartTooltipIndicator = "line" | "dot" | "dashed" | "none";
 
 export const ChartTooltipIndicators: ChartTooltipIndicator[] = [
@@ -138,6 +118,14 @@ export const ChartLabelistPositions: ChartLabelistPosition[] = [
   "middle",
 ];
 
+export const ChartLabelistPositionsOfCartesian: Array<
+  "top" | "left" | "right" | "bottom" | "center"
+> = ["top", "left", "right", "bottom", "center"];
+
+export const ChartLabelistPositionsOfPolar: Array<
+  "inside" | "outside" | "center"
+> = ["inside", "outside", "center"];
+
 export type ChartStrokeStyle = "solid" | "dashed" | "dotted" | "none";
 export const ChartStrokeStyles: ChartStrokeStyle[] = [
   "solid",
@@ -146,33 +134,71 @@ export const ChartStrokeStyles: ChartStrokeStyle[] = [
   "none",
 ];
 
+export type ChartTextFontFamily = "inter" | "poppins" | "roboto";
+export const ChartTextFontFamilies: ChartTextFontFamily[] = [
+  "inter",
+  "poppins",
+  "roboto",
+];
+
+export type ChartCustomizationFeature =
+  | "text"
+  | "labelist"
+  | "xAxis"
+  | "yAxis"
+  | "polarAngleAxis"
+  | "polarRadiusAxis"
+  | "legend"
+  | "tooltip"
+  | "grid"
+  | "polarGrid"
+  | "dot"
+  | "active";
+
+export type ChartOrientation = "horizontal" | "vertical";
+export const ChartOrientations: ChartOrientation[] = ["horizontal", "vertical"];
+
 export interface ChartCustomization {
-  theme: {
-    palette: {
-      selected: ChartColorPalette;
-    };
-    type: "light" | "dark";
-  };
   text: {
     title: {
+      show: boolean;
       text: string;
       color: string;
-      align: "left" | "center" | "right";
+      textAlign: "left" | "center" | "right";
+      textDecoration: "none" | "underline";
+      fontFamily: ChartTextFontFamily;
+      fontStyle: "normal" | "italic";
+      fontWeight: "normal" | "bold";
     };
     subtitle: {
+      show: boolean;
       text: string;
       color: string;
-      align: "left" | "center" | "right";
+      textAlign: "left" | "center" | "right";
+      textDecoration: "none" | "underline";
+      fontFamily: ChartTextFontFamily;
+      fontStyle: "normal" | "italic";
+      fontWeight: "normal" | "bold";
     };
     footerTitle: {
+      show: boolean;
       text: string;
       color: string;
-      align: "left" | "center" | "right";
+      textAlign: "left" | "center" | "right";
+      textDecoration: "none" | "underline";
+      fontFamily: ChartTextFontFamily;
+      fontStyle: "bold" | "normal" | "italic" | "oblique";
+      fontWeight: "normal" | "bold";
     };
     footerSubtitle: {
+      show: boolean;
       text: string;
       color: string;
-      align: "left" | "center" | "right";
+      textAlign: "left" | "center" | "right";
+      textDecoration: "none" | "underline";
+      fontFamily: ChartTextFontFamily;
+      fontStyle: "bold" | "normal" | "italic" | "oblique";
+      fontWeight: "normal" | "bold";
     };
   };
   labelist: {
@@ -180,11 +206,15 @@ export interface ChartCustomization {
       show: boolean;
       position: ChartLabelistPosition;
       offset: number;
+      color: string;
+      orientation: "horizontal" | "vertical";
     };
     value: {
       show: boolean;
       position: ChartLabelistPosition;
       offset: number;
+      color: string;
+      orientation: "horizontal" | "vertical";
     };
   };
   xAxis: {
@@ -213,6 +243,8 @@ export interface ChartCustomization {
   };
   legend: {
     show: boolean;
+    verticalAlign: "top" | "middle" | "bottom";
+    align: "left" | "center" | "right";
   };
   tooltip: {
     show: boolean;
@@ -234,6 +266,7 @@ export interface ChartCustomization {
   dot: {
     show: boolean;
     activeSize: number;
+    activeIndex: number;
   };
   active: {
     show: boolean;
@@ -339,38 +372,47 @@ export const ChartShadowStyles: {
 
 export type ChartFrame =
   | "none"
-  | "window_light"
-  | "window_dark"
   | "macos_light"
   | "macos_dark"
-  | "chrome_light"
-  | "chrome_dark";
+  | "arc"
+  | "stroke";
 
 export const ChartFrames: ChartFrame[] = [
   "none",
-  "window_light",
-  "window_dark",
   "macos_light",
   "macos_dark",
-  // "chrome_light",
-  // "chrome_dark",
+  "stroke",
+  "arc",
 ];
 
-export interface ChartScreenshot {
+export type ChartTheme =
+  | "default"
+  | "palette"
+  | "shappire"
+  | "ruby"
+  | "emerald"
+  | "daylight";
+
+export const ChartThemes: ChartTheme[] = [
+  "default",
+  "palette",
+  "shappire",
+  "ruby",
+  "emerald",
+  "daylight",
+];
+
+export interface ChartStyle {
   content: {
+    theme: {
+      selected: ChartTheme;
+      type: "light" | "dark";
+    };
     frame: ChartFrame;
     scale: number;
     rotate: number;
     width: number;
     shadow: string;
-    background: {
-      color: string;
-    };
-    border: {
-      width: number;
-      radius: number;
-      color: string;
-    };
   };
   canvas: {
     width: number;
@@ -383,6 +425,12 @@ export interface ChartScreenshot {
       radius: number;
     };
   };
+}
+
+export type ChartDownloadFileType = "jpeg" | "png" | "svg" | "pdf";
+
+export interface ChartDownload {
+  chartRef: React.RefObject<HTMLDivElement> | null;
 }
 
 export interface ChartData {
@@ -398,8 +446,10 @@ interface ChartState {
   setChartData: (data: ChartData[]) => void;
   chartCustomization: ChartCustomization;
   setChartCustomization: (customization: ChartCustomization) => void;
-  chartScreenshot: ChartScreenshot;
-  setChartScreenshot: (screenshot: ChartScreenshot) => void;
+  chartStyle: ChartStyle;
+  setChartStyle: (style: ChartStyle) => void;
+  chartDownload: ChartDownload;
+  setChartDownload: (download: ChartDownload) => void;
 }
 
 export const useChartStore = create<ChartState>()((set) => ({
@@ -408,63 +458,65 @@ export const useChartStore = create<ChartState>()((set) => ({
     variant: "default",
   },
   setChartType: (chartType: ChartType) => set({ chartType }),
-  chartData: [
-    {
-      id: 1,
-      label: "January",
-      "Data 1": 1000,
-    },
-    {
-      id: 2,
-      label: "February",
-      "Data 1": 2000,
-    },
-    {
-      id: 3,
-      label: "March",
-      "Data 1": 1000,
-    },
-  ],
+  chartData: [],
   setChartData: (data: ChartData[]) => set({ chartData: data }),
   chartCustomization: {
-    theme: {
-      palette: {
-        selected: "default",
-      },
-      type: "light",
-    },
     text: {
       title: {
+        show: true,
         text: "Report Title",
         color: "#000000",
-        align: "left",
+        textAlign: "left",
+        textDecoration: "none",
+        fontFamily: "inter",
+        fontStyle: "normal",
+        fontWeight: "bold",
       },
       subtitle: {
+        show: true,
         text: "20 June - 12 August 2024",
         color: "#000000",
-        align: "left",
+        textAlign: "left",
+        textDecoration: "none",
+        fontFamily: "inter",
+        fontStyle: "normal",
+        fontWeight: "normal",
       },
       footerTitle: {
+        show: true,
         text: "Trending up 20% since last month",
         color: "#000000",
-        align: "left",
+        textAlign: "left",
+        textDecoration: "none",
+        fontFamily: "inter",
+        fontStyle: "normal",
+        fontWeight: "normal",
       },
       footerSubtitle: {
+        show: true,
         text: "Showing total visitors for the last 6 months",
         color: "#000000",
-        align: "left",
+        textAlign: "left",
+        textDecoration: "none",
+        fontFamily: "inter",
+        fontStyle: "normal",
+        fontWeight: "normal",
       },
     },
     labelist: {
       key: {
         show: false,
-        position: "outside",
+        position: "center",
         offset: 12,
+        color: "#FFFFFF",
+        orientation: "horizontal",
       },
       value: {
         show: false,
-        position: "top",
+        position: "center",
         offset: 12,
+        color: "#000000",
+        orientation: "horizontal",
       },
     },
     xAxis: {
@@ -493,6 +545,8 @@ export const useChartStore = create<ChartState>()((set) => ({
     },
     legend: {
       show: true,
+      verticalAlign: "bottom",
+      align: "center",
     },
     tooltip: {
       show: false,
@@ -513,49 +567,50 @@ export const useChartStore = create<ChartState>()((set) => ({
     },
     dot: {
       show: false,
+      activeIndex: 1,
       activeSize: 2,
     },
     active: {
       show: false,
       index: 0,
-      fill: "#000",
+      fill: "#000000",
       fillOpacity: 0.5,
       strokeStyle: "solid",
-      strokeColor: "#ffffff",
+      strokeColor: "#000000",
       strokeOpacity: 1,
       strokeWidth: 2,
     },
   },
   setChartCustomization: (customization: ChartCustomization) =>
     set({ chartCustomization: customization }),
-  chartScreenshot: {
+  chartStyle: {
     content: {
+      theme: {
+        selected: "default",
+        type: "light",
+      },
       frame: "none",
       scale: 100,
       rotate: 0,
       shadow: "0 0 #0000",
       width: 500,
-      background: {
-        color: "#ffffff",
-      },
-      border: {
-        width: 0,
-        radius: 8,
-        color: "#ffffff",
-      },
     },
     canvas: {
       background: {
         color: "#e5e7eb",
-        opacity: 0.1,
+        opacity: 0.8,
       },
       width: 1616,
       height: 1414,
       border: {
-        radius: 8,
+        radius: 0,
       },
     },
   },
-  setChartScreenshot: (screenshot: ChartScreenshot) =>
-    set({ chartScreenshot: screenshot }),
+  setChartStyle: (style: ChartStyle) => set({ chartStyle: style }),
+  chartDownload: {
+    chartRef: null,
+  },
+  setChartDownload: (download: ChartDownload) =>
+    set({ chartDownload: download }),
 }));

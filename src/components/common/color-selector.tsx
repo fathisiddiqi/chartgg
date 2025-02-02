@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronDown, Ban, Paintbrush } from "lucide-react";
+import { Ban, Paintbrush } from "lucide-react";
 import { HexColorPicker } from "react-colorful";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,6 +9,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
 
 const colorGroups = [
   [
@@ -64,8 +65,17 @@ const simpleColors = [
   "#50E3C2",
 ];
 
-export default function ColorSelector() {
-  const [selectedColor, setSelectedColor] = useState("#000000");
+export default function ColorSelector({
+  selectedColor,
+  setSelectedColor,
+  triggerClassName,
+  disabled,
+}: {
+  selectedColor: string;
+  setSelectedColor: (color: string) => void;
+  triggerClassName?: string;
+  disabled?: boolean;
+}) {
   const [isCustom, setIsCustom] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -83,7 +93,12 @@ export default function ColorSelector() {
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
-        <Button variant="outline" className="w-[180px] justify-between">
+        <Button
+          variant="outline"
+          size="sm"
+          className={cn("w-32 justify-between", triggerClassName)}
+          disabled={disabled}
+        >
           <div className="flex items-center">
             {selectedColor === "none" ? (
               <Ban className="w-4 h-4 mr-2 text-muted-foreground" />
@@ -101,7 +116,6 @@ export default function ColorSelector() {
                 : selectedColor}
             </span>
           </div>
-          <ChevronDown className="h-4 w-4 ml-2" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-64 p-0">

@@ -19,6 +19,11 @@ const config = {
       },
     },
     extend: {
+      scale: {
+        "70": "0.7",
+        "40": "0.4",
+        "30": "0.3",
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -93,6 +98,8 @@ const config = {
       },
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
+        poppins: ["var(--font-poppins)", ...fontFamily.sans],
+        roboto: ["var(--font-roboto)", ...fontFamily.sans],
       },
     },
   },
