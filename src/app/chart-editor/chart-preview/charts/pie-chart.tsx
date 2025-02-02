@@ -1,4 +1,3 @@
-import CustomizedLabelist from "@/components/chart/customized-labelist";
 import {
   ChartConfig,
   ChartContainer,

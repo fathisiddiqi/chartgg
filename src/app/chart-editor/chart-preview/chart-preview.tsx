@@ -20,6 +20,7 @@ import ScatterChartPreview from "./charts/scatter-chart";
 import useChartTheme from "@/hook/use-chart-theme";
 import { Text } from "@/components/ui/text";
 import { useRef, useEffect } from "react";
+import Image from "next/image";
 
 const ChartPreview = () => {
   const { chartType, chartStyle, chartCustomization, setChartDownload } =
@@ -31,7 +32,7 @@ const ChartPreview = () => {
     setChartDownload({
       chartRef,
     });
-  }, [chartRef]);
+  }, [chartRef, setChartDownload]);
 
   return (
     <div
@@ -274,7 +275,9 @@ const Watermark = ({ className }: { className?: string }) => {
         <Text variant="sm" className="m-auto">
           made with
         </Text>
-        <img
+        <Image
+          width={14}
+          height={14}
           src="/logo.svg"
           alt="logo"
           className="w-[14px] h-[14px] object-contain m-auto"
