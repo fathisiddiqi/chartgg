@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { ChartColorPalette } from "@/store/chart";
+import { ChartTheme } from "@/store/chart";
 import React from "react";
 
 const ColorPalette = ({
@@ -43,11 +43,11 @@ const iconColors = {
   midnight: ["#9E9E9E", "#757575", "#616161", "#424242"],
 };
 
-const ColorPaletteIcon = ({
+const ThemeIcon = ({
   variant,
   isActive,
 }: {
-  variant: ChartColorPalette;
+  variant: ChartTheme;
   isActive?: boolean;
 }) => {
   return (
@@ -55,4 +55,4 @@ const ColorPaletteIcon = ({
   );
 };
 
-export default ColorPaletteIcon;
+export default ThemeIcon;

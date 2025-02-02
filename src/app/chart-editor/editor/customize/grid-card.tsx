@@ -1,11 +1,4 @@
 import { CustomizationCardProps } from "@/types";
-import {
-  Accordion,
-  AccordionItem,
-  AccordionTrigger,
-  AccordionContent,
-} from "@/components/ui/accordion";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Switch } from "@/components/custom-ui/switch";
 import { Text } from "@/components/ui/text";
 

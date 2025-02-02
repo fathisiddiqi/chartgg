@@ -6,7 +6,7 @@ import {
   PieChart,
   ScatterChart,
 } from "lucide-react";
-import { RadarChart, RadialChart } from "@/components/icon/chart-icon";
+import { RadarChart } from "@/components/icon/chart-icon";
 import {
   AreaChartVariants,
   BarChartVariants,

@@ -1,5 +1,4 @@
 import { CustomizationCardProps } from "@/types";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Switch } from "@/components/custom-ui/switch";
 import { Text } from "@/components/ui/text";
 import TextAlign from "@/components/common/text-align";

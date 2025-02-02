@@ -3,7 +3,6 @@ import { Switch } from "@/components/custom-ui/switch";
 import { Text } from "@/components/ui/text";
 import {
   ChartLabelistPosition,
-  ChartLabelistPositions,
   ChartLabelistPositionsOfCartesian,
   ChartLabelistPositionsOfPolar,
   ChartOrientation,

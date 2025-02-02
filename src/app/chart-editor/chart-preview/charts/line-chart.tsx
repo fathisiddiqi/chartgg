@@ -12,7 +12,6 @@ import { useChartStore } from "@/store/chart";
 import { useEffect, useState } from "react";
 import {
   CartesianGrid,
-  Dot,
   LabelList,
   Line,
   LineChart,

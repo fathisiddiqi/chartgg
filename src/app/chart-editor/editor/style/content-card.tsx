@@ -16,7 +16,7 @@ import {
   ChartThemes,
 } from "@/store/chart";
 import { StyleCardProps } from "@/types";
-import ThemeIcon from "@/components/icon/color-palette-icon";
+import ThemeIcon from "@/components/icon/theme-icon";
 
 const ContentCard = ({ chartStyle, setChartStyle }: StyleCardProps) => {
   return (

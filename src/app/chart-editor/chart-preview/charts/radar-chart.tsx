@@ -18,7 +18,6 @@ import {
   PolarRadiusAxis,
   Radar,
   RadarChart,
-  Sector,
 } from "recharts";
 
 const RadarChartPreview = () => {

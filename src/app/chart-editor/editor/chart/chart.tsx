@@ -1,6 +1,6 @@
 import { useChartStore } from "@/store/chart";
 import ChooseChartType from "./choose-chart-type";
-import { ScrollArea, ScrollBar } from "@/components/custom-ui/scroll-area";
+import { ScrollArea } from "@/components/custom-ui/scroll-area";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { InfoIcon } from "lucide-react";
 

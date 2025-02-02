@@ -59,7 +59,7 @@ const TallyFormPopup = ({
   },
 }: {
   formId: string;
-  options?: any;
+  options?: Options;
 }) => {
   useEffect(() => {
     // Load the Tally script dynamically

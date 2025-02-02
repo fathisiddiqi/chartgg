@@ -23,8 +23,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Text } from "@/components/ui/text";
-import { Slider } from "@/components/ui/slider";
-import { Input } from "@/components/custom-ui/input";
 import { ChartDownloadFileType, useChartStore } from "@/store/chart";
 import { useDownloadChart } from "@/service/chart";
 
