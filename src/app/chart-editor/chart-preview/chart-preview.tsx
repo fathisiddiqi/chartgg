@@ -46,10 +46,7 @@ const ChartPreview = () => {
       }}
     >
       <Watermark />
-      <div
-        style={{}}
-        className="flex items-center justify-center mx-auto bg-red-500 w-full h-full scale-50"
-      >
+      <div className="flex items-center justify-center mx-auto scale-50">
         {/* Chart Container */}
         <div
           style={{
