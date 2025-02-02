@@ -79,9 +79,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         type={type === "number" ? "text" : type}
         className={cn(inputVariants({ variant, className }))}
         ref={ref}
-        onKeyDown={type === "number" ? handleKeyDownNumber : undefined}
-        onChange={type === "number" ? handleChangeNumber : undefined}
-        inputMode="numeric"
+        onKeyDown={type === "number" ? handleKeyDownNumber : onKeyDown}
+        onChange={type === "number" ? handleChangeNumber : onChange}
+        inputMode={type === "number" ? "numeric" : undefined}
         {...props}
       />
     );

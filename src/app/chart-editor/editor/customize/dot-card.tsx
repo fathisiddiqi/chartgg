@@ -4,6 +4,8 @@ import { Text } from "@/components/ui/text";
 import { Slider } from "@/components/ui/slider";
 import { CustomizationCardProps } from "@/types";
 import { Input } from "@/components/custom-ui/input";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { InfoIcon } from "lucide-react";
 
 const DotCard = ({
   chartCustomization,
@@ -69,6 +71,16 @@ const DotCard = ({
             disabled={!chartCustomization.dot.show}
           />
         </div>
+        <Alert
+          variant="default"
+          className={chartCustomization.dot.show ? "mt-2" : "hidden"}
+        >
+          <InfoIcon size={16} />
+          <AlertTitle className="text-xs font-medium">Dots</AlertTitle>
+          <AlertDescription className="text-xs">
+            Active dot index will follow tooltip index
+          </AlertDescription>
+        </Alert>
       </div>
     </div>
   );

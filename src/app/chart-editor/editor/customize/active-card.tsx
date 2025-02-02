@@ -45,7 +45,7 @@ const ActiveCard = ({
           <Slider
             value={[chartCustomization.active.index + 1]}
             min={0}
-            max={Number(chartData.length - 1)}
+            max={Number(chartData.length)}
             step={1}
             onValueChange={(value) =>
               setChartCustomization({

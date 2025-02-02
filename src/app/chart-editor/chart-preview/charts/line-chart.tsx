@@ -5,13 +5,14 @@ import {
   ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart";
+} from "@/components/custom-ui/chart";
 import useChartTheme from "@/hook/use-chart-theme";
 import { replaceSpaceWithUnderscore } from "@/lib/utils";
 import { useChartStore } from "@/store/chart";
 import { useEffect, useState } from "react";
 import {
   CartesianGrid,
+  Dot,
   LabelList,
   Line,
   LineChart,
@@ -69,9 +70,10 @@ const LineChartPreview = () => {
           accessibilityLayer
           data={chartData}
           margin={{
-            left: 20,
+            left: 30,
             right: 30,
             top: 20,
+            bottom: 12,
           }}
         >
           <CartesianGrid
@@ -90,10 +92,15 @@ const LineChartPreview = () => {
             />
           )}
           {chartCustomization.yAxis.show && (
-            <YAxis axisLine={false} tickLine={false} reversed={false} />
+            <YAxis
+              axisLine={chartCustomization.yAxis.axisLine}
+              tickLine={chartCustomization.yAxis.tickLine}
+              reversed={chartCustomization.yAxis.reversed}
+            />
           )}
           <ChartTooltip
             cursor={chartCustomization.tooltip.focused}
+            trigger="click"
             content={
               <ChartTooltipContent
                 indicator={
@@ -112,19 +119,18 @@ const LineChartPreview = () => {
             }
           />
           {chartCustomization.legend.show && (
-            <>
-              {chartKeys.length > 0 &&
-                chartKeys.map((key) => (
-                  <ChartLegend
-                    key={key}
-                    content={
-                      <ChartLegendContent
-                        nameKey={replaceSpaceWithUnderscore(key)}
-                      />
-                    }
-                  />
-                ))}
-            </>
+            <ChartLegend
+              verticalAlign={chartCustomization.legend.verticalAlign}
+              align={chartCustomization.legend.align}
+              iconType="rect"
+              payload={chartKeys.map((key) => ({
+                value: key,
+                type: "rect",
+                color: `var(--color-${replaceSpaceWithUnderscore(key)})`,
+                dataKey: key,
+              }))}
+              content={<ChartLegendContent />}
+            />
           )}
           {chartKeys.map((key) => (
             <Line
@@ -139,22 +145,34 @@ const LineChartPreview = () => {
                 r: chartCustomization.dot.activeSize,
               }}
             >
-              {chartCustomization.labelist.value.show && (
-                <LabelList
-                  dataKey={key}
-                  position={chartCustomization.labelist.value.position}
-                  offset={chartCustomization.labelist.value.offset}
-                  className="fill-foreground"
-                  fontSize={10}
-                />
-              )}
               {chartCustomization.labelist.key.show && (
                 <LabelList
                   dataKey="label"
                   position={chartCustomization.labelist.key.position}
                   offset={chartCustomization.labelist.key.offset}
-                  fill="fill-foreground"
+                  stroke="none"
+                  fill={chartCustomization.labelist.key.color}
                   fontSize={10}
+                  angle={
+                    chartCustomization.labelist.key.orientation === "vertical"
+                      ? -90
+                      : 0
+                  }
+                />
+              )}
+              {chartCustomization.labelist.value.show && (
+                <LabelList
+                  dataKey={key}
+                  position={chartCustomization.labelist.value.position}
+                  offset={chartCustomization.labelist.value.offset}
+                  stroke="none"
+                  fill={chartCustomization.labelist.value.color}
+                  fontSize={10}
+                  angle={
+                    chartCustomization.labelist.value.orientation === "vertical"
+                      ? -90
+                      : 0
+                  }
                 />
               )}
             </Line>

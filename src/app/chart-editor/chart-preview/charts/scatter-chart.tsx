@@ -5,12 +5,20 @@ import {
   ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart";
+} from "@/components/custom-ui/chart";
 import useChartTheme from "@/hook/use-chart-theme";
 import { replaceSpaceWithUnderscore } from "@/lib/utils";
 import { useChartStore } from "@/store/chart";
 import { useEffect, useState } from "react";
-import { CartesianGrid, Scatter, ScatterChart, XAxis, YAxis } from "recharts";
+import {
+  CartesianGrid,
+  LabelList,
+  Rectangle,
+  Scatter,
+  ScatterChart,
+  XAxis,
+  YAxis,
+} from "recharts";
 
 const ScatterChartPreview = () => {
   const { chartData, chartCustomization, chartStyle } = useChartStore(
@@ -75,10 +83,15 @@ const ScatterChartPreview = () => {
             />
           )}
           {chartCustomization.yAxis.show && (
-            <YAxis axisLine={false} tickLine={false} reversed={false} />
+            <YAxis
+              axisLine={chartCustomization.yAxis.axisLine}
+              tickLine={chartCustomization.yAxis.tickLine}
+              reversed={chartCustomization.yAxis.reversed}
+            />
           )}
           <ChartTooltip
             cursor={chartCustomization.tooltip.focused}
+            trigger="click"
             content={
               <ChartTooltipContent
                 indicator={
@@ -97,19 +110,18 @@ const ScatterChartPreview = () => {
             }
           />
           {chartCustomization.legend.show && (
-            <>
-              {chartKeys.length > 0 &&
-                chartKeys.map((key) => (
-                  <ChartLegend
-                    key={key}
-                    content={
-                      <ChartLegendContent
-                        nameKey={replaceSpaceWithUnderscore(key)}
-                      />
-                    }
-                  />
-                ))}
-            </>
+            <ChartLegend
+              verticalAlign={chartCustomization.legend.verticalAlign}
+              align={chartCustomization.legend.align}
+              iconType="rect"
+              payload={chartKeys.map((key) => ({
+                value: key,
+                type: "rect",
+                color: `var(--color-${replaceSpaceWithUnderscore(key)})`,
+                dataKey: key,
+              }))}
+              content={<ChartLegendContent />}
+            />
           )}
           {chartKeys.map((key) => (
             <Scatter
@@ -118,7 +130,61 @@ const ScatterChartPreview = () => {
               name={key}
               fill={`var(--color-${replaceSpaceWithUnderscore(key)})`}
               radius={4}
-            />
+              {...(chartCustomization.active.show
+                ? {
+                    activeIndex: chartCustomization.active.index,
+                    activeShape: (props: any) => (
+                      <Rectangle
+                        {...props}
+                        fillOpacity={chartCustomization.active.fillOpacity}
+                        fill={chartCustomization.active.fill}
+                        stroke={chartCustomization.active.strokeColor}
+                        strokeWidth={chartCustomization.active.strokeWidth}
+                        strokeOpacity={chartCustomization.active.strokeOpacity}
+                        strokeDasharray={
+                          chartCustomization.active.strokeStyle === "dashed"
+                            ? "8 8"
+                            : chartCustomization.active.strokeStyle === "dotted"
+                            ? "1 2"
+                            : undefined
+                        }
+                        strokeDashoffset="2"
+                      />
+                    ),
+                  }
+                : {})}
+            >
+              {chartCustomization.labelist.key.show && (
+                <LabelList
+                  dataKey="label"
+                  position={chartCustomization.labelist.key.position}
+                  offset={chartCustomization.labelist.key.offset}
+                  stroke="none"
+                  fill={chartCustomization.labelist.key.color}
+                  fontSize={10}
+                  angle={
+                    chartCustomization.labelist.key.orientation === "vertical"
+                      ? -90
+                      : 0
+                  }
+                />
+              )}
+              {chartCustomization.labelist.value.show && (
+                <LabelList
+                  dataKey={key}
+                  position={chartCustomization.labelist.value.position}
+                  offset={chartCustomization.labelist.value.offset}
+                  stroke="none"
+                  fill={chartCustomization.labelist.value.color}
+                  fontSize={10}
+                  angle={
+                    chartCustomization.labelist.value.orientation === "vertical"
+                      ? -90
+                      : 0
+                  }
+                />
+              )}
+            </Scatter>
           ))}
         </ScatterChart>
       )}

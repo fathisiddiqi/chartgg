@@ -2,7 +2,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -20,16 +19,23 @@ import RadialChartPreview from "./charts/radial-chart";
 import ScatterChartPreview from "./charts/scatter-chart";
 import useChartTheme from "@/hook/use-chart-theme";
 import { Text } from "@/components/ui/text";
-import Image from "next/image";
+import { useRef, useEffect } from "react";
 
 const ChartPreview = () => {
-  const { chartType, chartStyle, chartCustomization } = useChartStore(
-    (state) => state
-  );
+  const { chartType, chartStyle, chartCustomization, setChartDownload } =
+    useChartStore((state) => state);
   const { backgroundColor } = useChartTheme(chartStyle.content.theme.selected);
+  const chartRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setChartDownload({
+      chartRef,
+    });
+  }, [chartRef]);
 
   return (
     <div
+      ref={chartRef}
       className="h-[calc(100vh-100px)] w-full flex justify-center items-center relative rounded-md"
       style={{
         backgroundColor: `rgba(${hexToRGB(
@@ -38,21 +44,10 @@ const ChartPreview = () => {
         borderRadius: chartStyle.canvas.border.radius,
       }}
     >
-      <div className="absolute bottom-10 rounded-md bg-white/50 p-2 shadow-md z-10 opacity-70">
-        <div className="flex gap-2 items-center">
-          <Text variant="sm">made with</Text>
-          <Image src="/logo.svg" alt="logo" width={14} height={14} />
-          <Text variant="sm" className="font-bold">
-            ChartSS
-          </Text>
-        </div>
-        <Text variant="sm"></Text>
-      </div>
+      <Watermark />
       <div
-        style={{
-          objectFit: "contain",
-        }}
-        className="flex items-center justify-center mx-auto scale-50"
+        style={{}}
+        className="flex items-center justify-center mx-auto bg-red-500 w-full h-full scale-50"
       >
         {/* Chart Container */}
         <div
@@ -125,61 +120,63 @@ const ChartPreview = () => {
               </CardHeader>
               <CardContent>
                 <ChartTypePreview chartType={chartType.type} />
-                {chartCustomization.text.footerTitle.show && (
-                  <div
-                    className={cn(
-                      "text-muted-foreground",
-                      chartCustomization.text.footerSubtitle.fontFamily ===
-                        "roboto"
-                        ? "font-roboto"
-                        : chartCustomization.text.footerSubtitle.fontFamily ===
-                          "poppins"
-                        ? "font-poppins"
-                        : "font-sans"
-                    )}
-                    style={{
-                      color: chartCustomization.text.footerTitle.color,
-                      textAlign: chartCustomization.text.footerTitle.textAlign,
-                      textDecoration:
-                        chartCustomization.text.footerTitle.textDecoration,
-                      fontStyle: chartCustomization.text.footerTitle.fontStyle,
-                      fontWeight:
-                        chartCustomization.text.footerTitle.fontWeight,
-                    }}
-                  >
-                    {chartCustomization.text.footerTitle.text}
-                  </div>
-                )}
-                {chartCustomization.text.footerSubtitle.show && (
-                  <div
-                    className={cn(
-                      "text-muted-foreground",
-                      chartCustomization.text.footerSubtitle.fontFamily ===
-                        "roboto"
-                        ? "font-roboto"
-                        : chartCustomization.text.footerSubtitle.fontFamily ===
-                          "poppins"
-                        ? "font-poppins"
-                        : "font-sans"
-                    )}
-                    style={{
-                      color: chartCustomization.text.footerSubtitle.color,
-                      textAlign:
-                        chartCustomization.text.footerSubtitle.textAlign,
-                      textDecoration:
-                        chartCustomization.text.footerSubtitle.textDecoration,
-                      fontStyle:
-                        chartCustomization.text.footerSubtitle.fontStyle,
-                      fontWeight:
-                        chartCustomization.text.footerSubtitle.fontWeight,
-                    }}
-                  >
-                    {chartCustomization.text.footerSubtitle.text}
-                  </div>
-                )}
+                <div className="mt-4">
+                  {chartCustomization.text.footerTitle.show && (
+                    <div
+                      className={cn(
+                        "text-muted-foreground",
+                        chartCustomization.text.footerSubtitle.fontFamily ===
+                          "roboto"
+                          ? "font-roboto"
+                          : chartCustomization.text.footerSubtitle
+                              .fontFamily === "poppins"
+                          ? "font-poppins"
+                          : "font-sans"
+                      )}
+                      style={{
+                        color: chartCustomization.text.footerTitle.color,
+                        textAlign:
+                          chartCustomization.text.footerTitle.textAlign,
+                        textDecoration:
+                          chartCustomization.text.footerTitle.textDecoration,
+                        fontStyle:
+                          chartCustomization.text.footerTitle.fontStyle,
+                        fontWeight:
+                          chartCustomization.text.footerTitle.fontWeight,
+                      }}
+                    >
+                      {chartCustomization.text.footerTitle.text}
+                    </div>
+                  )}
+                  {chartCustomization.text.footerSubtitle.show && (
+                    <div
+                      className={cn(
+                        "text-muted-foreground",
+                        chartCustomization.text.footerSubtitle.fontFamily ===
+                          "roboto"
+                          ? "font-roboto"
+                          : chartCustomization.text.footerSubtitle
+                              .fontFamily === "poppins"
+                          ? "font-poppins"
+                          : "font-sans"
+                      )}
+                      style={{
+                        color: chartCustomization.text.footerSubtitle.color,
+                        textAlign:
+                          chartCustomization.text.footerSubtitle.textAlign,
+                        textDecoration:
+                          chartCustomization.text.footerSubtitle.textDecoration,
+                        fontStyle:
+                          chartCustomization.text.footerSubtitle.fontStyle,
+                        fontWeight:
+                          chartCustomization.text.footerSubtitle.fontWeight,
+                      }}
+                    >
+                      {chartCustomization.text.footerSubtitle.text}
+                    </div>
+                  )}
+                </div>
               </CardContent>
-
-              <CardFooter className="flex-col gap-2 text-sm"></CardFooter>
             </Card>
           </ChartFrame>
         </div>
@@ -263,4 +260,29 @@ const ChartTypePreview = ({ chartType }: { chartType: ChartMainType }) => {
   };
 
   return chartTypeToPreview[chartType];
+};
+
+const Watermark = ({ className }: { className?: string }) => {
+  return (
+    <div
+      className={cn(
+        "absolute bottom-[5%] left-1/2 -translate-x-1/2 bg-white/50 p-2 rounded-md shadow-lg z-10 opacity-70",
+        className
+      )}
+    >
+      <div className="flex gap-2 my-auto h-full">
+        <Text variant="sm" className="m-auto">
+          made with
+        </Text>
+        <img
+          src="/logo.svg"
+          alt="logo"
+          className="w-[14px] h-[14px] object-contain m-auto"
+        />
+        <Text variant="sm" className="font-bold m-auto">
+          ChartSS
+        </Text>
+      </div>
+    </div>
+  );
 };

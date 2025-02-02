@@ -1,5 +1,4 @@
 import { AlignCenter, AlignLeft, AlignRight } from "lucide-react";
-import { Button } from "../ui/button";
 import { Toggle } from "../custom-ui/toggle";
 
 const TextAlign = ({

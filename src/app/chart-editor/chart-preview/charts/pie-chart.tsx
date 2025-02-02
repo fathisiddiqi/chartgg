@@ -1,3 +1,4 @@
+import CustomizedLabelist from "@/components/chart/customized-labelist";
 import {
   ChartConfig,
   ChartContainer,
@@ -5,12 +6,19 @@ import {
   ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart";
+} from "@/components/custom-ui/chart";
 import useChartTheme from "@/hook/use-chart-theme";
 import { replaceSpaceWithUnderscore } from "@/lib/utils";
 import { ChartData, useChartStore } from "@/store/chart";
 import { useEffect, useState } from "react";
-import { LabelList, Pie, PieChart, Sector } from "recharts";
+import {
+  LabelList,
+  Pie,
+  PieChart,
+  PolarAngleAxis,
+  PolarRadiusAxis,
+  Sector,
+} from "recharts";
 import { PieSectorDataItem } from "recharts/types/polar/Pie";
 
 const PieChartPreview = () => {
@@ -23,7 +31,9 @@ const PieChartPreview = () => {
 
   const [chartKeys, setChartKeys] = useState<string[]>([]);
   const [chartConfig, setChartConfig] = useState<ChartConfig>({});
-  const [pieChartData, setPieChartData] = useState<ChartData[]>([]);
+  const [pieChartData, setPieChartData] = useState<
+    Array<ChartData & { fill: string }>
+  >([]);
   const [pieChartKeys, setPieChartKeys] = useState<string[]>([]);
 
   useEffect(() => {
@@ -39,7 +49,7 @@ const PieChartPreview = () => {
 
   useEffect(() => {
     if (pieChartKeys?.length > 0) {
-      setChartConfig((prevConfig) => ({
+      const config = (prevConfig: ChartConfig) => ({
         ...prevConfig,
         ...Object.fromEntries(
           pieChartKeys.map((key, index) => [
@@ -50,12 +60,20 @@ const PieChartPreview = () => {
             },
           ])
         ),
-      }));
+        [chartKeys[0]]: {
+          label: chartKeys[0],
+          color: `hsl(${chartColors[1]})`,
+        },
+      });
+
+      setChartConfig(config);
     }
 
     setPieChartData(
       chartData.map((item, index) => ({
-        ...item,
+        id: item.id,
+        label: item.label,
+        [chartKeys[0]]: Number(item[chartKeys[0]]),
         fill: `hsl(${chartColors[index + 1]})`,
       }))
     );
@@ -79,14 +97,17 @@ const PieChartPreview = () => {
         >
           <ChartTooltip
             cursor={chartCustomization.tooltip.focused}
+            trigger="click"
             content={
               <ChartTooltipContent
+                nameKey={chartKeys[0]}
                 indicator={
                   chartCustomization.tooltip.indicator !== "none"
                     ? chartCustomization.tooltip.indicator
                     : undefined
                 }
                 hideIndicator={chartCustomization.tooltip.indicator === "none"}
+                hideLabel
               />
             }
             active={!!chartCustomization.tooltip.show}
@@ -96,11 +117,41 @@ const PieChartPreview = () => {
                 : undefined
             }
           />
-          <ChartLegend content={<ChartLegendContent nameKey="label" />} />
+          {chartCustomization.polarAngleAxis.show && (
+            <PolarAngleAxis
+              angleAxisId="angleAxis"
+              dataKey="label"
+              tickLine={chartCustomization.polarAngleAxis.tickLine}
+              axisLine={chartCustomization.polarAngleAxis.axisLine}
+              tickFormatter={(value: string) =>
+                value.slice(0, chartCustomization.polarAngleAxis.charLength)
+              }
+            />
+          )}
+          {chartCustomization.polarRadiusAxis.show && (
+            <PolarRadiusAxis
+              radiusAxisId="radiusAxis"
+              axisLine={chartCustomization.polarRadiusAxis.axisLine}
+              tickLine={chartCustomization.polarRadiusAxis.tickLine}
+              reversed={chartCustomization.polarRadiusAxis.reversed}
+            />
+          )}
+          {chartCustomization.legend.show && (
+            <ChartLegend
+              verticalAlign={chartCustomization.legend.verticalAlign}
+              align={chartCustomization.legend.align}
+              content={<ChartLegendContent key="label" nameKey="label" />}
+            />
+          )}
+
           <Pie
             data={pieChartData}
             dataKey={chartKeys[0]}
             nameKey="label"
+            {...{
+              angleAxisId: "angleAxis",
+              radiusAxisId: "radiusAxis",
+            }}
             {...(chartCustomization.active.show
               ? {
                   activeIndex: chartCustomization.active.index,
@@ -134,8 +185,14 @@ const PieChartPreview = () => {
                 dataKey={chartKeys[0]}
                 position={chartCustomization.labelist.value.position}
                 offset={chartCustomization.labelist.value.offset}
-                className="fill-foreground"
+                fill={chartCustomization.labelist.value.color}
+                stroke="none"
                 fontSize={10}
+                angle={
+                  chartCustomization.labelist.value.orientation === "vertical"
+                    ? -90
+                    : 0
+                }
               />
             )}
             {chartCustomization.labelist.key.show && (
@@ -143,8 +200,14 @@ const PieChartPreview = () => {
                 dataKey="label"
                 position={chartCustomization.labelist.key.position}
                 offset={chartCustomization.labelist.key.offset}
-                fill="#000000"
+                stroke="none"
                 fontSize={10}
+                fill={chartCustomization.labelist.key.color}
+                angle={
+                  chartCustomization.labelist.key.orientation === "vertical"
+                    ? -90
+                    : 0
+                }
               />
             )}
           </Pie>

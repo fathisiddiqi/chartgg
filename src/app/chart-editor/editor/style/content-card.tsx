@@ -187,7 +187,7 @@ const ContentCard = ({ chartStyle, setChartStyle }: StyleCardProps) => {
           <Slider
             value={[chartStyle.content.width]}
             min={300}
-            max={1000}
+            max={850}
             step={50}
             className="flex-1"
             onValueChange={(value) =>

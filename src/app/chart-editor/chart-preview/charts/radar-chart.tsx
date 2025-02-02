@@ -5,18 +5,20 @@ import {
   ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart";
+} from "@/components/custom-ui/chart";
 import useChartTheme from "@/hook/use-chart-theme";
 import { replaceSpaceWithUnderscore } from "@/lib/utils";
 import { useChartStore } from "@/store/chart";
 import { useEffect, useState } from "react";
 import {
   CartesianGrid,
+  LabelList,
   PolarAngleAxis,
   PolarGrid,
   PolarRadiusAxis,
   Radar,
   RadarChart,
+  Sector,
 } from "recharts";
 
 const RadarChartPreview = () => {
@@ -60,7 +62,7 @@ const RadarChartPreview = () => {
 
   return (
     <ChartContainer config={chartConfig}>
-      {!chartData || chartData.length === 0 ? (
+      {!chartKeys || chartKeys.length === 0 ? (
         <div className="flex h-full items-center justify-center">
           <p className="text-muted-foreground">No data available</p>
         </div>
@@ -72,6 +74,7 @@ const RadarChartPreview = () => {
           />
           <ChartTooltip
             cursor={chartCustomization.tooltip.focused}
+            trigger="click"
             content={
               <ChartTooltipContent
                 indicator={
@@ -108,19 +111,18 @@ const RadarChartPreview = () => {
           )}
           {chartCustomization.polarGrid.show && <PolarGrid />}
           {chartCustomization.legend.show && (
-            <>
-              {chartKeys.length > 0 &&
-                chartKeys.map((key) => (
-                  <ChartLegend
-                    key={key}
-                    content={
-                      <ChartLegendContent
-                        nameKey={replaceSpaceWithUnderscore(key)}
-                      />
-                    }
-                  />
-                ))}
-            </>
+            <ChartLegend
+              verticalAlign={chartCustomization.legend.verticalAlign}
+              align={chartCustomization.legend.align}
+              iconType="rect"
+              payload={chartKeys.map((key) => ({
+                value: key,
+                type: "rect",
+                color: `var(--color-${replaceSpaceWithUnderscore(key)})`,
+                dataKey: key,
+              }))}
+              content={<ChartLegendContent />}
+            />
           )}
           {chartKeys.map((key) => (
             <Radar
@@ -134,7 +136,38 @@ const RadarChartPreview = () => {
               activeDot={{
                 r: chartCustomization.dot.activeSize,
               }}
-            ></Radar>
+            >
+              {chartCustomization.labelist.value.show && (
+                <LabelList
+                  dataKey={key}
+                  position={chartCustomization.labelist.value.position}
+                  offset={chartCustomization.labelist.value.offset}
+                  fill={chartCustomization.labelist.value.color}
+                  stroke="none"
+                  fontSize={10}
+                  angle={
+                    chartCustomization.labelist.value.orientation === "vertical"
+                      ? -90
+                      : 0
+                  }
+                />
+              )}
+              {chartCustomization.labelist.key.show && (
+                <LabelList
+                  dataKey="label"
+                  position={chartCustomization.labelist.key.position}
+                  offset={chartCustomization.labelist.key.offset}
+                  stroke="none"
+                  fontSize={10}
+                  fill={chartCustomization.labelist.key.color}
+                  angle={
+                    chartCustomization.labelist.key.orientation === "vertical"
+                      ? -90
+                      : 0
+                  }
+                />
+              )}
+            </Radar>
           ))}
         </RadarChart>
       )}

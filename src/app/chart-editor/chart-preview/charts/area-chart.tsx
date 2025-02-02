@@ -5,7 +5,7 @@ import {
   ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart";
+} from "@/components/custom-ui/chart";
 import useChartTheme from "@/hook/use-chart-theme";
 import { replaceSpaceWithUnderscore } from "@/lib/utils";
 import { useChartStore } from "@/store/chart";
@@ -58,7 +58,16 @@ const AreaChartPreview = () => {
           <p className="text-muted-foreground">No data available</p>
         </div>
       ) : (
-        <AreaChart accessibilityLayer data={chartData}>
+        <AreaChart
+          accessibilityLayer
+          data={chartData}
+          margin={{
+            left: 30,
+            right: 30,
+            top: 20,
+            bottom: 12,
+          }}
+        >
           <CartesianGrid
             vertical={chartCustomization.grid.vertical.show}
             horizontal={chartCustomization.grid.horizontal.show}
@@ -75,10 +84,15 @@ const AreaChartPreview = () => {
             />
           )}
           {chartCustomization.yAxis.show && (
-            <YAxis axisLine={false} tickLine={false} reversed={false} />
+            <YAxis
+              axisLine={chartCustomization.yAxis.axisLine}
+              tickLine={chartCustomization.yAxis.tickLine}
+              reversed={chartCustomization.yAxis.reversed}
+            />
           )}
           <ChartTooltip
             cursor={chartCustomization.tooltip.focused}
+            trigger="click"
             content={
               <ChartTooltipContent
                 indicator={
@@ -97,19 +111,18 @@ const AreaChartPreview = () => {
             }
           />
           {chartCustomization.legend.show && (
-            <>
-              {chartKeys.length > 0 &&
-                chartKeys.map((key) => (
-                  <ChartLegend
-                    key={key}
-                    content={
-                      <ChartLegendContent
-                        nameKey={replaceSpaceWithUnderscore(key)}
-                      />
-                    }
-                  />
-                ))}
-            </>
+            <ChartLegend
+              verticalAlign={chartCustomization.legend.verticalAlign}
+              align={chartCustomization.legend.align}
+              iconType="rect"
+              payload={chartKeys.map((key) => ({
+                value: key,
+                type: "rect",
+                color: `var(--color-${replaceSpaceWithUnderscore(key)})`,
+                dataKey: key,
+              }))}
+              content={<ChartLegendContent />}
+            />
           )}
           {chartKeys.map((key) => (
             <Area

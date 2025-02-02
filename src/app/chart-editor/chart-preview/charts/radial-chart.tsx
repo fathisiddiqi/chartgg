@@ -5,12 +5,18 @@ import {
   ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart";
+} from "@/components/custom-ui/chart";
 import useChartTheme from "@/hook/use-chart-theme";
 import { replaceSpaceWithUnderscore } from "@/lib/utils";
 import { ChartData, useChartStore } from "@/store/chart";
 import { useEffect, useState } from "react";
-import { RadialBar, RadialBarChart } from "recharts";
+import {
+  PolarAngleAxis,
+  PolarGrid,
+  PolarRadiusAxis,
+  RadialBar,
+  RadialBarChart,
+} from "recharts";
 
 const RadialChartPreview = () => {
   const { chartData, chartCustomization, chartStyle } = useChartStore(
@@ -79,14 +85,17 @@ const RadialChartPreview = () => {
         >
           <ChartTooltip
             cursor={chartCustomization.tooltip.focused}
+            trigger="click"
             content={
               <ChartTooltipContent
+                nameKey={chartKeys[0]}
                 indicator={
                   chartCustomization.tooltip.indicator !== "none"
                     ? chartCustomization.tooltip.indicator
                     : undefined
                 }
                 hideIndicator={chartCustomization.tooltip.indicator === "none"}
+                hideLabel
               />
             }
             active={!!chartCustomization.tooltip.show}
@@ -96,8 +105,40 @@ const RadialChartPreview = () => {
                 : undefined
             }
           />
-          <ChartLegend content={<ChartLegendContent nameKey="label" />} />
-          <RadialBar dataKey={chartKeys[0]} background />
+          {chartCustomization.polarAngleAxis.show && (
+            <PolarAngleAxis
+              angleAxisId="angleAxis"
+              dataKey="label"
+              tickLine={chartCustomization.polarAngleAxis.tickLine}
+              axisLine={chartCustomization.polarAngleAxis.axisLine}
+              tickFormatter={(value: string) =>
+                value.slice(0, chartCustomization.polarAngleAxis.charLength)
+              }
+            />
+          )}
+          {chartCustomization.polarRadiusAxis.show && (
+            <PolarRadiusAxis
+              radiusAxisId="radiusAxis"
+              axisLine={chartCustomization.polarRadiusAxis.axisLine}
+              tickLine={chartCustomization.polarRadiusAxis.tickLine}
+              reversed={chartCustomization.polarRadiusAxis.reversed}
+            />
+          )}
+          {chartCustomization.legend.show && (
+            <ChartLegend
+              verticalAlign={chartCustomization.legend.verticalAlign}
+              align={chartCustomization.legend.align}
+              content={<ChartLegendContent key="label" nameKey="label" />}
+            />
+          )}
+          {chartCustomization.polarGrid.show && <PolarGrid />}
+          <RadialBar
+            dataKey={chartKeys[0]}
+            {...{
+              angleAxisId: "angleAxis",
+              radiusAxisId: "radiusAxis",
+            }}
+          />
         </RadialBarChart>
       )}
     </ChartContainer>

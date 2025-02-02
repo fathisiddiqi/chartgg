@@ -88,6 +88,7 @@ const Customize = () => {
           <LabelistCard
             chartCustomization={chartCustomization}
             setChartCustomization={setChartCustomization}
+            chartType={chartType}
           />
         </>
       )}
@@ -231,17 +232,17 @@ const chartCustomizeMatrix: Record<
     polarGrid: false,
     labelist: true,
     active: true,
-    dot: true,
+    dot: false,
   },
   pie: {
     text: true,
-    xAxis: true,
-    yAxis: true,
-    polarAngleAxis: false,
-    polarRadiusAxis: false,
+    xAxis: false,
+    yAxis: false,
+    polarAngleAxis: true,
+    polarRadiusAxis: true,
     legend: true,
     tooltip: true,
-    grid: true,
+    grid: false,
     polarGrid: false,
     labelist: true,
     active: true,
@@ -258,19 +259,19 @@ const chartCustomizeMatrix: Record<
     grid: false,
     polarGrid: true,
     labelist: true,
-    active: true,
+    active: false,
     dot: true,
   },
   radial: {
     text: true,
     xAxis: false,
     yAxis: false,
-    polarAngleAxis: false,
-    polarRadiusAxis: false,
+    polarAngleAxis: true,
+    polarRadiusAxis: true,
     legend: true,
     tooltip: true,
-    grid: true,
-    polarGrid: false,
+    grid: false,
+    polarGrid: true,
     labelist: true,
     active: true,
     dot: false,

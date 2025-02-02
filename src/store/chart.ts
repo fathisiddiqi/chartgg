@@ -118,6 +118,14 @@ export const ChartLabelistPositions: ChartLabelistPosition[] = [
   "middle",
 ];
 
+export const ChartLabelistPositionsOfCartesian: Array<
+  "top" | "left" | "right" | "bottom" | "center"
+> = ["top", "left", "right", "bottom", "center"];
+
+export const ChartLabelistPositionsOfPolar: Array<
+  "inside" | "outside" | "center"
+> = ["inside", "outside", "center"];
+
 export type ChartStrokeStyle = "solid" | "dashed" | "dotted" | "none";
 export const ChartStrokeStyles: ChartStrokeStyle[] = [
   "solid",
@@ -146,6 +154,9 @@ export type ChartCustomizationFeature =
   | "polarGrid"
   | "dot"
   | "active";
+
+export type ChartOrientation = "horizontal" | "vertical";
+export const ChartOrientations: ChartOrientation[] = ["horizontal", "vertical"];
 
 export interface ChartCustomization {
   text: {
@@ -195,11 +206,15 @@ export interface ChartCustomization {
       show: boolean;
       position: ChartLabelistPosition;
       offset: number;
+      color: string;
+      orientation: "horizontal" | "vertical";
     };
     value: {
       show: boolean;
       position: ChartLabelistPosition;
       offset: number;
+      color: string;
+      orientation: "horizontal" | "vertical";
     };
   };
   xAxis: {
@@ -228,6 +243,8 @@ export interface ChartCustomization {
   };
   legend: {
     show: boolean;
+    verticalAlign: "top" | "middle" | "bottom";
+    align: "left" | "center" | "right";
   };
   tooltip: {
     show: boolean;
@@ -249,6 +266,7 @@ export interface ChartCustomization {
   dot: {
     show: boolean;
     activeSize: number;
+    activeIndex: number;
   };
   active: {
     show: boolean;
@@ -409,6 +427,12 @@ export interface ChartStyle {
   };
 }
 
+export type ChartDownloadFileType = "jpeg" | "png" | "svg" | "pdf";
+
+export interface ChartDownload {
+  chartRef: React.RefObject<HTMLDivElement> | null;
+}
+
 export interface ChartData {
   id: number;
   label: string;
@@ -424,6 +448,8 @@ interface ChartState {
   setChartCustomization: (customization: ChartCustomization) => void;
   chartStyle: ChartStyle;
   setChartStyle: (style: ChartStyle) => void;
+  chartDownload: ChartDownload;
+  setChartDownload: (download: ChartDownload) => void;
 }
 
 export const useChartStore = create<ChartState>()((set) => ({
@@ -480,13 +506,17 @@ export const useChartStore = create<ChartState>()((set) => ({
     labelist: {
       key: {
         show: false,
-        position: "outside",
+        position: "center",
         offset: 12,
+        color: "#FFFFFF",
+        orientation: "horizontal",
       },
       value: {
         show: false,
-        position: "top",
+        position: "center",
         offset: 12,
+        color: "#000000",
+        orientation: "horizontal",
       },
     },
     xAxis: {
@@ -515,6 +545,8 @@ export const useChartStore = create<ChartState>()((set) => ({
     },
     legend: {
       show: true,
+      verticalAlign: "bottom",
+      align: "center",
     },
     tooltip: {
       show: false,
@@ -535,6 +567,7 @@ export const useChartStore = create<ChartState>()((set) => ({
     },
     dot: {
       show: false,
+      activeIndex: 1,
       activeSize: 2,
     },
     active: {
@@ -575,4 +608,9 @@ export const useChartStore = create<ChartState>()((set) => ({
     },
   },
   setChartStyle: (style: ChartStyle) => set({ chartStyle: style }),
+  chartDownload: {
+    chartRef: null,
+  },
+  setChartDownload: (download: ChartDownload) =>
+    set({ chartDownload: download }),
 }));

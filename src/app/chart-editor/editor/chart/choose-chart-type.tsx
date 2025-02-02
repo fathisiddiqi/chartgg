@@ -114,7 +114,7 @@ const ChooseChartType = ({
             <RadarChart size={24} />
           </CardContent>
         </Card>
-        <Card
+        {/* <Card
           className={
             chartType.type === "radial"
               ? "w-24 h-24 cursor-pointer border-black"
@@ -126,7 +126,7 @@ const ChooseChartType = ({
             <Text variant="xs">Radial</Text>
             <RadialChart size={24} />
           </CardContent>
-        </Card>
+        </Card> */}
         <Card
           className={
             chartType.type === "scatter"
