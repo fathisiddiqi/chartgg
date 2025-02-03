@@ -24,6 +24,37 @@ const fontRoboto = FontRoboto({
   variable: "--font-roboto",
 });
 
+export const metadata = {
+  title: "Chartgg - Chart Builder",
+  description:
+    "Effortlessly design and customize beautiful charts—no coding required!",
+  keywords:
+    "chart builder, data visualization, custom charts, chart editor, real-time preview, interactive chart builder, chart customization, data visualization tool, chart design interface, chart maker, graph editor, chart styling, data presentation tool, chart screenshot, chart rich editor, create charts, customize charts, data visualization editor, chart builder, chartgg",
+  viewport: "width=device-width, initial-scale=1",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://chartgg.com",
+    siteName: "Chartgg",
+    title: "Chartgg - Chart Builder",
+    description:
+      "Effortlessly design and customize beautiful charts—no coding required!",
+    images: [
+      {
+        url: "/og-chartgg.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Chartgg - Chart Builder",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@chartggapp",
+    creator: "@chartggapp",
+  },
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
