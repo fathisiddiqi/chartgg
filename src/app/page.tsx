@@ -14,19 +14,13 @@ import {
   SlidersHorizontalIcon,
   TableIcon,
 } from "lucide-react";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 
 export default function LandingPage() {
   return (
     <main className="flex flex-col min-h-screen mx-auto max-w-[1280px]">
       <Navbar />
-      <div className="h-20 md:h-24" />
+      <div className="h-20 md:h-32" />
       <Hero />
       <div className="h-20 md:h-24" />
       <ChartPlaceholder />
@@ -91,11 +85,10 @@ const Hero = () => {
     <section>
       <div className="container mx-auto px-4 text-center space-y-4">
         <Text variant="5xl" className="font-bold">
-          Create chart with easy step <br /> in minutes
+          Create Stunning Charts <br /> in Minutes
         </Text>
-        <Text variant="lg">
-          customize your chart quickly and beautifully <br /> - no coding
-          required
+        <Text variant="lg" className="text-muted-foreground">
+          Effortlessly design and customize beautiful charts—no coding required!
         </Text>
         <Button size="lg">
           <a href="/chart-editor">Try it now!</a>
@@ -188,7 +181,9 @@ function Features() {
               <Text variant="2xl" className="font-bold">
                 {feature.title}
               </Text>
-              <Text variant="base">{feature.description}</Text>
+              <Text variant="base" className="text-muted-foreground">
+                {feature.description}
+              </Text>
             </div>
             <div className="w-full h-64 rounded-md">
               <Image
