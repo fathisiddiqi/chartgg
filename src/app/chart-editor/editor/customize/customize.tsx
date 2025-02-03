@@ -1,3 +1,5 @@
+"use client";
+
 import { ScrollArea } from "@/components/custom-ui/scroll-area";
 import {
   ChartCustomizationFeature,

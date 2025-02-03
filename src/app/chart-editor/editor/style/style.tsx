@@ -1,3 +1,5 @@
+"use client";
+
 import { ScrollArea } from "@/components/custom-ui/scroll-area";
 import { useChartStore } from "@/store/chart";
 import ContentCard from "./content-card";
