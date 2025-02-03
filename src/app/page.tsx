@@ -14,46 +14,42 @@ import {
   SlidersHorizontalIcon,
   TableIcon,
 } from "lucide-react";
-import Head from "next/head";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
+
+export const metadata = {
+  title: "Chartgg - Chart Builder",
+  description:
+    "Effortlessly design and customize beautiful charts—no coding required!",
+  keywords:
+    "chart builder, data visualization, custom charts, chart editor, real-time preview, interactive chart builder, chart customization, data visualization tool, chart design interface, chart maker, graph editor, chart styling, data presentation tool, chart screenshot, chart rich editor, create charts, customize charts, data visualization editor, chart builder, chartgg",
+  viewport: "width=device-width, initial-scale=1",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://chartgg.com",
+    siteName: "Chartgg",
+    title: "Chartgg - Chart Builder",
+    description:
+      "Effortlessly design and customize beautiful charts—no coding required!",
+    images: [
+      {
+        url: "/og-chartgg.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Chartgg - Chart Builder",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@chartggapp",
+    creator: "@chartggapp",
+  },
+};
 
 export default function LandingPage() {
   return (
     <>
-      <Head>
-        <title>Chartgg - Chart Builder</title>
-        <meta
-          name="description"
-          content="Effortlessly design and customize beautiful charts—no coding required!"
-        />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta
-          name="keywords"
-          content="charts, data visualization, graphs, analytics, dashboard, statistics, chart maker, chart generator, chart builder, interactive charts, data charts, business charts, line charts, bar charts, pie charts, scatter plots, data analysis, reporting tools, data presentation, chart design, data insights, real-time charts, chart customization, chart templates, chart styles, data plotting, chart editor"
-        />
-        
-        <link rel="canonical" href="https://chartgg.com" />
-        
-        {/* Open Graph */}
-        <meta property="og:type" content="website" />
-        <meta property="og:locale" content="en_US" />
-        <meta property="og:url" content="https://chartgg.com" />
-        <meta property="og:site_name" content="Chartgg" />
-        <meta property="og:title" content="Chartgg - Chart Builder" />
-        <meta
-          property="og:description"
-          content="Effortlessly design and customize beautiful charts—no coding required!"
-        />
-        <meta property="og:image" content="/og-chartgg.jpg" />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content="Chartgg - Chart Builder" />
-        
-        {/* Twitter */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@chartggapp" />
-        <meta name="twitter:creator" content="@chartggapp" />
-      </Head>
       <main className="flex flex-col min-h-screen mx-auto max-w-[1280px]">
         <Navbar />
         <div className="h-20 md:h-32" />
