@@ -25,49 +25,45 @@ import {
 import { Text } from "@/components/ui/text";
 import { ChartDownloadFileType, useChartStore } from "@/store/chart";
 import { useDownloadChart } from "@/service/chart";
-import { NextSeo } from "next-seo";
+import Head from "next/head";
 
 export default function ChartEditor() {
   return (
     <>
-      <NextSeo
-        title="Chart Editor - Chartgg"
-        description="Create and customize beautiful charts with our intuitive chart editor. Design data visualizations effortlessly with real-time preview."
-        canonical="https://chartgg.com/chart-editor"
-        openGraph={{
-          type: "website",
-          locale: "en_US",
-          url: "https://chartgg.com/chart-editor",
-          siteName: "Chartgg",
-          title: "Chart Editor - Chartgg",
-          description:
-            "Create and customize beautiful charts with our intuitive chart editor. Design data visualizations effortlessly with real-time preview.",
-          images: [
-            {
-              url: "/og-chartgg.jpg",
-              width: 1200,
-              height: 630,
-              alt: "Chartgg Chart Editor",
-            },
-          ],
-        }}
-        twitter={{
-          handle: "@chartggapp",
-          site: "@chartggapp",
-          cardType: "summary_large_image",
-        }}
-        additionalMetaTags={[
-          {
-            name: "viewport",
-            content: "width=device-width, initial-scale=1",
-          },
-          {
-            name: "keywords",
-            content:
-              "chart editor, data visualization editor, chart customization, interactive chart builder, real-time chart preview, data visualization tool, chart design interface, chart maker, graph editor, chart styling, data presentation tool",
-          },
-        ]}
-      />
+      <Head>
+        <title>Chart Editor - Chartgg</title>
+        <meta
+          name="description"
+          content="Create and customize beautiful charts with our intuitive chart editor. Design data visualizations effortlessly with real-time preview."
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+          name="keywords"
+          content="chart editor, data visualization editor, chart customization, interactive chart builder, real-time chart preview, data visualization tool, chart design interface, chart maker, graph editor, chart styling, data presentation tool"
+        />
+
+        <link rel="canonical" href="https://chartgg.com/chart-editor" />
+
+        {/* Open Graph */}
+        <meta property="og:type" content="website" />
+        <meta property="og:locale" content="en_US" />
+        <meta property="og:url" content="https://chartgg.com/chart-editor" />
+        <meta property="og:site_name" content="Chartgg" />
+        <meta property="og:title" content="Chart Editor - Chartgg" />
+        <meta
+          property="og:description"
+          content="Create and customize beautiful charts with our intuitive chart editor. Design data visualizations effortlessly with real-time preview."
+        />
+        <meta property="og:image" content="/og-chartgg.jpg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="Chartgg Chart Editor" />
+
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@chartggapp" />
+        <meta name="twitter:creator" content="@chartggapp" />
+      </Head>
       <QueryClientProvider client={new QueryClient()}>
         <main className="flex h-screen flex-col w-full mx-auto">
           {/* Desktop Editor */}
