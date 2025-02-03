@@ -14,23 +14,64 @@ import {
   SlidersHorizontalIcon,
   TableIcon,
 } from "lucide-react";
+import { NextSeo } from "next-seo";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 
 export default function LandingPage() {
   return (
-    <main className="flex flex-col min-h-screen mx-auto max-w-[1280px]">
-      <Navbar />
-      <div className="h-20 md:h-32" />
-      <Hero />
-      <div className="h-20 md:h-24" />
-      <ChartPlaceholder />
-      <div className="h-20 md:h-24" />
-      <Features />
-      <div className="h-20 md:h-24" />
-      <Pricing />
-      <div className="h-20 md:h-24" />
-      <Footer />
-    </main>
+    <>
+      <NextSeo
+        title="Chartgg - Chart Builder"
+        description="Effortlessly design and customize beautiful charts—no coding required!"
+        canonical="https://chartgg.com"
+        openGraph={{
+          type: "website",
+          locale: "en_US",
+          url: "https://chartgg.com/",
+          siteName: "Chartgg",
+          title: "Chartgg - Chart Builder",
+          description:
+            "Effortlessly design and customize beautiful charts—no coding required!",
+          images: [
+            {
+              url: "/og-chartgg.jpg",
+              width: 1200,
+              height: 630,
+              alt: "Chartgg - Chart Builder",
+            },
+          ],
+        }}
+        twitter={{
+          handle: "@chartggapp",
+          site: "@chartggapp",
+          cardType: "summary_large_image",
+        }}
+        additionalMetaTags={[
+          {
+            name: "viewport",
+            content: "width=device-width, initial-scale=1",
+          },
+          {
+            name: "keywords",
+            content:
+              "charts, data visualization, graphs, analytics, dashboard, statistics, chart maker, chart generator, chart builder, interactive charts, data charts, business charts, line charts, bar charts, pie charts, scatter plots, data analysis, reporting tools, data presentation, chart design, data insights, real-time charts, chart customization, chart templates, chart styles, data plotting, chart editor",
+          },
+        ]}
+      />
+      <main className="flex flex-col min-h-screen mx-auto max-w-[1280px]">
+        <Navbar />
+        <div className="h-20 md:h-32" />
+        <Hero />
+        <div className="h-20 md:h-24" />
+        <ChartPlaceholder />
+        <div className="h-20 md:h-24" />
+        <Features />
+        <div className="h-20 md:h-24" />
+        <Pricing />
+        <div className="h-20 md:h-24" />
+        <Footer />
+      </main>
+    </>
   );
 }
 

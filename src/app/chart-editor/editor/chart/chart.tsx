@@ -1,3 +1,5 @@
+"use client";
+
 import { useChartStore } from "@/store/chart";
 import ChooseChartType from "./choose-chart-type";
 import { ScrollArea } from "@/components/custom-ui/scroll-area";
