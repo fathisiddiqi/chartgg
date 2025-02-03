@@ -30,7 +30,17 @@ export default function ChartEditor() {
   return (
     <QueryClientProvider client={new QueryClient()}>
       <main className="flex h-screen flex-col w-full mx-auto">
-        <Navbar />
+        {/* Desktop Editor */}
+        <div className="hidden md:block">
+          <Navbar />
+          <div className="flex flex-row gap-4 p-4">
+            <Editor />
+            <div className="w-full">
+              <ChartPreview />
+            </div>
+            <TallyFormPopup formId="mDxX4E" />
+          </div>
+        </div>
         {/* Mobile Message */}
         <div className="md:hidden flex flex-col items-center justify-center h-full p-4 text-center space-y-4">
           <Text variant="xl" className="font-bold">
@@ -45,14 +55,6 @@ export default function ChartEditor() {
               Back to Home
             </Button>
           </Link>
-        </div>
-        {/* Desktop Editor */}
-        <div className="hidden md:flex flex-row gap-4 p-4">
-          <Editor />
-          <div className="w-full">
-            <ChartPreview />
-          </div>
-          <TallyFormPopup formId="mDxX4E" />
         </div>
       </main>
     </QueryClientProvider>
