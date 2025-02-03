@@ -280,7 +280,7 @@ const Watermark = ({ className }: { className?: string }) => {
           className="w-[14px] h-[14px] object-contain m-auto"
         />
         <Text variant="sm" className="font-bold m-auto">
-          ChartSS
+          Chartgg
         </Text>
       </div>
     </div>
