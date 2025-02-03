@@ -31,7 +31,23 @@ export default function ChartEditor() {
     <QueryClientProvider client={new QueryClient()}>
       <main className="flex h-screen flex-col w-full mx-auto">
         <Navbar />
-        <div className="flex flex-row gap-4 p-4">
+        {/* Mobile Message */}
+        <div className="md:hidden flex flex-col items-center justify-center h-full p-4 text-center space-y-4">
+          <Text variant="xl" className="font-bold">
+            Desktop Only
+          </Text>
+          <Text variant="base">
+            Sorry, the chart editor is only available on desktop devices. Please
+            visit us on a larger screen.
+          </Text>
+          <Link href="/">
+            <Button variant="outline" size="lg">
+              Back to Home
+            </Button>
+          </Link>
+        </div>
+        {/* Desktop Editor */}
+        <div className="hidden md:flex flex-row gap-4 p-4">
           <Editor />
           <div className="w-full">
             <ChartPreview />
@@ -53,7 +69,7 @@ const Navbar = () => {
       >
         <div className="flex items-center">
           <Image src="/logo.svg" alt="logo" width={28} height={28} />
-          <span className="ml-2 text-xl font-bold">ChartSS</span>
+          <span className="ml-2 text-xl font-bold">Chartgg</span>
           <span className="ml-2 inline-flex items-center rounded-md bg-primary/10 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-primary ring-1 ring-inset ring-primary/20">
             Beta
           </span>

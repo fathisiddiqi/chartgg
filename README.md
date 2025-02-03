@@ -1,6 +1,6 @@
-# ChartSS
+# Chartgg
 
-ChartSS is app for creating charts and download using screenshot style method.
+Chartgg is app for creating charts and download using screenshot style method.
 
 ## Prequisites
 
