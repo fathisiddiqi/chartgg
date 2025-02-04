@@ -96,7 +96,7 @@ export default function RootLayout({
         {/* Umami */}
         <Script
           src={process.env.NEXT_PUBLIC_UMAMI_URL}
-          data-website-id={process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID}
+          data-website-id={process.env.NEXT_PUBLIC_UMAMI_DATA_WEBSITE_ID}
           strategy="lazyOnload"
         />
       </body>
