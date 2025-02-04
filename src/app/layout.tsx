@@ -93,9 +93,10 @@ export default function RootLayout({
         )}
       >
         {children}
+        {/* Umami */}
         <Script
-          src="https://cloud.umami.is/script.js"
-          data-website-id="90cf855a-792e-4f5d-a6f1-ff581668fa5f"
+          src={process.env.NEXT_PUBLIC_UMAMI_URL}
+          data-website-id={process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID}
           strategy="lazyOnload"
         />
       </body>
