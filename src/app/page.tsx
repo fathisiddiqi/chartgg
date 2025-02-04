@@ -16,37 +16,6 @@ import {
 } from "lucide-react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 
-export const metadata = {
-  title: "Chartgg - Chart Builder",
-  description:
-    "Effortlessly design and customize beautiful charts—no coding required!",
-  keywords:
-    "chart builder, data visualization, custom charts, chart editor, real-time preview, interactive chart builder, chart customization, data visualization tool, chart design interface, chart maker, graph editor, chart styling, data presentation tool, chart screenshot, chart rich editor, create charts, customize charts, data visualization editor, chart builder, chartgg",
-  viewport: "width=device-width, initial-scale=1",
-  openGraph: {
-    type: "website",
-    locale: "en_US",
-    url: "https://chartgg.com",
-    siteName: "Chartgg",
-    title: "Chartgg - Chart Builder",
-    description:
-      "Effortlessly design and customize beautiful charts—no coding required!",
-    images: [
-      {
-        url: "/og-chartgg.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Chartgg - Chart Builder",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    site: "@chartggapp",
-    creator: "@chartggapp",
-  },
-};
-
 export default function LandingPage() {
   return (
     <>
@@ -97,18 +66,22 @@ const Navbar = () => {
           </NavigationMenuLink>
         </NavigationMenuList>
       </NavigationMenu>
-      <Button
-        size="sm"
-        variant="default"
-        className="ml-auto flex gap-2 justify-end"
+      <a
+        href="/chart-editor"
+        className="hidden sm:flex ml-auto gap-2 justify-end"
       >
-        <a href="/chart-editor" className="hidden sm:inline">
+        <Button size="sm" variant="default">
           Go to Editor
-        </a>
-        <a href="/chart-editor" className="sm:hidden">
+        </Button>
+      </a>
+      <a
+        href="/chart-editor"
+        className="flex sm:hidden ml-auto gap-2 justify-end"
+      >
+        <Button size="sm" variant="default">
           Editor
-        </a>
-      </Button>
+        </Button>
+      </a>
     </header>
   );
 };
@@ -118,14 +91,14 @@ const Hero = () => {
     <section>
       <div className="container mx-auto px-4 text-center space-y-4">
         <Text variant="5xl" className="font-bold">
-          Create Stunning Charts <br /> in Minutes
+          Create <span className="cycle-text" /> Charts <br /> in Minutes
         </Text>
         <Text variant="lg" className="text-muted-foreground">
           Effortlessly design and customize beautiful charts—no coding required!
         </Text>
-        <Button size="lg">
-          <a href="/chart-editor">Try it now!</a>
-        </Button>
+        <a href="/chart-editor" className="inline-block">
+          <Button size="lg">Try it now!</Button>
+        </a>
       </div>
     </section>
   );
@@ -160,7 +133,7 @@ function Features() {
           {
             icon: <TableIcon size={14} />,
             feature: "Create Data",
-            title: "Effortlessly Create Stunning Charts",
+            title: "Effortlessly Create Charts",
             description:
               "Transform your data into beautiful, insightful charts with our intuitive and user-friendly interface. Simple, fast, and hassle-free!",
             image: "./create-data.gif",
@@ -324,9 +297,11 @@ function Pricing() {
           </div>
         </CardContent>
         <CardFooter>
-          <Button size="lg" className="w-full">
-            Get It Now!
-          </Button>
+          <a href="/chart-editor" className="w-full">
+            <Button size="lg" className="w-full">
+              Get It Now!
+            </Button>
+          </a>
         </CardFooter>
       </Card>
     </section>
@@ -337,9 +312,9 @@ function Footer() {
   return (
     <footer className="flex flex-col w-full h-20 mt-auto bg-white border-t border-muted mb-4 md:mb-0">
       <div className="flex flex-col md:flex-row w-full h-full p-4 space-y-4 md:space-y-0 md:space-x-4 justify-between items-center">
-        <Text variant="base"> 2025 Chartgg. All rights reserved.</Text>
+        <Text variant="base">&copy; 2025 Chartgg. All rights reserved.</Text>
         <Text className="text-center md:text-left">
-          Created with by{" "}
+          Created with <span className="text-red-500">&hearts;</span> by{" "}
           <a href="https://twitter.com/fathisiddiqi" className="underline">
             fathisiddiqi
           </a>

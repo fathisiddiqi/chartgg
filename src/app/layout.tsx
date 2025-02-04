@@ -6,6 +6,7 @@ import {
 } from "next/font/google";
 
 import { cn } from "@/lib/utils";
+import { Metadata } from "next";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -24,13 +25,13 @@ const fontRoboto = FontRoboto({
   variable: "--font-roboto",
 });
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Chartgg - Chart Builder",
   description:
     "Effortlessly design and customize beautiful charts—no coding required!",
   keywords:
-    "chart builder, data visualization, custom charts, chart editor, real-time preview, interactive chart builder, chart customization, data visualization tool, chart design interface, chart maker, graph editor, chart styling, data presentation tool, chart screenshot, chart rich editor, create charts, customize charts, data visualization editor, chart builder, chartgg",
-  viewport: "width=device-width, initial-scale=1",
+    "chart builder, data visualization, custom charts, chart editor, real-time preview, interactive chart builder, chart customization, data visualization tool, chart design interface, chart maker, graph editor, chart styling, data presentation tool, chart screenshot, chart rich editor, create charts, customize charts, data visualization editor, chartgg, free org chart builder, flow chart builder, gantt chart builder, chart builder ai, excel chart builder",
+  robots: "index, follow",
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -52,6 +53,25 @@ export const metadata = {
     card: "summary_large_image",
     site: "@chartggapp",
     creator: "@chartggapp",
+  },
+  other: {
+    script: [
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        name: "Chartgg",
+        description:
+          "The best online chart builder to create beautiful visualizations effortlessly.",
+        applicationCategory: "WebApplication",
+        url: "https://chartgg.com",
+        image: "https://chartgg.com/og-chartgg.jpg",
+        offers: {
+          "@type": "Offer",
+          price: "0",
+          priceCurrency: "USD",
+        },
+      },
+    ] as any,
   },
 };
 
