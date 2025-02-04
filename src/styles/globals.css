@@ -164,7 +164,39 @@
     }
   }
 
-  .slider {
-    animation: slide 10s infinite linear;
+  @keyframes cycleText {
+    0% {
+      content: "Stunning";
+      background-color: #323296;
+      color: white;
+    }
+    25% {
+      content: "Modern";
+      background-color: #6c3f01;
+      color: white;
+    }
+    50% {
+      content: "Beautiful";
+      background-color: #a41d56;
+      color: white;
+    }
+    75% {
+      content: "Powerful";
+      background-color: #025d54;
+      color: white;
+    }
+    100% {
+      content: "Stunning";
+      background-color: #323296;
+      color: white;
+    }
+  }
+
+  .cycle-text::after {
+    content: "Beautiful";
+    display: inline-block;
+    animation: cycleText 8.5s infinite;
+    color: white;
+    padding: 0 0.5rem;
   }
 }
