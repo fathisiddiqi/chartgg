@@ -7,6 +7,7 @@ import {
 
 import { cn } from "@/lib/utils";
 import { Metadata } from "next";
+import Script from "next/script";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -92,6 +93,11 @@ export default function RootLayout({
         )}
       >
         {children}
+        <Script
+          src="https://cloud.umami.is/script.js"
+          data-website-id="90cf855a-792e-4f5d-a6f1-ff581668fa5f"
+          strategy="lazyOnload"
+        />
       </body>
     </html>
   );
