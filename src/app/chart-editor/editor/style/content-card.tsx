@@ -216,6 +216,40 @@ const ContentCard = ({ chartStyle, setChartStyle }: StyleCardProps) => {
           />
         </div>
       </div>
+      <div className="flex flex-col">
+        <Text variant="label">Radius</Text>
+        <div className="flex items-center">
+          <Slider
+            value={[chartStyle.content.radius]}
+            min={300}
+            max={850}
+            step={50}
+            className="flex-1"
+            onValueChange={(value) =>
+              setChartStyle({
+                ...chartStyle,
+                content: { ...chartStyle.content, radius: value[0] },
+              })
+            }
+          />
+          <Input
+            variant="sm"
+            type="number"
+            value={chartStyle.content.radius}
+            onChange={(e) => {
+              setChartStyle({
+                ...chartStyle,
+                content: {
+                  ...chartStyle.content,
+                  radius: Number(e.target.value),
+                },
+              });
+            }}
+            max={1000}
+            className="ml-2 w-10 p-0 text-center"
+          />
+        </div>
+      </div>
     </div>
   );
 };

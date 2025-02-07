@@ -413,6 +413,7 @@ export interface ChartStyle {
     rotate: number;
     width: number;
     shadow: string;
+    radius: number;
   };
   canvas: {
     width: number;
@@ -590,10 +591,11 @@ export const useChartStore = create<ChartState>()((set) => ({
         type: "light",
       },
       frame: "none",
+      shadow: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
       scale: 100,
       rotate: 0,
-      shadow: "0 0 #0000",
       width: 500,
+      radius: 0,
     },
     canvas: {
       background: {

@@ -7,21 +7,75 @@ import { JSX } from "react";
 
 const ChartFrame = ({
   frame,
-  size,
   children,
   width,
+  boxShadow,
+  transform,
+  scale,
+  borderRadius,
 }: {
-  frame: ChartFrame;
-  size?: "xs" | "sm" | "md" | "lg" | "xl";
-  width?: number;
   children: React.ReactNode;
+  frame: ChartFrame;
+  width?: number;
+  boxShadow?: string;
+  transform?: string;
+  scale?: number;
+  borderRadius?: number;
 }) => {
   const frameMap: Record<ChartFrame, JSX.Element> = {
-    none: <div style={{ width }}>{children}</div>,
-    macos_light: <MackLigthFrame width={width}>{children}</MackLigthFrame>,
-    macos_dark: <MackDarkFrame width={width}>{children}</MackDarkFrame>,
-    arc: <ArcFrame width={width}>{children}</ArcFrame>,
-    stroke: <StrokeFrame width={width}>{children}</StrokeFrame>,
+    none: (
+      <div
+        style={{
+          width,
+          boxShadow,
+          transform,
+          scale,
+          borderRadius: `${borderRadius}px`,
+        }}
+      >
+        {children}
+      </div>
+    ),
+    macos_light: (
+      <MackLigthFrame
+        width={width}
+        boxShadow={boxShadow}
+        transform={transform}
+        scale={scale}
+      >
+        {children}
+      </MackLigthFrame>
+    ),
+    macos_dark: (
+      <MackDarkFrame
+        width={width}
+        boxShadow={boxShadow}
+        transform={transform}
+        scale={scale}
+      >
+        {children}
+      </MackDarkFrame>
+    ),
+    arc: (
+      <ArcFrame
+        width={width}
+        boxShadow={boxShadow}
+        transform={transform}
+        scale={scale}
+      >
+        {children}
+      </ArcFrame>
+    ),
+    stroke: (
+      <StrokeFrame
+        width={width}
+        boxShadow={boxShadow}
+        transform={transform}
+        scale={scale}
+      >
+        {children}
+      </StrokeFrame>
+    ),
   };
 
   return frameMap[frame];
