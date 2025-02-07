@@ -21,14 +21,14 @@ import RadialChartPreview from "./charts/radial-chart";
 import ScatterChartPreview from "./charts/scatter-chart";
 import useChartTheme from "@/hook/use-chart-theme";
 import { Text } from "@/components/ui/text";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, JSX } from "react";
 import Image from "next/image";
 
 const ChartPreview = () => {
   const { chartType, chartStyle, chartCustomization, setChartDownload } =
     useChartStore((state) => state);
   const { backgroundColor } = useChartTheme(chartStyle.content.theme.selected);
-  const chartRef = useRef<HTMLDivElement>(null);
+  const chartRef = useRef<HTMLDivElement>(null!);
 
   useEffect(() => {
     setChartDownload({
