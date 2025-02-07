@@ -3,6 +3,7 @@ import MackLigthFrame from "../frame/mac-light";
 import MackDarkFrame from "../frame/mac-dark";
 import ArcFrame from "../frame/arc";
 import StrokeFrame from "../frame/stroke";
+import { JSX } from "react";
 
 const ChartFrame = ({
   frame,
