@@ -6,7 +6,6 @@ import {
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Text } from "@/components/ui/text";
 import {
   BrushIcon,
   ChartAreaIcon,
@@ -90,12 +89,12 @@ const Hero = () => {
   return (
     <section>
       <div className="container mx-auto px-4 text-center space-y-4">
-        <Text variant="5xl" className="font-bold">
+        <h1 className="text-5xl font-bold">
           Create <span className="cycle-text" /> Charts <br /> in Minutes
-        </Text>
-        <Text variant="lg" className="text-muted-foreground">
+        </h1>
+        <h1 className="text-lg text-muted-foreground">
           Effortlessly design and customize beautiful charts—no coding required!
-        </Text>
+        </h1>
         <a href="/chart-editor" className="inline-block">
           <Button size="lg">Try it now!</Button>
         </a>
@@ -182,14 +181,12 @@ function Features() {
                 className="space-x-2 flex flex-row"
               >
                 {feature.icon}
-                <Text variant="xs">{feature.feature}</Text>
+                <p className="text-xs">{feature.feature}</p>
               </Button>
-              <Text variant="2xl" className="font-bold">
-                {feature.title}
-              </Text>
-              <Text variant="base" className="text-muted-foreground">
+              <h3 className="text-2xl font-bold">{feature.title}</h3>
+              <p className="text-base text-muted-foreground">
                 {feature.description}
-              </Text>
+              </p>
             </div>
             <div className="w-full h-64 rounded-md">
               <Image
@@ -210,31 +207,19 @@ function Features() {
 function Pricing() {
   return (
     <section className="container mx-auto px-4" id="pricing">
-      <Text variant="3xl" className="font-bold text-center mb-20">
-        Pricing
-      </Text>
+      <h2 className="text-3xl font-bold text-center mb-20">Pricing</h2>
       <Card className="md:w-[400px] w-md mx-auto p-8 space-y-6 shadow-sm">
         <CardContent className="space-y-4">
-          <Text variant="xl" className="font-bold">
-            Pro
-          </Text>
+          <h3 className="text-xl font-bold">Pro</h3>
           <div>
             <div className="flex items-baseline">
-              <Text variant="5xl" className="font-bold line-through">
-                $10
-              </Text>
-              <Text variant="xl" className="font-medium">
-                /month
-              </Text>
+              <h4 className="text-5xl font-bold line-through">$10</h4>
+              <p className="text-xl font-medium">/month</p>
             </div>
-            <Text variant="xl" className="mt-2 font-medium text-green-600">
-              Free
-            </Text>
+            <p className="mt-2 font-medium text-green-600 text-xl">Free</p>
           </div>
           <div className="space-y-4">
-            <Text variant="lg" className="text-gray-600">
-              Get Unlimited Features
-            </Text>
+            <h5 className="text-lg text-gray-600">Get Unlimited Features</h5>
             <div className="space-y-4">
               <div className="flex items-center gap-2">
                 <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center">
@@ -253,7 +238,7 @@ function Pricing() {
                     ></path>
                   </svg>
                 </div>
-                <Text variant="base">Unlimited Charts - Cloud</Text>
+                <p className="text-base">Unlimited Charts - Cloud</p>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center">
@@ -272,7 +257,7 @@ function Pricing() {
                     ></path>
                   </svg>
                 </div>
-                <Text variant="base">Unlimited Features</Text>
+                <p className="text-base">Unlimited Features</p>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center">
@@ -291,7 +276,7 @@ function Pricing() {
                     ></path>
                   </svg>
                 </div>
-                <Text variant="base">High Resolution Export</Text>
+                <p className="text-base">High Resolution Export</p>
               </div>
             </div>
           </div>
@@ -312,13 +297,13 @@ function Footer() {
   return (
     <footer className="flex flex-col w-full h-20 mt-auto bg-white border-t border-muted mb-4 md:mb-0">
       <div className="flex flex-col md:flex-row w-full h-full p-4 space-y-4 md:space-y-0 md:space-x-4 justify-between items-center">
-        <Text variant="base">&copy; 2025 Chartgg. All rights reserved.</Text>
-        <Text className="text-center md:text-left">
+        <p className="text-base">&copy; 2025 Chartgg. All rights reserved.</p>
+        <p className="text-center md:text-left">
           Created with <span className="text-red-500">&hearts;</span> by{" "}
           <a href="https://twitter.com/fathisiddiqi" className="underline">
             fathisiddiqi
           </a>
-        </Text>
+        </p>
       </div>
     </footer>
   );
