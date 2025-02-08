@@ -374,7 +374,7 @@ export type ChartFrame =
   | "macos_dark"
   | "arc"
   | "stroke"
-  | "gradient";
+  | "shadow";
 
 export const ChartFrames: ChartFrame[] = [
   "none",
@@ -382,7 +382,7 @@ export const ChartFrames: ChartFrame[] = [
   "macos_dark",
   "stroke",
   "arc",
-  "gradient",
+  "shadow",
 ];
 
 export type ChartTheme =

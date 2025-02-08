@@ -5,6 +5,7 @@ import {
   MacDarkFrameIcon,
   MacLightFrameIcon,
   NoneFrameIcon,
+  ShadowFrameIcon,
   StrokeFrameIcon,
 } from "@/components/icon/frame-icon";
 import { Slider } from "@/components/ui/slider";
@@ -270,7 +271,7 @@ const ChartFrameIcon = ({
     macos_dark: <MacDarkFrameIcon />,
     arc: <ArcFrameIcon />,
     stroke: <StrokeFrameIcon />,
-    gradient: <GradientFrameIcon />,
+    shadow: <ShadowFrameIcon />,
   };
 
   return frameMap[frame];

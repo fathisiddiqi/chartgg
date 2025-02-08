@@ -5,6 +5,7 @@ import ArcFrame from "../frame/arc";
 import StrokeFrame from "../frame/stroke";
 import { JSX } from "react";
 import GradientFrame from "../frame/gradient";
+import ShadowFrame from "../frame/shadow";
 
 const ChartFrame = ({
   frame,
@@ -83,15 +84,15 @@ const ChartFrame = ({
         {children}
       </StrokeFrame>
     ),
-    gradient: (
-      <GradientFrame
+    shadow: (
+      <ShadowFrame
         width={width}
         transform={transform}
         scale={scale}
         borderRadius={borderRadius}
       >
         {children}
-      </GradientFrame>
+      </ShadowFrame>
     ),
   };
 

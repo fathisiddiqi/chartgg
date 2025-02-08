@@ -343,7 +343,6 @@ export const StrokeFrameIcon = ({
   </svg>
 );
 
-// gradient frame
 export const GradientFrameIcon = ({
   width = 103,
   height = 80,
@@ -385,5 +384,23 @@ export const GradientFrameIcon = ({
       fill="white"
       filter="drop-shadow(0 2px 4px rgba(255, 154, 158, 0.2))"
     />
+  </svg>
+);
+
+export const ShadowFrameIcon = ({
+  width = 103,
+  height = 80,
+  className = "",
+  ...props
+}) => (
+  <svg
+    width={width}
+    height={height}
+    viewBox={`0 0 ${width} ${height}`}
+    className={className}
+    {...props}
+  >
+    <rect width="97" height="74" x="2" y="4" fill="black" rx="7" opacity="1" />
+    <rect width="97" height="74" x="5" y="1" fill="white" rx="7" />
   </svg>
 );
