@@ -4,6 +4,7 @@ import MackDarkFrame from "../frame/mac-dark";
 import ArcFrame from "../frame/arc";
 import StrokeFrame from "../frame/stroke";
 import { JSX } from "react";
+import GradientFrame from "../frame/gradient";
 
 const ChartFrame = ({
   frame,
@@ -13,6 +14,7 @@ const ChartFrame = ({
   transform,
   scale,
   borderRadius,
+  borderWidth,
 }: {
   children: React.ReactNode;
   frame: ChartFrame;
@@ -21,6 +23,7 @@ const ChartFrame = ({
   transform?: string;
   scale?: number;
   borderRadius?: number;
+  borderWidth?: number;
 }) => {
   const frameMap: Record<ChartFrame, JSX.Element> = {
     none: (
@@ -79,6 +82,16 @@ const ChartFrame = ({
       >
         {children}
       </StrokeFrame>
+    ),
+    gradient: (
+      <GradientFrame
+        width={width}
+        transform={transform}
+        scale={scale}
+        borderRadius={borderRadius}
+      >
+        {children}
+      </GradientFrame>
     ),
   };
 

@@ -1,6 +1,7 @@
 import { Input } from "@/components/custom-ui/input";
 import {
   ArcFrameIcon,
+  GradientFrameIcon,
   MacDarkFrameIcon,
   MacLightFrameIcon,
   NoneFrameIcon,
@@ -264,11 +265,12 @@ const ChartFrameIcon = ({
   size?: number;
 }) => {
   const frameMap: Record<ChartFrame, JSX.Element> = {
-    none: <NoneFrameIcon size={size} />,
-    macos_light: <MacLightFrameIcon size={size} />,
-    macos_dark: <MacDarkFrameIcon size={size} />,
-    arc: <ArcFrameIcon size={size} />,
-    stroke: <StrokeFrameIcon size={size} />,
+    none: <NoneFrameIcon />,
+    macos_light: <MacLightFrameIcon />,
+    macos_dark: <MacDarkFrameIcon />,
+    arc: <ArcFrameIcon />,
+    stroke: <StrokeFrameIcon />,
+    gradient: <GradientFrameIcon />,
   };
 
   return frameMap[frame];

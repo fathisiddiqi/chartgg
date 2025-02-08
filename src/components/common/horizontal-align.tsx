@@ -1,37 +1,37 @@
 import { AlignCenter, AlignLeft, AlignRight } from "lucide-react";
 import { Toggle } from "../custom-ui/toggle";
 
-const TextAlign = ({
-  textAlign,
-  setTextAlign,
+const HorizontalAlign = ({
+  align,
+  setAlign,
   disabled,
 }: {
-  textAlign: "left" | "center" | "right";
-  setTextAlign: (textAlign: "left" | "center" | "right") => void;
+  align: "left" | "center" | "right";
+  setAlign: (align: "left" | "center" | "right") => void;
   disabled?: boolean;
 }) => {
   return (
     <div className="flex space-x-1">
       <Toggle
-        pressed={textAlign === "left"}
+        pressed={align === "left"}
         disabled={disabled}
-        onPressedChange={() => setTextAlign("left")}
+        onPressedChange={() => setAlign("left")}
         size="sm"
       >
         <AlignLeft className="h-4 w-4" />
       </Toggle>
       <Toggle
-        pressed={textAlign === "center"}
+        pressed={align === "center"}
         disabled={disabled}
-        onPressedChange={() => setTextAlign("center")}
+        onPressedChange={() => setAlign("center")}
         size="sm"
       >
         <AlignCenter className="h-4 w-4" />
       </Toggle>
       <Toggle
-        pressed={textAlign === "right"}
+        pressed={align === "right"}
         disabled={disabled}
-        onPressedChange={() => setTextAlign("right")}
+        onPressedChange={() => setAlign("right")}
         size="sm"
       >
         <AlignRight className="h-4 w-4" />
@@ -40,4 +40,4 @@ const TextAlign = ({
   );
 };
 
-export default TextAlign;
+export default HorizontalAlign;
