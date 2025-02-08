@@ -1,8 +1,20 @@
 import ColorSelector from "@/components/common/color-selector";
 import { Input } from "@/components/custom-ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/custom-ui/select";
 import { Slider } from "@/components/ui/slider";
 import { Text } from "@/components/ui/text";
-import { ChartColors } from "@/store/chart";
+import { getChartAspectRatio } from "@/lib/chart";
+import {
+  ChartAspectRatio,
+  ChartAspectRatios,
+  ChartColors,
+} from "@/store/chart";
 import { StyleCardProps } from "@/types";
 
 const BackgroundCard = ({ chartStyle, setChartStyle }: StyleCardProps) => {
@@ -11,6 +23,48 @@ const BackgroundCard = ({ chartStyle, setChartStyle }: StyleCardProps) => {
       <Text variant="sm" className="font-bold">
         Background
       </Text>
+      <div className="flex flex-col space-y-2">
+        <Text variant="label">Aspect Ratio</Text>
+        <Select
+          value={chartStyle.canvas.aspectRatio}
+          onValueChange={(e) =>
+            setChartStyle({
+              ...chartStyle,
+              canvas: {
+                ...chartStyle.canvas,
+                aspectRatio: e as ChartAspectRatio,
+              },
+            })
+          }
+        >
+          <SelectTrigger variant="sm" className="w-full">
+            <SelectValue>
+              <Text variant="xs">
+                {getChartAspectRatio(chartStyle.canvas.aspectRatio)}
+              </Text>
+            </SelectValue>
+          </SelectTrigger>
+          <SelectContent>
+            {ChartAspectRatios.map(({ value, label }) => (
+              <SelectItem
+                key={value}
+                value={value}
+                onClick={() =>
+                  setChartStyle({
+                    ...chartStyle,
+                    canvas: {
+                      ...chartStyle.canvas,
+                      aspectRatio: value,
+                    },
+                  })
+                }
+              >
+                <Text variant="xs">{label}</Text>
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
       <div className="flex flex-col space-y-2">
         <Text variant="label" className="font-medium">
           Color

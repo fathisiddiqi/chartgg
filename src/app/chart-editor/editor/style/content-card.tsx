@@ -1,7 +1,6 @@
 import { Input } from "@/components/custom-ui/input";
 import {
   ArcFrameIcon,
-  GradientFrameIcon,
   MacDarkFrameIcon,
   MacLightFrameIcon,
   NoneFrameIcon,
@@ -29,7 +28,7 @@ const ContentCard = ({ chartStyle, setChartStyle }: StyleCardProps) => {
       </Text>
       <div>
         <Text variant="label">Frames</Text>
-        <div className="grid grid-cols-2 gap-4 justify-around p-3">
+        <div className="flex flex-row flex-wrap gap-3 justify-between pl-1 mt-2">
           {ChartFrames.map((frame) => (
             <div
               key={frame}
