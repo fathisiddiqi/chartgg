@@ -1,37 +1,41 @@
-import { AlignVerticalJustifyCenter, AlignVerticalJustifyEnd, AlignVerticalJustifyStart } from "lucide-react";
+import {
+  AlignVerticalJustifyCenter,
+  AlignVerticalJustifyEnd,
+  AlignVerticalJustifyStart,
+} from "lucide-react";
 import { Toggle } from "../custom-ui/toggle";
 
 const VerticalAlign = ({
-  verticalAlign,
-  setVerticalAlign,
+  align,
+  setAlign,
   disabled,
 }: {
-  verticalAlign: "top" | "middle" | "bottom";
-  setVerticalAlign: (verticalAlign: "top" | "middle" | "bottom") => void;
+  align: "top" | "middle" | "bottom";
+  setAlign: (align: "top" | "middle" | "bottom") => void;
   disabled?: boolean;
 }) => {
   return (
     <div className="flex space-x-1">
       <Toggle
-        pressed={verticalAlign === "top"}
+        pressed={align === "top"}
         disabled={disabled}
-        onPressedChange={() => setVerticalAlign("top")}
+        onPressedChange={() => setAlign("top")}
         size="sm"
       >
         <AlignVerticalJustifyStart className="h-4 w-4" />
       </Toggle>
       <Toggle
-        pressed={verticalAlign === "middle"}
+        pressed={align === "middle"}
         disabled={disabled}
-        onPressedChange={() => setVerticalAlign("middle")}
+        onPressedChange={() => setAlign("middle")}
         size="sm"
       >
         <AlignVerticalJustifyCenter className="h-4 w-4" />
       </Toggle>
       <Toggle
-        pressed={verticalAlign === "bottom"}
+        pressed={align === "bottom"}
         disabled={disabled}
-        onPressedChange={() => setVerticalAlign("bottom")}
+        onPressedChange={() => setAlign("bottom")}
         size="sm"
       >
         <AlignVerticalJustifyEnd className="h-4 w-4" />

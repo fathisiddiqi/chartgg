@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { ChartMainType, useChartStore } from "@/store/chart";
+import { ChartAspectRatio, ChartMainType, useChartStore } from "@/store/chart";
 import { icons } from "lucide-react";
 import { cn, hexToRGB } from "@/lib/utils";
 import { Input } from "@/components/custom-ui/input";
@@ -23,6 +23,7 @@ import useChartTheme from "@/hook/use-chart-theme";
 import { Text } from "@/components/ui/text";
 import { useRef, useEffect, JSX } from "react";
 import Image from "next/image";
+import { getChartLayoutWidthAndHeightFromAspectRatio } from "@/lib/chart";
 
 const ChartPreview = () => {
   const { chartType, chartStyle, chartCustomization, setChartDownload } =
@@ -34,166 +35,150 @@ const ChartPreview = () => {
     setChartDownload({
       chartRef,
     });
-  }, [chartRef, setChartDownload]);
+  }, [chartRef]);
 
   return (
-    <div
-      ref={chartRef}
-      className="h-[calc(100vh-100px)] w-full flex justify-center items-center relative rounded-md"
-      style={{
-        backgroundColor: `rgba(${hexToRGB(
+    <div className="relative max-h-[90vh] h-[90vh] md:h-[calc(100vh-100px)] md:max-h-[calc(100vh-100px)] md:max-w-[calc(100vw-500px)] w-full flex justify-center items-center rounded-md">
+      <ChartLayout
+        ref={chartRef}
+        aspectRatio={chartStyle.canvas.aspectRatio}
+        borderRadius={chartStyle.canvas.border.radius}
+        backgroundColor={`rgba(${hexToRGB(
           chartStyle.canvas.background.color
-        )}, ${chartStyle.canvas.background.opacity})`,
-        borderRadius: chartStyle.canvas.border.radius,
-      }}
-    >
-      <Watermark />
-      <div className="flex items-center justify-center mx-auto scale-50">
-        {/* Chart Container */}
-        <div
-          style={{
-            transform: `scale(${chartStyle.content.scale / 60}) rotate(${
-              chartStyle.content.rotate
-            }deg)`,
-            boxShadow: chartStyle.content.shadow,
-            padding: 0,
-          }}
+        )}, ${chartStyle.canvas.background.opacity})`}
+      >
+        <Watermark />
+        {/* Chart Frame */}
+        <ChartFrame
+          frame={chartStyle.content.frame}
+          width={chartStyle.content.width}
+          transform={`scale(${chartStyle.content.scale / 60}) rotate(${
+            chartStyle.content.rotate
+          }deg)`}
+          boxShadow={chartStyle.content.shadow}
+          scale={0.5}
+          borderRadius={chartStyle.content.radius}
         >
-          {/* Chart Frame */}
-          <ChartFrame
-            frame={chartStyle.content.frame}
-            width={chartStyle.content.width}
+          {/* Chart Content */}
+          <Card
+            className="shadow-none border-none rounded-none"
+            style={{
+              backgroundColor,
+              borderRadius: chartStyle.content.radius,
+            }}
           >
-            {/* Chart Content */}
-            <Card
-              className="shadow-none border-none rounded-none"
-              style={{
-                backgroundColor,
-              }}
-            >
-              <CardHeader>
-                {chartCustomization.text.title.show && (
-                  <CardTitle
+            <CardHeader>
+              {chartCustomization.text.title.show && (
+                <CardTitle
+                  className={cn(
+                    "text-muted-foreground",
+                    chartCustomization.text.title.fontFamily === "roboto"
+                      ? "font-roboto"
+                      : chartCustomization.text.title.fontFamily === "poppins"
+                      ? "font-poppins"
+                      : "font-sans"
+                  )}
+                  style={{
+                    color: chartCustomization.text.title.color,
+                    textAlign: chartCustomization.text.title.textAlign,
+                    textDecoration:
+                      chartCustomization.text.title.textDecoration,
+                    fontStyle: chartCustomization.text.title.fontStyle,
+                    fontWeight: chartCustomization.text.title.fontWeight,
+                  }}
+                >
+                  {chartCustomization.text.title.text}
+                </CardTitle>
+              )}
+              {chartCustomization.text.subtitle.show && (
+                <CardDescription
+                  className={cn(
+                    "text-muted-foreground",
+                    chartCustomization.text.subtitle.fontFamily === "roboto"
+                      ? "font-roboto"
+                      : chartCustomization.text.subtitle.fontFamily ===
+                        "poppins"
+                      ? "font-poppins"
+                      : "font-sans"
+                  )}
+                  style={{
+                    color: chartCustomization.text.subtitle.color,
+                    textAlign: chartCustomization.text.subtitle.textAlign,
+                    textDecoration:
+                      chartCustomization.text.subtitle.textDecoration,
+                    fontStyle: chartCustomization.text.subtitle.fontStyle,
+                    fontWeight: chartCustomization.text.subtitle.fontWeight,
+                  }}
+                >
+                  {chartCustomization.text.subtitle.text}
+                </CardDescription>
+              )}
+            </CardHeader>
+            <CardContent>
+              <ChartTypePreview chartType={chartType.type} />
+              <div className="mt-4">
+                {chartCustomization.text.footerTitle.show && (
+                  <div
                     className={cn(
                       "text-muted-foreground",
-                      chartCustomization.text.title.fontFamily === "roboto"
+                      chartCustomization.text.footerSubtitle.fontFamily ===
+                        "roboto"
                         ? "font-roboto"
-                        : chartCustomization.text.title.fontFamily === "poppins"
-                        ? "font-poppins"
-                        : "font-sans"
-                    )}
-                    style={{
-                      color: chartCustomization.text.title.color,
-                      textAlign: chartCustomization.text.title.textAlign,
-                      textDecoration:
-                        chartCustomization.text.title.textDecoration,
-                      fontStyle: chartCustomization.text.title.fontStyle,
-                      fontWeight: chartCustomization.text.title.fontWeight,
-                    }}
-                  >
-                    {chartCustomization.text.title.text}
-                  </CardTitle>
-                )}
-                {chartCustomization.text.subtitle.show && (
-                  <CardDescription
-                    className={cn(
-                      "text-muted-foreground",
-                      chartCustomization.text.subtitle.fontFamily === "roboto"
-                        ? "font-roboto"
-                        : chartCustomization.text.subtitle.fontFamily ===
+                        : chartCustomization.text.footerSubtitle.fontFamily ===
                           "poppins"
                         ? "font-poppins"
                         : "font-sans"
                     )}
                     style={{
-                      color: chartCustomization.text.subtitle.color,
-                      textAlign: chartCustomization.text.subtitle.textAlign,
+                      color: chartCustomization.text.footerTitle.color,
+                      textAlign: chartCustomization.text.footerTitle.textAlign,
                       textDecoration:
-                        chartCustomization.text.subtitle.textDecoration,
-                      fontStyle: chartCustomization.text.subtitle.fontStyle,
-                      fontWeight: chartCustomization.text.subtitle.fontWeight,
+                        chartCustomization.text.footerTitle.textDecoration,
+                      fontStyle: chartCustomization.text.footerTitle.fontStyle,
+                      fontWeight:
+                        chartCustomization.text.footerTitle.fontWeight,
                     }}
                   >
-                    {chartCustomization.text.subtitle.text}
-                  </CardDescription>
+                    {chartCustomization.text.footerTitle.text}
+                  </div>
                 )}
-              </CardHeader>
-              <CardContent>
-                <ChartTypePreview chartType={chartType.type} />
-                <div className="mt-4">
-                  {chartCustomization.text.footerTitle.show && (
-                    <div
-                      className={cn(
-                        "text-muted-foreground",
-                        chartCustomization.text.footerSubtitle.fontFamily ===
-                          "roboto"
-                          ? "font-roboto"
-                          : chartCustomization.text.footerSubtitle
-                              .fontFamily === "poppins"
-                          ? "font-poppins"
-                          : "font-sans"
-                      )}
-                      style={{
-                        color: chartCustomization.text.footerTitle.color,
-                        textAlign:
-                          chartCustomization.text.footerTitle.textAlign,
-                        textDecoration:
-                          chartCustomization.text.footerTitle.textDecoration,
-                        fontStyle:
-                          chartCustomization.text.footerTitle.fontStyle,
-                        fontWeight:
-                          chartCustomization.text.footerTitle.fontWeight,
-                      }}
-                    >
-                      {chartCustomization.text.footerTitle.text}
-                    </div>
-                  )}
-                  {chartCustomization.text.footerSubtitle.show && (
-                    <div
-                      className={cn(
-                        "text-muted-foreground",
-                        chartCustomization.text.footerSubtitle.fontFamily ===
-                          "roboto"
-                          ? "font-roboto"
-                          : chartCustomization.text.footerSubtitle
-                              .fontFamily === "poppins"
-                          ? "font-poppins"
-                          : "font-sans"
-                      )}
-                      style={{
-                        color: chartCustomization.text.footerSubtitle.color,
-                        textAlign:
-                          chartCustomization.text.footerSubtitle.textAlign,
-                        textDecoration:
-                          chartCustomization.text.footerSubtitle.textDecoration,
-                        fontStyle:
-                          chartCustomization.text.footerSubtitle.fontStyle,
-                        fontWeight:
-                          chartCustomization.text.footerSubtitle.fontWeight,
-                      }}
-                    >
-                      {chartCustomization.text.footerSubtitle.text}
-                    </div>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          </ChartFrame>
-        </div>
-      </div>
+                {chartCustomization.text.footerSubtitle.show && (
+                  <div
+                    className={cn(
+                      "text-muted-foreground",
+                      chartCustomization.text.footerSubtitle.fontFamily ===
+                        "roboto"
+                        ? "font-roboto"
+                        : chartCustomization.text.footerSubtitle.fontFamily ===
+                          "poppins"
+                        ? "font-poppins"
+                        : "font-sans"
+                    )}
+                    style={{
+                      color: chartCustomization.text.footerSubtitle.color,
+                      textAlign:
+                        chartCustomization.text.footerSubtitle.textAlign,
+                      textDecoration:
+                        chartCustomization.text.footerSubtitle.textDecoration,
+                      fontStyle:
+                        chartCustomization.text.footerSubtitle.fontStyle,
+                      fontWeight:
+                        chartCustomization.text.footerSubtitle.fontWeight,
+                    }}
+                  >
+                    {chartCustomization.text.footerSubtitle.text}
+                  </div>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        </ChartFrame>
+      </ChartLayout>
     </div>
   );
 };
 
 export default ChartPreview;
-
-const FooterTitleIcon = ({ iconInStr }: { iconInStr: string }) => {
-  const LucideIcon = icons[iconInStr as keyof typeof icons];
-
-  return (
-    <LucideIcon className="w-4 h-4 text-muted-foreground" aria-hidden="true" />
-  );
-};
 
 const ActionMenu = () => {
   const { chartStyle } = useChartStore((state) => state);
@@ -248,6 +233,37 @@ const ActionMenu = () => {
   );
 };
 
+const ChartLayout = ({
+  children,
+  aspectRatio,
+  backgroundColor,
+  borderRadius,
+  ref,
+}: {
+  children: React.ReactNode;
+  aspectRatio: ChartAspectRatio;
+  backgroundColor?: string;
+  borderRadius?: number;
+  ref?: React.Ref<HTMLDivElement>;
+}) => {
+  return (
+    <div
+      ref={ref}
+      className={cn(
+        "flex justify-center items-center max-h-[90vh] md:max-h-[87vh] max-w-[90vw] md:max-w-[calc(100vw-500px)]",
+        getChartLayoutWidthAndHeightFromAspectRatio(aspectRatio)
+      )}
+      style={{
+        aspectRatio: aspectRatio,
+        backgroundColor: backgroundColor,
+        borderRadius: borderRadius,
+      }}
+    >
+      {children}
+    </div>
+  );
+};
+
 const ChartTypePreview = ({ chartType }: { chartType: ChartMainType }) => {
   const chartTypeToPreview: Record<ChartMainType, JSX.Element> = {
     bar: <BarChartPreview />,
@@ -266,7 +282,7 @@ const Watermark = ({ className }: { className?: string }) => {
   return (
     <div
       className={cn(
-        "absolute bottom-[5%] left-1/2 -translate-x-1/2 bg-white/50 p-2 rounded-md shadow-lg z-10 opacity-70",
+        "absolute bottom-[15%] md:bottom-[5%] left-1/2 -translate-x-1/2 bg-white/50 p-2 rounded-md shadow-lg z-10 opacity-70",
         className
       )}
     >

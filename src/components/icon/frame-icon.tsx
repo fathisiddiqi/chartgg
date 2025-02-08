@@ -251,9 +251,9 @@ export const NoneFrameIcon = ({
         width="103"
         height="80"
         filterUnits="userSpaceOnUse"
-        color-interpolation-filters="sRGB"
+        colorInterpolationFilters="sRGB"
       >
-        <feFlood flood-opacity="0" result="BackgroundImageFix" />
+        <feFlood floodOpacity="0" result="BackgroundImageFix" />
         <feColorMatrix
           in="SourceAlpha"
           type="matrix"
@@ -340,5 +340,67 @@ export const StrokeFrameIcon = ({
         ></feBlend>
       </filter>
     </defs>
+  </svg>
+);
+
+export const GradientFrameIcon = ({
+  width = 103,
+  height = 80,
+  ...props
+}: {
+  width?: number;
+  height?: number;
+}) => (
+  <svg
+    width={width}
+    height={height}
+    viewBox={`0 0 ${width} ${height}`}
+    {...props}
+  >
+    <defs>
+      <linearGradient id="gradientBorder" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#FF9A9E" />
+        <stop offset="33%" stopColor="#FAD0C4" />
+        <stop offset="66%" stopColor="#FFC1D5" />
+        <stop offset="100%" stopColor="#FFB8D1" />
+      </linearGradient>
+    </defs>
+    <rect
+      x="3"
+      y="3"
+      width="95"
+      height="72"
+      rx="4"
+      fill="white"
+      stroke="url(#gradientBorder)"
+      strokeWidth="2"
+    />
+    <rect
+      x="5"
+      y="5"
+      width="97"
+      height="74"
+      rx="3"
+      fill="white"
+      filter="drop-shadow(0 2px 4px rgba(255, 154, 158, 0.2))"
+    />
+  </svg>
+);
+
+export const ShadowFrameIcon = ({
+  width = 103,
+  height = 80,
+  className = "",
+  ...props
+}) => (
+  <svg
+    width={width}
+    height={height}
+    viewBox={`0 0 ${width} ${height}`}
+    className={className}
+    {...props}
+  >
+    <rect width="97" height="74" x="2" y="4" fill="black" rx="7" opacity="1" />
+    <rect width="97" height="74" x="5" y="1" fill="white" rx="7" />
   </svg>
 );

@@ -54,15 +54,27 @@ const Editor = () => {
       <Card className="h-[calc(100vh-100px)] w-[360px] ml-4">
         <CardContent className="p-4">
           <TabsContent value="chart">
+            <Text variant="lg" className="font-semibold mb-4">
+              Chart Settings
+            </Text>
             <Chart />
           </TabsContent>
           <TabsContent value="data">
+            <Text variant="lg" className="font-semibold mb-4">
+              Data Input
+            </Text>
             <Data />
           </TabsContent>
           <TabsContent value="customization">
+            <Text variant="lg" className="font-semibold mb-4">
+              Customize Chart
+            </Text>
             <Customize />
           </TabsContent>
           <TabsContent value="style">
+            <Text variant="lg" className="font-semibold mb-4">
+              Style Options
+            </Text>
             <Style />
           </TabsContent>
         </CardContent>

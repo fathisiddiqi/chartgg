@@ -4,24 +4,96 @@ import MackDarkFrame from "../frame/mac-dark";
 import ArcFrame from "../frame/arc";
 import StrokeFrame from "../frame/stroke";
 import { JSX } from "react";
+import GradientFrame from "../frame/gradient";
+import ShadowFrame from "../frame/shadow";
 
 const ChartFrame = ({
   frame,
-  size,
   children,
   width,
+  boxShadow,
+  transform,
+  scale,
+  borderRadius,
+  borderWidth,
 }: {
-  frame: ChartFrame;
-  size?: "xs" | "sm" | "md" | "lg" | "xl";
-  width?: number;
   children: React.ReactNode;
+  frame: ChartFrame;
+  width?: number;
+  boxShadow?: string;
+  transform?: string;
+  scale?: number;
+  borderRadius?: number;
+  borderWidth?: number;
 }) => {
   const frameMap: Record<ChartFrame, JSX.Element> = {
-    none: <div style={{ width }}>{children}</div>,
-    macos_light: <MackLigthFrame width={width}>{children}</MackLigthFrame>,
-    macos_dark: <MackDarkFrame width={width}>{children}</MackDarkFrame>,
-    arc: <ArcFrame width={width}>{children}</ArcFrame>,
-    stroke: <StrokeFrame width={width}>{children}</StrokeFrame>,
+    none: (
+      <div
+        style={{
+          width,
+          boxShadow,
+          transform,
+          scale,
+          borderRadius: borderRadius ?? 0,
+        }}
+      >
+        {children}
+      </div>
+    ),
+    macos_light: (
+      <MackLigthFrame
+        width={width}
+        boxShadow={boxShadow}
+        transform={transform}
+        scale={scale}
+        borderRadius={borderRadius}
+      >
+        {children}
+      </MackLigthFrame>
+    ),
+    macos_dark: (
+      <MackDarkFrame
+        width={width}
+        boxShadow={boxShadow}
+        transform={transform}
+        scale={scale}
+        borderRadius={borderRadius}
+      >
+        {children}
+      </MackDarkFrame>
+    ),
+    arc: (
+      <ArcFrame
+        width={width}
+        boxShadow={boxShadow}
+        transform={transform}
+        scale={scale}
+        borderRadius={borderRadius}
+      >
+        {children}
+      </ArcFrame>
+    ),
+    stroke: (
+      <StrokeFrame
+        width={width}
+        boxShadow={boxShadow}
+        transform={transform}
+        scale={scale}
+        borderRadius={borderRadius}
+      >
+        {children}
+      </StrokeFrame>
+    ),
+    shadow: (
+      <ShadowFrame
+        width={width}
+        transform={transform}
+        scale={scale}
+        borderRadius={borderRadius}
+      >
+        {children}
+      </ShadowFrame>
+    ),
   };
 
   return frameMap[frame];

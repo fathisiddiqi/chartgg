@@ -40,7 +40,7 @@ const ChooseChartType = ({
   return (
     <div>
       <Text variant="sm" className="font-bold">
-        Type
+        Chart Type
       </Text>
       <div className="grid grid-cols-3 gap-2 space-y-2 items-center justify-evenly py-4">
         <Card

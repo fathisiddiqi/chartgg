@@ -1,5 +1,4 @@
 import { CustomizationCardProps } from "@/types";
-import TextAlign from "@/components/common/text-align";
 import { Input } from "@/components/custom-ui/input";
 import { Text } from "@/components/ui/text";
 import { Switch } from "@/components/custom-ui/switch";
@@ -14,6 +13,7 @@ import ColorSelector from "@/components/common/color-selector";
 import { titleCase } from "@/lib/utils";
 import { ChartTextFontFamilies, ChartTextFontFamily } from "@/store/chart";
 import FontStyle from "@/components/common/font-style";
+import HorizontalAlign from "@/components/common/horizontal-align";
 
 const TextCard = ({
   chartCustomization,
@@ -230,9 +230,9 @@ const TextCard = ({
           </div>
           <div className="w-3/6 space-y-2">
             <Text variant="label">Text Align</Text>
-            <TextAlign
-              textAlign={chartCustomization.text.title.textAlign}
-              setTextAlign={(textAlign: "left" | "center" | "right") => {
+            <HorizontalAlign
+              align={chartCustomization.text.title.textAlign}
+              setAlign={(textAlign: "left" | "center" | "right") => {
                 setChartCustomization({
                   ...chartCustomization,
                   text: {

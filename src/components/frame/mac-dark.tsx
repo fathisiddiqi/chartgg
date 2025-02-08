@@ -3,14 +3,22 @@ import React from "react";
 export default function MacDarkFrame({
   children,
   width,
+  boxShadow,
+  transform,
+  scale,
+  borderRadius,
 }: {
   children: React.ReactNode;
   width?: number;
+  boxShadow?: string;
+  transform?: string;
+  scale?: number;
+  borderRadius?: number;
 }) {
   return (
     <div
-      className="w-full mx-auto overflow-hidden rounded-lg shadow-lg bg-gray-900"
-      style={{ width }}
+      className="w-full mx-auto overflow-hidden shadow-lg bg-gray-900"
+      style={{ width, boxShadow, transform, scale, borderRadius: borderRadius ? `${borderRadius}px` : undefined }}
     >
       {/* Window frame */}
       <div className="flex items-center px-4 py-2 bg-gray-800">

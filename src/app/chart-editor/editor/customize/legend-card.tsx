@@ -1,7 +1,7 @@
 import { CustomizationCardProps } from "@/types";
 import { Switch } from "@/components/custom-ui/switch";
 import { Text } from "@/components/ui/text";
-import TextAlign from "@/components/common/text-align";
+import HorizontalAlign from "@/components/common/horizontal-align";
 import VerticalAlign from "@/components/common/vertical-align";
 
 const LegendCard = ({
@@ -32,13 +32,13 @@ const LegendCard = ({
         <div className="w-3/6 space-y-2">
           <Text variant="label">Vertical Align</Text>
           <VerticalAlign
-            verticalAlign={chartCustomization.legend.verticalAlign}
-            setVerticalAlign={(verticalAlign: "top" | "middle" | "bottom") => {
+            align={chartCustomization.legend.verticalAlign}
+            setAlign={(align: "top" | "middle" | "bottom") => {
               setChartCustomization({
                 ...chartCustomization,
                 legend: {
                   ...chartCustomization.legend,
-                  verticalAlign: verticalAlign,
+                  verticalAlign: align,
                 },
               });
             }}
@@ -46,9 +46,9 @@ const LegendCard = ({
         </div>
         <div className="w-3/6 space-y-2">
           <Text variant="label">Align</Text>
-          <TextAlign
-            textAlign={chartCustomization.legend.align}
-            setTextAlign={(align: "left" | "center" | "right") => {
+          <HorizontalAlign
+            align={chartCustomization.legend.align}
+            setAlign={(align: "left" | "center" | "right") => {
               setChartCustomization({
                 ...chartCustomization,
                 legend: {

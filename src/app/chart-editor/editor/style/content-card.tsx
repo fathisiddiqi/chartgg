@@ -4,6 +4,7 @@ import {
   MacDarkFrameIcon,
   MacLightFrameIcon,
   NoneFrameIcon,
+  ShadowFrameIcon,
   StrokeFrameIcon,
 } from "@/components/icon/frame-icon";
 import { Slider } from "@/components/ui/slider";
@@ -27,7 +28,7 @@ const ContentCard = ({ chartStyle, setChartStyle }: StyleCardProps) => {
       </Text>
       <div>
         <Text variant="label">Frames</Text>
-        <div className="grid grid-cols-2 gap-4 justify-around p-3">
+        <div className="flex flex-row flex-wrap gap-3 justify-between pl-1 mt-2">
           {ChartFrames.map((frame) => (
             <div
               key={frame}
@@ -55,7 +56,7 @@ const ContentCard = ({ chartStyle, setChartStyle }: StyleCardProps) => {
         <Text variant="label" className="mt-3">
           Theme
         </Text>
-        <div className="flex flex-wrap gap-3 mt-3 mx-4">
+        <div className="flex flex-wrap gap-2 pl-1 mt-2">
           {ChartThemes.map((theme, index) => (
             <div
               className="cursor-pointer"
@@ -83,14 +84,14 @@ const ContentCard = ({ chartStyle, setChartStyle }: StyleCardProps) => {
       </div>
       <div>
         <Text variant="label">Shadow</Text>
-        <div className="grid grid-cols-4 gap-4 p-3">
+        <div className="flex flex-wrap gap-2 pl-1 mt-2">
           {ChartShadowStyles.map(({ id, className, property }) => (
             <div
               key={id}
               className={
                 chartStyle.content.shadow === property
-                  ? `w-14 h-14 bg-secondary rounded-lg flex justify-center items-center cursor-pointer border border-black`
-                  : `w-14 h-14 bg-secondary rounded-lg flex justify-center items-center cursor-pointer`
+                  ? `w-11 h-11 bg-secondary rounded-lg flex justify-center items-center cursor-pointer ring-1 ring-black ring-offset-1`
+                  : `w-11 h-11 bg-secondary rounded-lg flex justify-center items-center cursor-pointer`
               }
               onClick={() =>
                 setChartStyle({
@@ -103,9 +104,9 @@ const ContentCard = ({ chartStyle, setChartStyle }: StyleCardProps) => {
               }
             >
               <div
-                className={`w-10 h-10 bg-white ${className} rounded-lg flex justify-center items-center cursor-pointer`}
+                className={`w-8 h-8 bg-white ${className} rounded-lg flex justify-center items-center cursor-pointer`}
               >
-                <Text variant="label" className="text-center text-[9px]">
+                <Text variant="label" className="text-center text-[8px]">
                   {id}
                 </Text>
               </div>
@@ -216,6 +217,40 @@ const ContentCard = ({ chartStyle, setChartStyle }: StyleCardProps) => {
           />
         </div>
       </div>
+      <div className="flex flex-col">
+        <Text variant="label">Radius</Text>
+        <div className="flex items-center">
+          <Slider
+            value={[chartStyle.content.radius]}
+            min={0}
+            max={30}
+            step={1}
+            className="flex-1"
+            onValueChange={(value) =>
+              setChartStyle({
+                ...chartStyle,
+                content: { ...chartStyle.content, radius: value[0] },
+              })
+            }
+          />
+          <Input
+            variant="sm"
+            type="number"
+            value={chartStyle.content.radius}
+            onChange={(e) => {
+              setChartStyle({
+                ...chartStyle,
+                content: {
+                  ...chartStyle.content,
+                  radius: Number(e.target.value),
+                },
+              });
+            }}
+            max={1000}
+            className="ml-2 w-10 p-0 text-center"
+          />
+        </div>
+      </div>
     </div>
   );
 };
@@ -230,11 +265,12 @@ const ChartFrameIcon = ({
   size?: number;
 }) => {
   const frameMap: Record<ChartFrame, JSX.Element> = {
-    none: <NoneFrameIcon size={size} />,
-    macos_light: <MacLightFrameIcon size={size} />,
-    macos_dark: <MacDarkFrameIcon size={size} />,
-    arc: <ArcFrameIcon size={size} />,
-    stroke: <StrokeFrameIcon size={size} />,
+    none: <NoneFrameIcon />,
+    macos_light: <MacLightFrameIcon />,
+    macos_dark: <MacDarkFrameIcon />,
+    arc: <ArcFrameIcon />,
+    stroke: <StrokeFrameIcon />,
+    shadow: <ShadowFrameIcon />,
   };
 
   return frameMap[frame];

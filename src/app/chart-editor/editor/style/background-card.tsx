@@ -1,7 +1,20 @@
 import ColorSelector from "@/components/common/color-selector";
 import { Input } from "@/components/custom-ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/custom-ui/select";
 import { Slider } from "@/components/ui/slider";
 import { Text } from "@/components/ui/text";
+import { getChartAspectRatio } from "@/lib/chart";
+import {
+  ChartAspectRatio,
+  ChartAspectRatios,
+  ChartColors,
+} from "@/store/chart";
 import { StyleCardProps } from "@/types";
 
 const BackgroundCard = ({ chartStyle, setChartStyle }: StyleCardProps) => {
@@ -10,11 +23,80 @@ const BackgroundCard = ({ chartStyle, setChartStyle }: StyleCardProps) => {
       <Text variant="sm" className="font-bold">
         Background
       </Text>
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col space-y-2">
+        <Text variant="label">Aspect Ratio</Text>
+        <Select
+          value={chartStyle.canvas.aspectRatio}
+          onValueChange={(e) =>
+            setChartStyle({
+              ...chartStyle,
+              canvas: {
+                ...chartStyle.canvas,
+                aspectRatio: e as ChartAspectRatio,
+              },
+            })
+          }
+        >
+          <SelectTrigger variant="sm" className="w-full">
+            <SelectValue>
+              <Text variant="xs">
+                {getChartAspectRatio(chartStyle.canvas.aspectRatio)}
+              </Text>
+            </SelectValue>
+          </SelectTrigger>
+          <SelectContent>
+            {ChartAspectRatios.map(({ value, label }) => (
+              <SelectItem
+                key={value}
+                value={value}
+                onClick={() =>
+                  setChartStyle({
+                    ...chartStyle,
+                    canvas: {
+                      ...chartStyle.canvas,
+                      aspectRatio: value,
+                    },
+                  })
+                }
+              >
+                <Text variant="xs">{label}</Text>
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+      <div className="flex flex-col space-y-2">
         <Text variant="label" className="font-medium">
           Color
         </Text>
-        <div className="flex items-center space-x-2">
+        <div className="flex flex-row gap-2 pl-1">
+          {ChartColors.map((color: string, id: number) => (
+            <div
+              key={id}
+              className={
+                chartStyle.canvas.background.color === color
+                  ? `w-10 h-10 bg-secondary rounded-lg flex justify-center items-center cursor-pointer ring-1 ring-black ring-offset-1`
+                  : `w-10 h-10 bg-secondary rounded-lg flex justify-center items-center cursor-pointer`
+              }
+              onClick={() =>
+                setChartStyle({
+                  ...chartStyle,
+                  canvas: {
+                    ...chartStyle.canvas,
+                    background: {
+                      ...chartStyle.canvas.background,
+                      color: color,
+                    },
+                  },
+                })
+              }
+            >
+              <div
+                className={`w-8 h-8 rounded-lg flex justify-center items-center cursor-pointer`}
+                style={{ backgroundColor: color }}
+              />
+            </div>
+          ))}
           <ColorSelector
             selectedColor={chartStyle.canvas.background.color}
             setSelectedColor={(color) =>
@@ -29,7 +111,8 @@ const BackgroundCard = ({ chartStyle, setChartStyle }: StyleCardProps) => {
                 },
               })
             }
-            triggerClassName="w-28"
+            triggerClassName="w-10 h-10 bg-secondary"
+            showColorText={false}
           />
         </div>
       </div>
