@@ -69,11 +69,15 @@ export default function ColorSelector({
   selectedColor,
   setSelectedColor,
   triggerClassName,
+  triggerIconClassName,
+  showColorText = true,
   disabled,
 }: {
   selectedColor: string;
   setSelectedColor: (color: string) => void;
   triggerClassName?: string;
+  triggerIconClassName?: string;
+  showColorText?: boolean;
   disabled?: boolean;
 }) {
   const [isCustom, setIsCustom] = useState(false);
@@ -104,17 +108,22 @@ export default function ColorSelector({
               <Ban className="w-4 h-4 mr-2 text-muted-foreground" />
             ) : (
               <div
-                className="w-4 h-4 rounded-full mr-2"
+                className={cn(
+                  "w-4 h-4 rounded-full mr-2",
+                  triggerIconClassName
+                )}
                 style={{ backgroundColor: selectedColor }}
               />
             )}
-            <span className="text-sm">
-              {selectedColor === "none"
-                ? "None"
-                : isCustom
-                ? "Custom"
-                : selectedColor}
-            </span>
+            {showColorText && (
+              <span className="text-sm">
+                {selectedColor === "none"
+                  ? "None"
+                  : isCustom
+                  ? "Custom"
+                  : selectedColor}
+              </span>
+            )}
           </div>
         </Button>
       </PopoverTrigger>

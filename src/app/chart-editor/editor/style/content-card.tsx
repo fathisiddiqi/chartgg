@@ -55,7 +55,7 @@ const ContentCard = ({ chartStyle, setChartStyle }: StyleCardProps) => {
         <Text variant="label" className="mt-3">
           Theme
         </Text>
-        <div className="flex flex-wrap gap-3 mt-3 mx-4">
+        <div className="flex flex-wrap gap-2 pl-1 mt-2">
           {ChartThemes.map((theme, index) => (
             <div
               className="cursor-pointer"
@@ -83,14 +83,14 @@ const ContentCard = ({ chartStyle, setChartStyle }: StyleCardProps) => {
       </div>
       <div>
         <Text variant="label">Shadow</Text>
-        <div className="grid grid-cols-4 gap-4 p-3">
+        <div className="flex flex-wrap gap-2 pl-1 mt-2">
           {ChartShadowStyles.map(({ id, className, property }) => (
             <div
               key={id}
               className={
                 chartStyle.content.shadow === property
-                  ? `w-14 h-14 bg-secondary rounded-lg flex justify-center items-center cursor-pointer border border-black`
-                  : `w-14 h-14 bg-secondary rounded-lg flex justify-center items-center cursor-pointer`
+                  ? `w-11 h-11 bg-secondary rounded-lg flex justify-center items-center cursor-pointer ring-1 ring-black ring-offset-1`
+                  : `w-11 h-11 bg-secondary rounded-lg flex justify-center items-center cursor-pointer`
               }
               onClick={() =>
                 setChartStyle({
@@ -103,9 +103,9 @@ const ContentCard = ({ chartStyle, setChartStyle }: StyleCardProps) => {
               }
             >
               <div
-                className={`w-10 h-10 bg-white ${className} rounded-lg flex justify-center items-center cursor-pointer`}
+                className={`w-8 h-8 bg-white ${className} rounded-lg flex justify-center items-center cursor-pointer`}
               >
-                <Text variant="label" className="text-center text-[9px]">
+                <Text variant="label" className="text-center text-[8px]">
                   {id}
                 </Text>
               </div>
@@ -221,9 +221,9 @@ const ContentCard = ({ chartStyle, setChartStyle }: StyleCardProps) => {
         <div className="flex items-center">
           <Slider
             value={[chartStyle.content.radius]}
-            min={300}
-            max={850}
-            step={50}
+            min={0}
+            max={30}
+            step={1}
             className="flex-1"
             onValueChange={(value) =>
               setChartStyle({

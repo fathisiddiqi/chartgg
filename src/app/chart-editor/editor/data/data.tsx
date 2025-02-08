@@ -88,17 +88,19 @@ export default function Data() {
   };
 
   return (
-    <ScrollArea className="h-[calc(100vh-130px)] w-full">
+    <ScrollArea className="h-[65vh] md:h-[calc(100vh-200px)] w-full">
       <div className="space-y-4 w-full">
-        <Text variant="sm" className="font-bold">
-          Data
-        </Text>
         <div>
           {chartData.length > 0 ? (
-            <TablePreview
-              chartData={chartData.slice(0, 5)}
-              setOpenTableModal={setOpenTableModal}
-            />
+            <>
+              <Text variant="sm" className="font-bold mb-3">
+                Data Preview
+              </Text>
+              <TablePreview
+                chartData={chartData.slice(0, 5)}
+                setOpenTableModal={setOpenTableModal}
+              />
+            </>
           ) : (
             <div className="w-full mt-24 flex flex-col items-center justify-center align-center gap-4">
               <Button
@@ -148,7 +150,7 @@ const TablePreview = ({
 
   return (
     <div className="space-y-4">
-      <div className="w-[300px]">
+      <div className="w-[87vw] overflow-x-scroll md:overflow-x-hidden md:w-[300px]">
         <ScrollArea className="w-full whitespace-nowrap">
           <Table className="border border-border w-full">
             <TableHeader>
@@ -350,17 +352,17 @@ const TableModal = ({
             </Button>
           </div>
         </DialogHeader>
-        <div className="w-full overflow-x-auto">
+        <div className="w-full overflow-x-auto overflow-y-auto max-h-[50vh]">
           <Table className="border border-border min-w-full">
             <TableHeader>
               <TableRow className="border-b border-border">
-                <TableCell className="font-bold text-center border-r border-border p-0">
+                <TableCell className="font-bold text-center border-r border-border px-10">
                   Label
                 </TableCell>
                 {headers.map((header) => (
                   <TableCell
                     key={header}
-                    className="font-bold border-r border-border p-0"
+                    className="font-bold border-r border-border px-0"
                     ref={triggerRef}
                   >
                     {editingHeaderMode === header ? (

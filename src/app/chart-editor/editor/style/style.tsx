@@ -10,7 +10,7 @@ const Screenshot = () => {
   const { setChartStyle, chartStyle } = useChartStore((state) => state);
 
   return (
-    <ScrollArea className="h-[calc(100vh-130px)]" isThumbHidden>
+    <ScrollArea className="h-[65vh] md:h-[calc(100vh-200px)]" isThumbHidden>
       {/* General Card */}
       <ContentCard chartStyle={chartStyle} setChartStyle={setChartStyle} />
 

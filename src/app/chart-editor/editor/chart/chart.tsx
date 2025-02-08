@@ -10,7 +10,7 @@ const Chart = () => {
   const { chartType, setChartType } = useChartStore((state) => state);
 
   return (
-    <ScrollArea className="h-[calc(100vh-130px)]" isThumbHidden>
+    <ScrollArea className="h-[65vh] md:h-[calc(100vh-200px)]" isThumbHidden>
       {/* Choose chart type */}
       <ChooseChartType chartType={chartType} setChartType={setChartType} />
 

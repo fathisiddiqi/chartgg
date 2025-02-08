@@ -6,17 +6,19 @@ export default function MackLigthFrame({
   boxShadow,
   transform,
   scale,
+  borderRadius,
 }: {
   children: React.ReactNode;
   width?: number;
   boxShadow?: string;
   transform?: string;
   scale?: number;
+  borderRadius?: number;
 }) {
   return (
     <div
-      className="w-full mx-auto overflow-hidden rounded-lg shadow-lg bg-white border border-gray-200"
-      style={{ width, boxShadow, transform, scale }}
+      className="w-full mx-auto overflow-hidden shadow-lg bg-white border border-gray-200"
+      style={{ width, boxShadow, transform, scale, borderRadius: borderRadius ? `${borderRadius}px` : undefined }}
     >
       {/* Window frame */}
       <div className="flex items-center px-4 py-2 bg-gray-100 border-b border-gray-200">

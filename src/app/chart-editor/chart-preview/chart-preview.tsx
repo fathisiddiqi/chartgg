@@ -39,7 +39,7 @@ const ChartPreview = () => {
   return (
     <div
       ref={chartRef}
-      className="h-[calc(100vh-100px)] max-w-[calc(100vw-500px)] w-full flex justify-center items-center rounded-md"
+      className="relative max-h-[90vh] h-[90vh] md:h-[calc(100vh-100px)] md:max-h-[calc(100vh-100px)] md:max-w-[calc(100vw-500px)] w-full flex justify-center items-center rounded-md"
       style={{
         backgroundColor: `rgba(${hexToRGB(
           chartStyle.canvas.background.color
@@ -64,6 +64,7 @@ const ChartPreview = () => {
           className="shadow-none border-none rounded-none"
           style={{
             backgroundColor,
+            borderRadius: chartStyle.content.radius,
           }}
         >
           <CardHeader>
@@ -252,7 +253,7 @@ const Watermark = ({ className }: { className?: string }) => {
   return (
     <div
       className={cn(
-        "absolute bottom-[5%] left-1/2 -translate-x-1/2 bg-white/50 p-2 rounded-md shadow-lg z-10 opacity-70",
+        "absolute bottom-[15%] md:bottom-[5%] left-1/2 -translate-x-1/2 bg-white/50 p-2 rounded-md shadow-lg z-10 opacity-70",
         className
       )}
     >

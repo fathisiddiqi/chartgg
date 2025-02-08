@@ -26,6 +26,7 @@ import { Text } from "@/components/ui/text";
 import { ChartDownloadFileType, useChartStore } from "@/store/chart";
 import { useDownloadChart } from "@/service/chart";
 import Head from "next/head";
+import MobileEditor from "./editor/mobile-editor";
 
 export default function ChartEditor() {
   return (
@@ -78,19 +79,22 @@ export default function ChartEditor() {
             </div>
           </div>
           {/* Mobile Message */}
-          <div className="md:hidden flex flex-col items-center justify-center h-full p-4 text-center space-y-4">
-            <Text variant="xl" className="font-bold">
-              Desktop Only
-            </Text>
-            <Text variant="base">
-              Sorry, the chart editor is only available on desktop devices.
-              Please visit us on a larger screen.
-            </Text>
-            <Link href="/">
-              <Button variant="outline" size="lg">
-                Back to Home
-              </Button>
-            </Link>
+          <div className="md:hidden">
+            <Navbar />
+            <ChartPreview />
+            <MobileEditor />
+            {/* <Text variant="xl" className="font-bold">
+                Desktop Only
+              </Text>
+              <Text variant="base">
+                Sorry, the chart editor is only available on desktop devices.
+                Please visit us on a larger screen.
+              </Text>
+              <Link href="/">
+                <Button variant="outline" size="lg">
+                  Back to Home
+                </Button>
+              </Link> */}
           </div>
         </main>
       </QueryClientProvider>
@@ -100,21 +104,29 @@ export default function ChartEditor() {
 
 const Navbar = () => {
   return (
-    <header className="flex h-12 w-full shrink-0 items-center px-4 border-b border-muted">
+    <header className="flex h-12 w-full shrink-0 items-center px-2 md:px-4 border-b border-muted">
       <Link
         href="/"
-        className="mr-6 hidden lg:flex items-center"
+        className="mr-4 md:mr-6 flex items-center"
         prefetch={false}
       >
         <div className="flex items-center">
-          <Image src="/logo.svg" alt="logo" width={28} height={28} />
-          <span className="ml-2 text-xl font-bold">Chartgg</span>
-          <span className="ml-2 inline-flex items-center rounded-md bg-primary/10 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-primary ring-1 ring-inset ring-primary/20">
+          <Image
+            src="/logo.svg"
+            alt="logo"
+            width={24}
+            height={24}
+            className="md:w-[28px] md:h-[28px]"
+          />
+          <span className="ml-1.5 md:ml-2 text-lg md:text-xl font-bold">
+            Chartgg
+          </span>
+          <span className="ml-1.5 md:ml-2 inline-flex items-center rounded-md bg-primary/10 px-1 md:px-1.5 py-0.5 text-[9px] md:text-[10px] font-medium uppercase tracking-wider text-primary ring-1 ring-inset ring-primary/20">
             Beta
           </span>
         </div>
       </Link>
-      <div className="ml-auto flex gap-2 justify-end">
+      <div className="ml-auto flex gap-1.5 md:gap-2 justify-end">
         <FileDownloadPopover />
       </div>
     </header>
@@ -143,12 +155,12 @@ const FileDownloadPopover = () => {
 
   return (
     <Popover>
-      <PopoverTrigger className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 gap-2 bg-primary text-primary-foreground hover:bg-primary/90 h-8 px-3">
-        <ShareIcon className="h-4 w-4" />
+      <PopoverTrigger className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 gap-1.5 md:gap-2 bg-primary text-primary-foreground hover:bg-primary/90 h-7 md:h-8 px-2 md:px-3">
+        <ShareIcon className="h-3.5 w-3.5 md:h-4 md:w-4" />
         Share
       </PopoverTrigger>
-      <PopoverContent className="mr-4 space-y-4">
-        <div className="space-y-2">
+      <PopoverContent className="mr-2 md:mr-4 space-y-3 md:space-y-4 p-3 md:p-4">
+        <div className="space-y-1.5 md:space-y-2">
           <Text variant="xs">File Type</Text>
           <Select
             onValueChange={(value) =>
@@ -156,73 +168,52 @@ const FileDownloadPopover = () => {
             }
             value={fileType}
           >
-            <SelectTrigger className="mr-2">
+            <SelectTrigger className="h-8 md:h-9">
               <SelectValue placeholder="Download Format">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5 md:gap-2">
                   {fileType === "pdf" ? (
-                    <FileIcon className="h-4 w-4" />
+                    <FileIcon className="h-3.5 w-3.5 md:h-4 md:w-4" />
                   ) : (
-                    <ImageIcon className="h-4 w-4" />
+                    <ImageIcon className="h-3.5 w-3.5 md:h-4 md:w-4" />
                   )}
-                  <Text className="text-sm">{fileType.toUpperCase()}</Text>
+                  <Text className="text-xs md:text-sm">
+                    {fileType.toUpperCase()}
+                  </Text>
                 </div>
               </SelectValue>
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="jpeg" className="cursor-pointer">
-                <div className="flex items-center gap-2">
-                  <ImageIcon className="h-4 w-4" />
-                  <Text className="text-sm">JPEG</Text>
+                <div className="flex items-center gap-1.5 md:gap-2">
+                  <ImageIcon className="h-3.5 w-3.5 md:h-4 md:w-4" />
+                  <Text className="text-xs md:text-sm">JPEG</Text>
                 </div>
               </SelectItem>
               <SelectItem value="png" className="cursor-pointer">
-                <div className="flex items-center gap-2">
-                  <ImageIcon className="h-4 w-4" />
-                  <Text className="text-sm">PNG</Text>
+                <div className="flex items-center gap-1.5 md:gap-2">
+                  <ImageIcon className="h-3.5 w-3.5 md:h-4 md:w-4" />
+                  <Text className="text-xs md:text-sm">PNG</Text>
                 </div>
               </SelectItem>
               <SelectItem value="svg" className="cursor-pointer">
-                <div className="flex items-center gap-2">
-                  <ImageIcon className="h-4 w-4" />
-                  <Text className="text-sm">SVG</Text>
+                <div className="flex items-center gap-1.5 md:gap-2">
+                  <ImageIcon className="h-3.5 w-3.5 md:h-4 md:w-4" />
+                  <Text className="text-xs md:text-sm">SVG</Text>
                 </div>
               </SelectItem>
               {/* <SelectItem value="pdf" className="cursor-pointer">
-                <div className="flex items-center gap-2">
-                  <FileIcon className="h-4 w-4" />
-                  <Text className="text-sm">PDF</Text>
+                <div className="flex items-center gap-1.5 md:gap-2">
+                  <FileIcon className="h-3.5 w-3.5 md:h-4 md:w-4" />
+                  <Text className="text-xs md:text-sm">PDF</Text>
                 </div>
               </SelectItem> */}
             </SelectContent>
           </Select>
         </div>
-        {/* <div className="space-y-2">
-          <Text variant="xs">Quality</Text>
-          <div className="flex space-x-2">
-            <Slider
-              defaultValue={[quality]}
-              min={1}
-              max={3}
-              step={1}
-              className="flex-1"
-              onValueChange={(value) => {
-                setQuality(value[0]);
-              }}
-            />
-            <Input
-              variant="sm"
-              type="number"
-              value={quality}
-              onChange={(e) => setQuality(Number(e.target.value))}
-              max={3}
-              className="flex-1 bg-white text-gray-900 border-gray-300 max-w-[2.25rem] p-1 text-center"
-            />
-          </div>
-        </div> */}
         <Button
           variant="default"
           size="sm"
-          className="w-full"
+          className="w-full h-8 md:h-9 text-xs md:text-sm"
           onClick={handleDownload}
         >
           Download

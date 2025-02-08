@@ -331,11 +331,6 @@ export const ChartShadowStyles: {
 }[] = [
   { id: "none", className: "shadow-none", property: "0 0 #0000" },
   {
-    id: "sm",
-    property: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
-    className: "shadow-sm",
-  },
-  {
     id: "normal",
     property: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
     className: "shadow",
@@ -363,11 +358,14 @@ export const ChartShadowStyles: {
     className: "shadow-2xl",
     property: "0 25px 50px -12px rgb(0 0 0 / 0.25)",
   },
-  {
-    id: "inner",
-    className: "shadow-inner",
-    property: "inset 0 2px 4px 0 rgb(0 0 0 / 0.05)",
-  },
+];
+
+export const ChartColors: string[] = [
+  "#E5E7EB",
+  "#5F3B00",
+  "#A31355",
+  "#004A54",
+  "#303685",
 ];
 
 export type ChartFrame =
@@ -599,7 +597,7 @@ export const useChartStore = create<ChartState>()((set) => ({
     },
     canvas: {
       background: {
-        color: "#e5e7eb",
+        color: "#E5E7EB",
         opacity: 0.8,
       },
       width: 1616,

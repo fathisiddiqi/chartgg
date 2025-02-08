@@ -30,7 +30,7 @@ const ChartFrame = ({
           boxShadow,
           transform,
           scale,
-          borderRadius: `${borderRadius}px`,
+          borderRadius: borderRadius ?? 0,
         }}
       >
         {children}
@@ -42,6 +42,7 @@ const ChartFrame = ({
         boxShadow={boxShadow}
         transform={transform}
         scale={scale}
+        borderRadius={borderRadius}
       >
         {children}
       </MackLigthFrame>
@@ -52,6 +53,7 @@ const ChartFrame = ({
         boxShadow={boxShadow}
         transform={transform}
         scale={scale}
+        borderRadius={borderRadius}
       >
         {children}
       </MackDarkFrame>
@@ -62,6 +64,7 @@ const ChartFrame = ({
         boxShadow={boxShadow}
         transform={transform}
         scale={scale}
+        borderRadius={borderRadius}
       >
         {children}
       </ArcFrame>
@@ -72,6 +75,7 @@ const ChartFrame = ({
         boxShadow={boxShadow}
         transform={transform}
         scale={scale}
+        borderRadius={borderRadius}
       >
         {children}
       </StrokeFrame>

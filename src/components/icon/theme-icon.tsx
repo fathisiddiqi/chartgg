@@ -18,7 +18,7 @@ const ColorPalette = ({
       xmlns="http://www.w3.org/2000/svg"
       className={cn(
         "cursor-pointer",
-        isActive && "ring-2 ring-black ring-offset-1 rounded-sm"
+        isActive && "ring-1 ring-black ring-offset-1 rounded-sm"
       )}
     >
       <rect width="40" height="40" rx="8" fill="white" />
