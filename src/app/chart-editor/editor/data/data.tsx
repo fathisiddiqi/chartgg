@@ -19,6 +19,7 @@ import {
   Pencil,
   Check,
   X,
+  TableIcon,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -37,10 +38,29 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Separator } from "@/components/ui/separator";
+import { FileDropzone } from "@/components/common/file-dropzone";
+import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
+
+import { toast } from "sonner";
+import { useImportData } from "@/service/chart";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default function Data() {
   const { chartData, setChartData } = useChartStore((state) => state);
   const [openTableModal, setOpenTableModal] = useState<boolean>(false);
+  const [openImportPreviewModal, setOpenImportPreviewModal] =
+    useState<boolean>(false);
+  const [previewData, setPreviewData] = useState<any[] | null>(null);
+  const importData = useImportData();
+  const fileDropzoneRef = useRef<{ clearFiles: () => void }>(null);
 
   const handleTryData = () => {
     setChartData([
@@ -87,6 +107,40 @@ export default function Data() {
     ]);
   };
 
+  const handleImportData = (file: File) => {
+    const fileType = file.name.split(".").pop()?.toLowerCase();
+    if (fileType !== "xlsx" && fileType !== "xls" && fileType !== "csv") {
+      toast.error("Invalid file type");
+      fileDropzoneRef.current?.clearFiles();
+      return;
+    }
+
+    importData.mutate(file, {
+      onSuccess: (data) => {
+        setPreviewData(data as any[]);
+        setOpenImportPreviewModal(true);
+        fileDropzoneRef.current?.clearFiles();
+      },
+      onError: (error) => {
+        toast.error("Failed to import data");
+        fileDropzoneRef.current?.clearFiles();
+      },
+    });
+  };
+
+  const handleConfirmImport = (transformedData: any[]) => {
+    setChartData(transformedData);
+    setPreviewData(null);
+    setOpenImportPreviewModal(false);
+    toast.success("Data imported successfully");
+  };
+
+  const handleCancelImport = () => {
+    setPreviewData(null);
+    setOpenImportPreviewModal(false);
+    importData.reset(); // Reset the mutation state
+  };
+
   return (
     <ScrollArea className="h-[65vh] md:h-[calc(100vh-200px)] w-full">
       <div className="space-y-4 w-full">
@@ -102,28 +156,63 @@ export default function Data() {
               />
             </>
           ) : (
-            <div className="w-full mt-24 flex flex-col items-center justify-center align-center gap-4">
-              <Button
-                variant="default"
-                className="w-3/4"
-                onClick={() => setOpenTableModal(true)}
-              >
-                Create Data
-              </Button>
-              <Text variant="sm">
-                or{" "}
-                <span
-                  className="text-blue-500 cursor-pointer"
+            <div className="w-full mt-12 flex flex-col items-center justify-center align-center gap-6">
+              <div className="w-full flex flex-col items-center justify-center align-center gap-4">
+                <TableIcon className="w-12 h-12 text-muted-foreground" />
+                <div className="text-center">
+                  <Text variant="sm" className="font-bold">
+                    No data available
+                  </Text>
+                  <Text variant="sm" className="text-muted-foreground">
+                    Import your data or try sample data
+                  </Text>
+                </div>
+              </div>
+              <div className="w-full flex flex-col items-center justify-center align-center gap-4">
+                <Button
+                  variant="default"
+                  className="w-3/4"
+                  onClick={() => setOpenTableModal(true)}
+                >
+                  Create Data
+                </Button>
+                <Button
+                  variant="outline"
+                  className="w-3/4"
                   onClick={handleTryData}
                 >
                   try an example data
-                </span>
-              </Text>
+                </Button>
+              </div>
+              <div className="w-full flex flex-row items-center justify-center align-center gap-4">
+                <Separator className="my-4" />
+                <Text variant="sm" className="text-center">
+                  OR
+                </Text>
+                <Separator className="my-4" />
+              </div>
+              <FileDropzone
+                ref={fileDropzoneRef}
+                onFilesSelected={(files) => {
+                  handleImportData(files[0]);
+                }}
+                loading={importData.isPending}
+              />
             </div>
           )}
         </div>
 
         <TableModal open={openTableModal} setIsOpen={setOpenTableModal} />
+
+        {previewData && (
+          <TableImportPreview
+            data={previewData}
+            onConfirm={handleConfirmImport}
+            onCancel={handleCancelImport}
+            openImportPreviewModal={openImportPreviewModal}
+            setOpenImportPreviewModal={setOpenImportPreviewModal}
+          />
+        )}
       </div>
     </ScrollArea>
   );
@@ -199,6 +288,207 @@ const TablePreview = ({
         </Button>
       </div>
     </div>
+  );
+};
+
+// Table Import Preview
+const TableImportPreview = ({
+  data,
+  onConfirm,
+  onCancel,
+  openImportPreviewModal,
+  setOpenImportPreviewModal,
+}: {
+  data: any[];
+  onConfirm: (transformedData: any[]) => void;
+  onCancel: () => void;
+  openImportPreviewModal: boolean;
+  setOpenImportPreviewModal: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
+  const columnKeys =
+    data.length > 0 ? Object.keys(data[0]).filter((key) => key !== "id") : [];
+
+  const [labelColumn, setLabelColumn] = useState<string>(columnKeys[0] || "");
+  const [selectedColumns, setSelectedColumns] = useState<string[]>([]);
+
+  const handleConfirm = () => {
+    if (!labelColumn) {
+      toast.error("Please select a label column");
+      return;
+    }
+    if (selectedColumns.length === 0) {
+      toast.error("Please select at least one value column");
+      return;
+    }
+
+    // Transform the data to match the expected format
+    const transformedData = data.map((row, index) => {
+      const newRow: any = {
+        id: index + 1,
+        label: row[labelColumn],
+      };
+
+      selectedColumns.forEach((column) => {
+        newRow[column] = row[column];
+      });
+
+      return newRow;
+    });
+
+    onConfirm(transformedData);
+  };
+
+  return (
+    <Dialog
+      open={openImportPreviewModal}
+      onOpenChange={setOpenImportPreviewModal}
+    >
+      <DialogContent className="max-w-4xl space-y-4">
+        <DialogHeader>
+          <DialogTitle>Import Preview</DialogTitle>
+          <DialogDescription>
+            Review your data before importing
+          </DialogDescription>
+        </DialogHeader>
+        <div className="flex flex-col gap-4 p-4 border rounded-lg bg-muted/50">
+          <div className="flex flex-col gap-4">
+            <div className="flex-1">
+              <Text variant="sm" className="font-medium mb-2 block">
+                Label Column
+              </Text>
+              <Select value={labelColumn} onValueChange={setLabelColumn}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select label column" />
+                </SelectTrigger>
+                <SelectContent>
+                  {columnKeys.map((key) => (
+                    <SelectItem key={key} value={key}>
+                      {key}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex-1">
+              <Text variant="sm" className="font-medium mb-2 block">
+                Value Columns (max 3)
+              </Text>
+              <Select
+                onValueChange={(value) => {
+                  if (
+                    !selectedColumns.includes(value) &&
+                    selectedColumns.length >= 3
+                  ) {
+                    toast.error("Maximum 3 columns allowed");
+                    return;
+                  }
+                  setSelectedColumns((current) =>
+                    current.includes(value)
+                      ? current.filter((item) => item !== value)
+                      : [...current, value]
+                  );
+                }}
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select columns">
+                    {selectedColumns.length > 0 ? (
+                      <div className="flex flex-wrap gap-1">
+                        {selectedColumns.map((column) => (
+                          <Badge
+                            key={column}
+                            variant="secondary"
+                            className="mr-1"
+                          >
+                            {column}
+                          </Badge>
+                        ))}
+                      </div>
+                    ) : null}
+                  </SelectValue>
+                </SelectTrigger>
+                <SelectContent>
+                  {columnKeys
+                    .filter((key) => key !== labelColumn)
+                    .map((key) => (
+                      <SelectItem key={key} value={key}>
+                        <div className="flex items-center gap-2">{key}</div>
+                      </SelectItem>
+                    ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          {selectedColumns.length > 0 && (
+            <div className="flex flex-wrap gap-2">
+              {selectedColumns.map((column) => (
+                <div
+                  key={column}
+                  className="px-2 py-1 bg-primary/10 text-primary rounded-md text-sm flex items-center gap-1"
+                >
+                  {column}
+                  <X
+                    className="w-3 h-3 cursor-pointer"
+                    onClick={() =>
+                      setSelectedColumns((prev) =>
+                        prev.filter((k) => k !== column)
+                      )
+                    }
+                  />
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="flex items-center justify-end gap-2">
+          <Button variant="outline" size="sm" onClick={onCancel}>
+            <X className="w-4 h-4 mr-2" />
+            Cancel
+          </Button>
+          <Button size="sm" onClick={handleConfirm}>
+            <Check className="w-4 h-4 mr-2" />
+            Confirm Import
+          </Button>
+        </div>
+
+        <div className="w-full overflow-x-auto overflow-y-auto max-h-[40vh]">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                {columnKeys.map((key) => (
+                  <TableHead
+                    key={key}
+                    className={cn(
+                      key === labelColumn && "bg-primary/10",
+                      selectedColumns.includes(key) && "bg-secondary/10"
+                    )}
+                  >
+                    {key}
+                  </TableHead>
+                ))}
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {data.map((row, index) => (
+                <TableRow key={row.id || index}>
+                  {columnKeys.map((key) => (
+                    <TableCell
+                      key={key}
+                      className={cn(
+                        key === labelColumn && "bg-primary/10",
+                        selectedColumns.includes(key) && "bg-secondary/10"
+                      )}
+                    >
+                      {row[key as keyof typeof row]}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 };
 
@@ -302,11 +592,6 @@ const TableModal = ({
     });
 
     setChartData(updatedData);
-  };
-
-  const handleExport = () => {
-    // Implement CSV/XLSX export logic here
-    console.log("Exporting data...");
   };
 
   const handleEditColumnHeader = (header: string) => {

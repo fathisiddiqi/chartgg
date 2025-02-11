@@ -8,6 +8,7 @@ import {
 import { cn } from "@/lib/utils";
 import { Metadata } from "next";
 import Script from "next/script";
+import { Toaster } from "sonner";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -93,6 +94,7 @@ export default function RootLayout({
         )}
       >
         {children}
+        <Toaster />
         {/* Umami */}
         <Script
           src={process.env.NEXT_PUBLIC_UMAMI_URL}
