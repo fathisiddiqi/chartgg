@@ -2,6 +2,7 @@ import { ChartDownloadFileType } from "@/store/chart";
 import { useMutation } from "@tanstack/react-query";
 import { toJpeg, toPng, toSvg } from "html-to-image";
 import jsPDF from "jspdf";
+import * as XLSX from "xlsx";
 
 export const useDownloadChart = () => {
   const chartDownloadByFileType: Record<
@@ -116,5 +117,39 @@ export const useDownloadChart = () => {
         width: chartRef?.current?.width,
         height: chartRef?.current?.height,
       }),
+  });
+};
+
+export const useImportData = () => {
+  return useMutation({
+    mutationKey: ["import-data"],
+    mutationFn: async (file: File) => {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+
+        reader.onload = (e) => {
+          try {
+            const data = e.target?.result;
+            const workbook = XLSX.read(data, { type: "array" });
+            const sheetName = workbook.SheetNames[0];
+            const worksheet = workbook.Sheets[sheetName];
+            const jsonData = XLSX.utils.sheet_to_json(worksheet);
+
+            // Transform the data to match the expected format
+            const transformedData = jsonData.map((row: any, index) => ({
+              id: index + 1,
+              ...row,
+            }));
+
+            resolve(transformedData);
+          } catch (error) {
+            reject(error);
+          }
+        };
+
+        reader.onerror = () => reject(new Error("Failed to read file"));
+        reader.readAsArrayBuffer(file);
+      });
+    },
   });
 };
