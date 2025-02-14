@@ -9,10 +9,38 @@ import {
 } from "lucide-react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import Navbar from "@/components/marketing/navbar";
+import { Metadata } from "next";
+import { HomeSchema } from "@/components/marketing/home-schema";
+
+export const metadata: Metadata = {
+  title: "ChartGG - Create Beautiful Charts and Visualizations",
+  description:
+    "Create charts and data visualizations with ChartGG. Easy to use, powerful features, and beautiful results.",
+  openGraph: {
+    title: "ChartGG - Create Beautiful Charts and Visualizations",
+    description:
+      "Create charts and data visualizations with ChartGG. Easy to use, powerful features, and beautiful results.",
+    type: "website",
+    url: "https://chartgg.com",
+    siteName: "ChartGG",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "ChartGG - Create Beautiful Charts and Visualizations",
+    description:
+      "Create charts and data visualizations with ChartGG. Easy to use, powerful features, and beautiful results.",
+    creator: "@chartgg",
+    site: "@chartgg",
+  },
+  alternates: {
+    canonical: "https://chartgg.com",
+  },
+};
 
 export default function LandingPage() {
   return (
     <>
+      <HomeSchema />
       <main className="flex flex-col min-h-screen mx-auto max-w-[1280px]">
         <Navbar />
         <div className="h-20 md:h-32" />

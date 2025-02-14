@@ -18,7 +18,9 @@ export function BlogPostSchema({
     "@type": "BlogPosting",
     headline: title,
     description: description,
-    image: image ? `https://chartgg.com${image}` : "https://chartgg.com/og-image.png",
+    image: image
+      ? `https://chartgg.com${image}`
+      : "https://chartgg.com/og-chartgg.jpg",
     datePublished: date,
     dateModified: date,
     author: {
@@ -31,7 +33,7 @@ export function BlogPostSchema({
       name: "ChartGG",
       logo: {
         "@type": "ImageObject",
-        url: "https://chartgg.com/logo.png",
+        url: "https://chartgg.com/logo.svg",
       },
     },
     mainEntityOfPage: {

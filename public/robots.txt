@@ -4,9 +4,15 @@ Allow: /
 Allow: /features
 Allow: /blog/
 Allow: /chart-editor
+
+# Block access to private or development routes
 Disallow: /api/
 Disallow: /admin/
 Disallow: /_next/
+Disallow: /static/
+
+# Crawl delay to prevent overwhelming the server
+Crawl-delay: 1
 
 # Sitemap location
 Sitemap: https://chartgg.com/sitemap.xml
