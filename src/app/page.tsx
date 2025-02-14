@@ -1,19 +1,14 @@
-import {
-  NavigationMenu,
-  NavigationMenuLink,
-  NavigationMenuList,
-} from "@/components/ui/navigation-menu";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import {
-  BrushIcon,
   ChartAreaIcon,
-  DownloadIcon,
+  DatabaseIcon,
+  PaletteIcon,
+  ShareIcon,
   SlidersHorizontalIcon,
-  TableIcon,
 } from "lucide-react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import Navbar from "@/components/marketing/navbar";
 
 export default function LandingPage() {
   return (
@@ -22,12 +17,12 @@ export default function LandingPage() {
         <Navbar />
         <div className="h-20 md:h-32" />
         <Hero />
-        <div className="h-20 md:h-24" />
+        <div className="h-20 md:h-20" />
         <ChartPlaceholder />
         <div className="h-20 md:h-24" />
         <Features />
         <div className="h-20 md:h-24" />
-        <Pricing />
+        <GetStartedFree />
         <div className="h-20 md:h-24" />
         <Footer />
       </main>
@@ -35,64 +30,14 @@ export default function LandingPage() {
   );
 }
 
-const Navbar = () => {
-  return (
-    <header className="fixed top-0 left-0 right-0 flex h-12 shrink-0 items-center px-4 sm:px-12 border-b-2 border-muted z-50 max-w-[1280px] mx-auto bg-white rounded-md">
-      <Link href="/" className="mr-6 flex items-center" prefetch={false}>
-        <Image src="/logo.svg" alt="logo" width={28} height={28} />
-        <span className="ml-2 text-xl font-bold">Chartgg</span>
-        <span className="ml-2 inline-flex items-center rounded-md bg-primary/10 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-primary ring-1 ring-inset ring-primary/20">
-          Beta
-        </span>
-      </Link>
-      <NavigationMenu className="hidden md:flex justify-center">
-        <NavigationMenuList>
-          <NavigationMenuLink asChild>
-            <a
-              href="#features"
-              className="group inline-flex h-6 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
-            >
-              Features
-            </a>
-          </NavigationMenuLink>
-          <NavigationMenuLink asChild>
-            <a
-              href="#pricing"
-              className="group inline-flex h-6 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
-            >
-              Pricing
-            </a>
-          </NavigationMenuLink>
-        </NavigationMenuList>
-      </NavigationMenu>
-      <a
-        href="/chart-editor"
-        className="hidden sm:flex ml-auto gap-2 justify-end"
-      >
-        <Button size="sm" variant="default">
-          Go to Editor
-        </Button>
-      </a>
-      <a
-        href="/chart-editor"
-        className="flex sm:hidden ml-auto gap-2 justify-end"
-      >
-        <Button size="sm" variant="default">
-          Editor
-        </Button>
-      </a>
-    </header>
-  );
-};
-
 const Hero = () => {
   return (
     <section>
       <div className="container mx-auto px-4 text-center space-y-4">
         <h1 className="text-5xl font-bold">
-          Create <span className="cycle-text" /> Charts <br /> in Minutes
+          Create <span className="cycle-text" /> charts <br /> in minutes
         </h1>
-        <h1 className="text-lg text-muted-foreground">
+        <h1 className="text-xl text-muted-foreground">
           Effortlessly design and customize beautiful charts—no coding required!
         </h1>
         <a href="/chart-editor" className="inline-block">
@@ -105,15 +50,15 @@ const Hero = () => {
 
 function ChartPlaceholder() {
   return (
-    <div className="relative w-full aspect-square mx-auto px-4 md:px-0 md:max-w-[500px]">
+    <div className="relative w-72 h-autoaspect-square mx-auto px-4 md:px-0 md:max-w-[500px]">
       <div className="flex items-center justify-center">
         <div className="text-center mx-auto flex flex-col items-center rounded-lg">
           <Image
             src="./chart-placeholder.gif"
             alt="Placeholder Image 1"
-            width={1200}
-            height={1200}
-            className="rounded-lg w-full h-auto"
+            width={800}
+            height={800}
+            className="rounded-lg w-72 h-auto"
           />
         </div>
       </div>
@@ -122,83 +67,181 @@ function ChartPlaceholder() {
 }
 
 function Features() {
+  const features = [
+    {
+      icon: <DatabaseIcon size={16} />,
+      feature: "Data Input",
+      title: "Flexible Data Management",
+      description:
+        "Create data from scratch with our minimalist editor or import existing data from CSV, Excel, or JSON files. Simple, fast, and hassle-free!",
+      image: "./create-data.gif",
+      highlight: "New",
+    },
+    {
+      icon: <ChartAreaIcon size={16} />,
+      feature: "Chart Types",
+      title: "Powerful Visualization Options",
+      description:
+        "Choose from a variety of chart types including bar, line, pie, scatter plots, and more. Find the perfect visualization for your data story!",
+      image: "./choose-chart.gif",
+    },
+    {
+      icon: <SlidersHorizontalIcon size={16} />,
+      feature: "Advanced Customization",
+      title: "Complete Control Over Your Charts",
+      description:
+        "Fine-tune every aspect of your charts with our comprehensive customization options. Adjust axes, legends, tooltips, and data labels with ease!",
+      image: "./customize-chart.gif",
+    },
+    {
+      icon: <PaletteIcon size={16} />,
+      feature: "Style Options",
+      title: "Beautiful Design Made Simple",
+      description:
+        "Make your charts stand out with our professional styling options. Choose from pre-built themes, customize colors, frames, and backgrounds!",
+      image: "./style-chart.gif",
+    },
+    {
+      icon: <ShareIcon size={16} />,
+      feature: "Export & Share",
+      title: "Share Your Insights",
+      description:
+        "Export your charts in multiple formats (PNG, SVG, PDF) with high resolution. Perfect for presentations, reports, or embedding in your applications!",
+      image: "./download-chart.gif",
+    },
+  ];
+
   return (
-    <section className="container mx-auto px-4" id="features">
-      <h2 className="text-3xl font-bold text-center mb-20 md:mb-40">
-        Features
-      </h2>
-      <div className="md:space-y-40 space-y-10">
-        {[
-          {
-            icon: <TableIcon size={14} />,
-            feature: "Create Data",
-            title: "Effortlessly Create Charts",
-            description:
-              "Transform your data into beautiful, insightful charts with our intuitive and user-friendly interface. Simple, fast, and hassle-free!",
-            image: "./create-data.gif",
-          },
-          {
-            icon: <ChartAreaIcon size={14} />,
-            feature: "Choose Chart",
-            title: "Select the Perfect Chart",
-            description:
-              "Pick the ideal chart for your data—bar, line, pie, and more. Visualize your insights effortlessly!",
-            image: "./choose-chart.gif",
-          },
-          {
-            icon: <SlidersHorizontalIcon size={14} />,
-            feature: "Customize Chart",
-            title: "Personalize Your Chart",
-            description:
-              "Tailor your chart to perfection—add a title, legend, adjust the x-axis, and more. Make it truly yours!",
-            image: "./customize-chart.gif",
-          },
-          {
-            icon: <BrushIcon size={14} />,
-            feature: "Style Chart",
-            title: "Fine-Tune Your Chart’s Style",
-            description:
-              "Design a stunning chart—adjust the frame, set the background color, and refine every detail effortlessly!",
-            image: "./style-chart.gif",
-          },
-          {
-            icon: <DownloadIcon size={14} />,
-            feature: "Download Chart",
-            title: "Export Your Chart in High Quality",
-            description:
-              "Save your chart in PNG, JPEG, or PDF with HD resolution—perfect for presentations, reports, and sharing!",
-            image: "./download-chart.gif",
-          },
-        ].map((feature, index) => (
+    <section className="container mx-auto px-4 py-16" id="features">
+      <div className="text-center max-w-3xl mx-auto mb-16">
+        <h2 className="text-4xl font-bold mb-4">Powerful Features</h2>
+        <p className="text-xl text-muted-foreground">
+          Everything you need to create beautiful and insightful data
+          visualizations
+        </p>
+      </div>
+
+      <div className="space-y-32">
+        {features.map((feature, index) => (
           <div
             key={index}
-            className="grid grid-cols-1 gap-8 items-center md:grid-cols-2 md:gap-8"
+            className={`grid grid-cols-1 gap-12 items-center md:grid-cols-2 md:gap-16 ${
+              index % 2 === 1 ? "md:flex-row-reverse" : ""
+            }`}
           >
-            <div className="space-y-4">
-              <Button
-                variant="outline"
-                size="sm"
-                className="space-x-2 flex flex-row"
-              >
-                {feature.icon}
-                <p className="text-xs">{feature.feature}</p>
-              </Button>
-              <h3 className="text-2xl font-bold">{feature.title}</h3>
-              <p className="text-base text-muted-foreground">
+            <div className="space-y-6">
+              <div className="space-y-2">
+                <div className="flex items-center gap-4">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="space-x-2 flex items-center"
+                  >
+                    {feature.icon}
+                    <span className="text-sm font-medium">
+                      {feature.feature}
+                    </span>
+                  </Button>
+                  {feature.highlight && (
+                    <span className="inline-flex items-center rounded-md bg-primary/10 px-2 py-1 text-xs font-medium text-primary ring-1 ring-inset ring-primary/20">
+                      {feature.highlight}
+                    </span>
+                  )}
+                </div>
+                <h3 className="text-3xl font-bold tracking-tight">
+                  {feature.title}
+                </h3>
+              </div>
+              <p className="text-lg text-muted-foreground leading-relaxed">
                 {feature.description}
               </p>
             </div>
-            <div className="w-full h-64 rounded-md">
-              <Image
-                src={feature.image}
-                alt={`Feature Image ${index + 1}`}
-                width={1200}
-                height={1200}
-                className="rounded-lg"
-              />
+            <div className="relative group">
+              <div className="relative overflow-hidden rounded-xl border bg-background shadow-lg">
+                <Image
+                  src={feature.image}
+                  alt={feature.title}
+                  width={1200}
+                  height={800}
+                  className="w-full h-auto transition-transform duration-300 group-hover:scale-105"
+                />
+              </div>
+              <div className="absolute -inset-px rounded-xl bg-gradient-to-r from-primary/20 to-secondary/20 opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
           </div>
         ))}
+      </div>
+    </section>
+  );
+}
+
+// Get started for free section
+function GetStartedFree() {
+  return (
+    <section className="container mx-auto px-4">
+      <div className="max-w-3xl mx-auto text-center">
+        <h2 className="text-3xl font-bold mb-4">Get Started for Free</h2>
+        <p className="text-gray-600 mb-8">
+          Start creating beautiful charts today. No credit card required.
+        </p>
+        <div className="bg-primary/5 rounded-lg p-8 mb-8">
+          <div className="grid gap-6">
+            <div className="flex items-center gap-3">
+              <svg
+                className="h-5 w-5 text-primary"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+              <span>Unlimited charts and visualizations</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <svg
+                className="h-5 w-5 text-primary"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+              <span>Export to PNG, SVG, and PDF</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <svg
+                className="h-5 w-5 text-primary"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+              <span>Basic customization options</span>
+            </div>
+          </div>
+        </div>
+        <a
+          href="/chart-editor"
+          className="inline-flex items-center justify-center rounded-md bg-primary px-8 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+        >
+          Start Creating Charts
+        </a>
       </div>
     </section>
   );
