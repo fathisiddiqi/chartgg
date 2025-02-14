@@ -7,26 +7,55 @@ import { Metadata } from "next";
 import Navbar from "@/components/marketing/navbar";
 
 export const metadata: Metadata = {
-  title: "ChartGG Blog - Data Visualization Insights",
+  title: "ChartGG Blog - Expert Data Visualization Insights & Tutorials",
   description:
-    "Explore articles about data visualization, chart creation, and design best practices from the ChartGG team.",
+    "Discover expert insights on data visualization, chart design best practices, and tutorials. Learn how to create effective charts and visualizations with ChartGG.",
+  keywords: [
+    "data visualization",
+    "chart design",
+    "data visualization tutorials",
+    "chart best practices",
+    "ChartGG",
+    "data visualization tools",
+  ],
   alternates: {
     canonical: "https://chartgg.com/blog",
   },
   openGraph: {
-    title: "ChartGG Blog - Data Visualization Insights",
+    title: "ChartGG Blog - Expert Data Visualization Insights & Tutorials",
     description:
-      "Explore articles about data visualization, chart creation, and design best practices from the ChartGG team.",
+      "Discover expert insights on data visualization, chart design best practices, and tutorials. Learn how to create effective charts and visualizations with ChartGG.",
     type: "website",
     url: "https://chartgg.com/blog",
-    images: ["/blog/chartgg-intro.png"],
+    images: [
+      {
+        url: "/blog/chartgg-intro.png",
+        width: 1200,
+        height: 630,
+        alt: "ChartGG Blog - Data Visualization Insights",
+      },
+    ],
+    siteName: "ChartGG",
   },
   twitter: {
     card: "summary_large_image",
-    title: "ChartGG Blog - Data Visualization Insights",
+    title: "ChartGG Blog - Expert Data Visualization Insights & Tutorials",
     description:
-      "Explore articles about data visualization, chart creation, and design best practices from the ChartGG team.",
+      "Discover expert insights on data visualization, chart design best practices, and tutorials. Learn how to create effective charts and visualizations with ChartGG.",
     images: ["/blog/chartgg-intro.png"],
+    creator: "@chartgg",
+    site: "@chartgg",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
 };
 
@@ -51,21 +80,19 @@ function BlogPostCard({ post }: { post: BlogPost }) {
               src={post.image}
               alt={post.title}
               fill
-              className="object-cover transition-transform duration-300 group-hover:scale-105"
+              className="object-cover transition-transform duration-200 ease-in-out group-hover:scale-105"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              priority={true}
             />
           </div>
         )}
-        <h2 className="mb-2 text-xl font-bold group-hover:text-blue-600">
-          {post.title}
-        </h2>
-        <time className="block mb-2 text-sm text-gray-500">
-          {new Date(post.date).toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })}
-        </time>
-        <p className="text-gray-600">{post.description}</p>
+        <div className="space-y-2">
+          <h2 className="text-xl font-semibold tracking-tight text-gray-800 group-hover:text-primary transition-colors duration-200">
+            {post.title}
+          </h2>
+          <p className="text-sm text-gray-500">{post.date}</p>
+          <p className="text-gray-600">{post.description}</p>
+        </div>
       </article>
     </Link>
   );
