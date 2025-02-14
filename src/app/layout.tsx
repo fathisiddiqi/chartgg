@@ -56,25 +56,6 @@ export const metadata: Metadata = {
     site: "@chartggapp",
     creator: "@chartggapp",
   },
-  other: {
-    script: [
-      {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        name: "Chartgg",
-        description:
-          "The best online chart builder to create beautiful visualizations effortlessly.",
-        applicationCategory: "WebApplication",
-        url: "https://chartgg.com",
-        image: "https://chartgg.com/og-chartgg.jpg",
-        offers: {
-          "@type": "Offer",
-          price: "0",
-          priceCurrency: "USD",
-        },
-      },
-    ] as any,
-  },
 };
 
 export default function RootLayout({
