@@ -166,27 +166,27 @@
 
   @keyframes cycleText {
     0% {
-      content: "Stunning";
+      content: "stunning";
       background-color: #323296;
       color: white;
     }
     25% {
-      content: "Modern";
+      content: "modern";
       background-color: #6c3f01;
       color: white;
     }
     50% {
-      content: "Beautiful";
+      content: "beautiful";
       background-color: #a41d56;
       color: white;
     }
     75% {
-      content: "Powerful";
+      content: "powerful";
       background-color: #025d54;
       color: white;
     }
     100% {
-      content: "Stunning";
+      content: "stunning";
       background-color: #323296;
       color: white;
     }
