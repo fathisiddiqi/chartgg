@@ -8,7 +8,7 @@ interface AuthorProps {
 
 export function Author({ name, role, avatar }: AuthorProps) {
   return (
-    <div className="flex items-center gap-4 not-prose">
+    <div className="flex items-center gap-4 not-prose my-8">
       <Image
         src={avatar}
         alt={name}
