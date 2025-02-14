@@ -7,6 +7,20 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://chartgg.com/features</loc>
+    <lastmod>2025-02-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://chartgg.com/blog</loc>
+    <lastmod>2025-02-03</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
     <loc>https://chartgg.com/chart-editor</loc>
     <lastmod>2025-02-03</lastmod>
     <changefreq>weekly</changefreq>
