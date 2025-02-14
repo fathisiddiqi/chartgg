@@ -35,6 +35,7 @@ const ChartPreview = () => {
     setChartDownload({
       chartRef,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chartRef]);
 
   return (
