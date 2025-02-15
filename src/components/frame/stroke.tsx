@@ -1,5 +1,8 @@
+import { cn } from "@/lib/utils";
+
 const StrokeFrame = ({
   children,
+  className,
   width,
   boxShadow,
   transform,
@@ -7,6 +10,7 @@ const StrokeFrame = ({
   borderRadius,
 }: {
   children: React.ReactNode;
+  className?: string;
   width?: number;
   boxShadow?: string;
   transform?: string;
@@ -15,7 +19,10 @@ const StrokeFrame = ({
 }) => {
   return (
     <div
-      className="w-full mx-auto overflow-hidden shadow-lg bg-white border border-gray-200"
+      className={cn(
+        "w-full mx-auto overflow-hidden shadow-lg bg-white border border-gray-200",
+        className
+      )}
       style={{ width, boxShadow, transform, scale, borderRadius: borderRadius }}
     >
       {/* Code content */}

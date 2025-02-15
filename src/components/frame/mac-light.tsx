@@ -1,7 +1,9 @@
+import { cn } from "@/lib/utils";
 import React from "react";
 
-export default function MackLigthFrame({
+export default function MacLightFrame({
   children,
+  className,
   width,
   boxShadow,
   transform,
@@ -9,6 +11,7 @@ export default function MackLigthFrame({
   borderRadius,
 }: {
   children: React.ReactNode;
+  className?: string;
   width?: number;
   boxShadow?: string;
   transform?: string;
@@ -17,8 +20,17 @@ export default function MackLigthFrame({
 }) {
   return (
     <div
-      className="w-full mx-auto overflow-hidden shadow-lg bg-white border border-gray-200"
-      style={{ width, boxShadow, transform, scale, borderRadius: borderRadius ? `${borderRadius}px` : undefined }}
+      className={cn(
+        "w-full mx-auto overflow-hidden shadow-lg bg-white border border-gray-200",
+        className
+      )}
+      style={{
+        width,
+        boxShadow,
+        transform,
+        scale,
+        borderRadius: borderRadius ? `${borderRadius}px` : undefined,
+      }}
     >
       {/* Window frame */}
       <div className="flex items-center px-4 py-2 bg-gray-100 border-b border-gray-200">

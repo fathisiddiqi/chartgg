@@ -8,7 +8,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ChartAspectRatio, ChartMainType, useChartStore } from "@/store/chart";
-import { icons } from "lucide-react";
 import { cn, hexToRGB } from "@/lib/utils";
 import { Input } from "@/components/custom-ui/input";
 import ChartFrame from "@/components/common/chart-frame";
@@ -23,13 +22,21 @@ import useChartTheme from "@/hook/use-chart-theme";
 import { Text } from "@/components/ui/text";
 import { useRef, useEffect, JSX } from "react";
 import Image from "next/image";
-import { getChartLayoutWidthAndHeightFromAspectRatio } from "@/lib/chart";
+import {
+  getChartLayoutWidthAndHeightFromAspectRatio,
+  getWatermarkPositionBasedOnAspectRatio,
+  getChartMaxWidthFromAspectRatio,
+  getChartMaxHeightFromAspectRatio,
+  getScaleFromAspectRatio,
+} from "@/lib/chart";
+import { useIsMobile } from "@/hook/use-mobile";
 
 const ChartPreview = () => {
   const { chartType, chartStyle, chartCustomization, setChartDownload } =
     useChartStore((state) => state);
   const { backgroundColor } = useChartTheme(chartStyle.content.theme.selected);
   const chartRef = useRef<HTMLDivElement>(null!);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     setChartDownload({
@@ -39,7 +46,7 @@ const ChartPreview = () => {
   }, [chartRef]);
 
   return (
-    <div className="relative max-h-[90vh] h-[90vh] md:h-[calc(100vh-100px)] md:max-h-[calc(100vh-100px)] md:max-w-[calc(100vw-500px)] w-full flex justify-center items-center rounded-md">
+    <div className="relative w-full h-[80vh] md:h-[calc(100vh-100px)] flex justify-center items-center rounded-md overflow-auto p-4">
       <ChartLayout
         ref={chartRef}
         aspectRatio={chartStyle.canvas.aspectRatio}
@@ -48,7 +55,6 @@ const ChartPreview = () => {
           chartStyle.canvas.background.color
         )}, ${chartStyle.canvas.background.opacity})`}
       >
-        <Watermark />
         {/* Chart Frame */}
         <ChartFrame
           frame={chartStyle.content.frame}
@@ -57,8 +63,15 @@ const ChartPreview = () => {
             chartStyle.content.rotate
           }deg)`}
           boxShadow={chartStyle.content.shadow}
-          scale={0.5}
+          scale={getScaleFromAspectRatio(
+            chartStyle.canvas.aspectRatio,
+            isMobile
+          )}
           borderRadius={chartStyle.content.radius}
+          className={cn(
+            getChartMaxWidthFromAspectRatio(chartStyle.canvas.aspectRatio),
+            getChartMaxHeightFromAspectRatio(chartStyle.canvas.aspectRatio)
+          )}
         >
           {/* Chart Content */}
           <Card
@@ -174,6 +187,11 @@ const ChartPreview = () => {
             </CardContent>
           </Card>
         </ChartFrame>
+        <Watermark
+          className={getWatermarkPositionBasedOnAspectRatio(
+            chartStyle.canvas.aspectRatio
+          )}
+        />
       </ChartLayout>
     </div>
   );
@@ -240,19 +258,22 @@ const ChartLayout = ({
   backgroundColor,
   borderRadius,
   ref,
+  className,
 }: {
   children: React.ReactNode;
   aspectRatio: ChartAspectRatio;
   backgroundColor?: string;
   borderRadius?: number;
   ref?: React.Ref<HTMLDivElement>;
+  className?: string;
 }) => {
   return (
     <div
       ref={ref}
       className={cn(
-        "flex justify-center items-center max-h-[90vh] md:max-h-[87vh] max-w-[90vw] md:max-w-[calc(100vw-500px)]",
-        getChartLayoutWidthAndHeightFromAspectRatio(aspectRatio)
+        "relative flex justify-center items-center max-h-[90vh] md:max-h-[87vh] max-w-[90vw] md:max-w-[calc(100vw-500px)]",
+        getChartLayoutWidthAndHeightFromAspectRatio(aspectRatio),
+        className
       )}
       style={{
         aspectRatio: aspectRatio,
@@ -283,12 +304,15 @@ const Watermark = ({ className }: { className?: string }) => {
   return (
     <div
       className={cn(
-        "absolute bottom-[15%] md:bottom-[5%] left-1/2 -translate-x-1/2 bg-white/50 p-2 rounded-md shadow-lg z-10 opacity-70",
+        "absolute bg-white/50 p-2 rounded-md shadow-lg z-10 opacity-70",
         className
       )}
     >
-      <div className="flex gap-2 my-auto h-full">
-        <Text variant="sm" className="m-auto">
+      <div className="flex gap-1 md:gap-2 my-auto h-full">
+        <Text variant="xs" className="m-auto block md:hidden">
+          made with
+        </Text>
+        <Text variant="sm" className="m-auto hidden md:block">
           made with
         </Text>
         <Image
@@ -298,7 +322,10 @@ const Watermark = ({ className }: { className?: string }) => {
           alt="logo"
           className="w-[14px] h-[14px] object-contain m-auto"
         />
-        <Text variant="sm" className="font-bold m-auto">
+        <Text variant="sm" className="font-bold m-auto hidden md:block">
+          Chartgg
+        </Text>
+        <Text variant="xs" className="font-bold m-auto block md:hidden">
           Chartgg
         </Text>
       </div>
