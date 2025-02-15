@@ -1,6 +1,6 @@
 # Allow crawling of all public pages
 User-agent: *
-Allow: /
+Allow: /$
 Allow: /features
 Allow: /blog/
 Allow: /chart-editor
