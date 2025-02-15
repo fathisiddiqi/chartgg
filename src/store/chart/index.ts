@@ -245,9 +245,9 @@ export const useChartStore = create<ChartState>()((set) => ({
     canvas: {
       background: {
         color: "#E5E7EB",
-        opacity: 0.8,
+        opacity: 1,
       },
-      aspectRatio: "1/1",
+      aspectRatio: "auto",
       width: 1616,
       height: 1414,
       border: {

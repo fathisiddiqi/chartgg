@@ -1,9 +1,11 @@
 // Happy frame
 
+import { cn } from "@/lib/utils";
 import React from "react";
 
 export default function GradientFrame({
   children,
+  className,
   width,
   transform,
   scale,
@@ -12,6 +14,7 @@ export default function GradientFrame({
   borderWidth = 3,
 }: {
   children: React.ReactNode;
+  className?: string;
   width?: number;
   transform?: string;
   scale?: number;
@@ -21,7 +24,7 @@ export default function GradientFrame({
 }) {
   return (
     <div
-      className="relative w-full mx-auto"
+      className={cn("relative w-full mx-auto", className)}
       style={{
         width,
         transform,

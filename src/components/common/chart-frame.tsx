@@ -1,30 +1,29 @@
 import { type ChartFrame } from "@/store/chart";
-import MackLigthFrame from "../frame/mac-light";
+import MacLightFrame from "../frame/mac-light";
 import MackDarkFrame from "../frame/mac-dark";
 import ArcFrame from "../frame/arc";
 import StrokeFrame from "../frame/stroke";
 import { JSX } from "react";
-import GradientFrame from "../frame/gradient";
 import ShadowFrame from "../frame/shadow";
 
 const ChartFrame = ({
-  frame,
   children,
+  frame,
+  className,
   width,
   boxShadow,
   transform,
   scale,
   borderRadius,
-  borderWidth,
 }: {
   children: React.ReactNode;
   frame: ChartFrame;
+  className?: string;
   width?: number;
   boxShadow?: string;
   transform?: string;
   scale?: number;
   borderRadius?: number;
-  borderWidth?: number;
 }) => {
   const frameMap: Record<ChartFrame, JSX.Element> = {
     none: (
@@ -36,20 +35,22 @@ const ChartFrame = ({
           scale,
           borderRadius: borderRadius ?? 0,
         }}
+        className={className}
       >
         {children}
       </div>
     ),
     macos_light: (
-      <MackLigthFrame
+      <MacLightFrame
         width={width}
         boxShadow={boxShadow}
         transform={transform}
         scale={scale}
         borderRadius={borderRadius}
+        className={className}
       >
         {children}
-      </MackLigthFrame>
+      </MacLightFrame>
     ),
     macos_dark: (
       <MackDarkFrame
@@ -58,6 +59,7 @@ const ChartFrame = ({
         transform={transform}
         scale={scale}
         borderRadius={borderRadius}
+        className={className}
       >
         {children}
       </MackDarkFrame>
@@ -69,6 +71,7 @@ const ChartFrame = ({
         transform={transform}
         scale={scale}
         borderRadius={borderRadius}
+        className={className}
       >
         {children}
       </ArcFrame>
@@ -80,6 +83,7 @@ const ChartFrame = ({
         transform={transform}
         scale={scale}
         borderRadius={borderRadius}
+        className={className}
       >
         {children}
       </StrokeFrame>
@@ -90,6 +94,7 @@ const ChartFrame = ({
         transform={transform}
         scale={scale}
         borderRadius={borderRadius}
+        className={className}
       >
         {children}
       </ShadowFrame>

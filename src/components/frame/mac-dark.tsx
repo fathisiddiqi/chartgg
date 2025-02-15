@@ -1,7 +1,9 @@
+import { cn } from "@/lib/utils";
 import React from "react";
 
 export default function MacDarkFrame({
   children,
+  className,
   width,
   boxShadow,
   transform,
@@ -9,6 +11,7 @@ export default function MacDarkFrame({
   borderRadius,
 }: {
   children: React.ReactNode;
+  className?: string;
   width?: number;
   boxShadow?: string;
   transform?: string;
@@ -17,8 +20,17 @@ export default function MacDarkFrame({
 }) {
   return (
     <div
-      className="w-full mx-auto overflow-hidden shadow-lg bg-gray-900"
-      style={{ width, boxShadow, transform, scale, borderRadius: borderRadius ? `${borderRadius}px` : undefined }}
+      className={cn(
+        "w-full mx-auto overflow-hidden shadow-lg bg-gray-900",
+        className
+      )}
+      style={{
+        width,
+        boxShadow,
+        transform,
+        scale,
+        borderRadius: borderRadius ? `${borderRadius}px` : undefined,
+      }}
     >
       {/* Window frame */}
       <div className="flex items-center px-4 py-2 bg-gray-800">

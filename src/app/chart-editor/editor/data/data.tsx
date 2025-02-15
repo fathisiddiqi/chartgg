@@ -142,7 +142,10 @@ export default function Data() {
   };
 
   return (
-    <ScrollArea className="h-[65vh] md:h-[calc(100vh-200px)] w-full">
+    <ScrollArea
+      className="h-[65vh] md:h-[calc(100vh-200px)] w-full"
+      isThumbHidden
+    >
       <div className="space-y-4 w-full">
         <div>
           {chartData.length > 0 ? (

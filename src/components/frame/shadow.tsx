@@ -1,8 +1,10 @@
 // shadow frame
+import { cn } from "@/lib/utils";
 import React from "react";
 
 export default function ShadowFrame({
   children,
+  className,
   width,
   transform,
   scale,
@@ -10,6 +12,7 @@ export default function ShadowFrame({
   borderRadius,
 }: {
   children: React.ReactNode;
+  className?: string;
   width?: number;
   transform?: string;
   scale?: number;
@@ -18,7 +21,7 @@ export default function ShadowFrame({
 }) {
   return (
     <div
-      className="relative"
+      className={cn("relative", className)}
       style={{
         width,
         transform,
