@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { BlogLayout } from "@/components/marketing/blog/layout";
 import { Author } from "@/components/marketing/blog/author";
 import { BlogPostSchema } from "@/components/marketing/blog/schema";
+import { RelatedPosts } from "@/components/marketing/blog/related-posts";
 import matter from "gray-matter";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import Image from "next/image";
@@ -140,19 +141,18 @@ export default async function Page({
         title={frontMatter.title}
         date={frontMatter.date}
         image={frontMatter.image}
+        imageSource={frontMatter.imageSource}
       >
         <article className="prose prose-lg dark:prose-invert max-w-none">
           <MDXRemote
             source={content}
-            components={components}
-            options={{
-              mdxOptions: {
-                remarkPlugins: [],
-                rehypePlugins: [],
-              },
+            components={{
+              ...components,
+              Author: (props: any) => <Author {...props} />,
             }}
           />
         </article>
+        <RelatedPosts currentSlug={slug} tags={frontMatter.tags} />
       </BlogLayout>
     </>
   );
