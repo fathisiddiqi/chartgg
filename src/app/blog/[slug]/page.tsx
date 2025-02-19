@@ -142,6 +142,7 @@ export default async function Page({
         date={frontMatter.date}
         image={frontMatter.image}
         imageSource={frontMatter.imageSource}
+        imageLink={frontMatter.imageLink}
       >
         <article className="prose prose-lg dark:prose-invert max-w-none">
           <MDXRemote

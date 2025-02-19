@@ -103,7 +103,7 @@ function Features() {
       description:
         "Create data from scratch with our minimalist editor or import existing data from CSV, Excel, or JSON files. Simple, fast, and hassle-free!",
       image: "./create-data.gif",
-      highlight: "New",
+      highlight: "",
     },
     {
       icon: <ChartAreaIcon size={16} />,
@@ -213,8 +213,8 @@ function GetStartedFree() {
           Start creating beautiful charts today. No credit card required.
         </p>
         <div className="bg-primary/5 rounded-lg p-8 mb-8">
-          <div className="grid gap-6">
-            <div className="flex items-center gap-3">
+          <div className="grid gap-6 justify-center">
+            <div className="flex items-center  gap-3">
               <svg
                 className="h-5 w-5 text-primary"
                 fill="none"
@@ -228,9 +228,9 @@ function GetStartedFree() {
                   d="M5 13l4 4L19 7"
                 />
               </svg>
-              <span>Unlimited charts and visualizations</span>
+              <span>Unlimited charts</span>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center  gap-3">
               <svg
                 className="h-5 w-5 text-primary"
                 fill="none"
@@ -244,7 +244,7 @@ function GetStartedFree() {
                   d="M5 13l4 4L19 7"
                 />
               </svg>
-              <span>Export to PNG, SVG, and PDF</span>
+              <span>Unlimited create/import data</span>
             </div>
             <div className="flex items-center gap-3">
               <svg
@@ -261,6 +261,38 @@ function GetStartedFree() {
                 />
               </svg>
               <span>Basic customization options</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <svg
+                className="h-5 w-5 text-primary"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+              <span>Basic styling options</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <svg
+                className="h-5 w-5 text-primary"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+              <span>Export to PNG, SVG, and PDF</span>
             </div>
           </div>
         </div>
