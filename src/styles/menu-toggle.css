@@ -1,0 +1,26 @@
+/* Menu toggle styles */
+button[aria-label="Toggle menu"][data-state="open"] [data-state="closed"] {
+  display: none;
+}
+
+button[aria-label="Toggle menu"][data-state="open"] [data-state="open"] {
+  display: block;
+}
+
+button[aria-label="Toggle menu"][data-state="closed"] [data-state="open"] {
+  display: none;
+}
+
+button[aria-label="Toggle menu"][data-state="closed"] [data-state="closed"] {
+  display: block;
+}
+
+/* Mobile menu overlay styles */
+div[data-state="open"].md\:hidden {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+div[data-state="open"] > div[data-state="open"] {
+  transform: translateX(0);
+}

@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Navbar from "@/components/marketing/navbar";
+import { Footer } from "@/components/marketing/footer";
 import {
   ChartAreaIcon,
   SlidersHorizontalIcon,
@@ -77,6 +78,7 @@ const features = [
     description:
       "Create a wide variety of charts including bar, line, pie, and scatter plots.",
     icon: ChartAreaIcon,
+    gradient: "from-purple-500 to-pink-500",
     items: [
       {
         title: "Bar Charts",
@@ -107,6 +109,7 @@ const features = [
     description:
       "Flexible data input options to get your data visualization started quickly.",
     icon: DatabaseIcon,
+    gradient: "from-pink-500 to-rose-500",
     items: [
       {
         title: "Minimalist Editor",
@@ -136,6 +139,7 @@ const features = [
     description:
       "Customize every aspect of your charts to match your brand and needs.",
     icon: SlidersHorizontalIcon,
+    gradient: "from-rose-500 to-orange-500",
     items: [
       {
         title: "Axis Customization",
@@ -165,6 +169,7 @@ const features = [
     description:
       "Customize the look and feel of your charts with comprehensive styling options.",
     icon: PaletteIcon,
+    gradient: "from-orange-500 to-amber-500",
     items: [
       {
         title: "Themes",
@@ -194,77 +199,99 @@ const features = [
 export default function FeaturesPage() {
   return (
     <>
-      <Navbar />
+      <Navbar pathname="/features" />
       <main className="min-h-screen pt-16">
-        <div className="max-w-7xl mx-auto px-4 py-12">
-          {/* Hero Section */}
-          <div className="text-center mb-16">
-            <h1 className="text-4xl font-bold mb-4">
-              Powerful Features for Data Visualization
-            </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              ChartGG provides all the tools you need to create beautiful,
-              interactive charts and visualize your data effectively.
-            </p>
+        {/* Hero Section */}
+        <section className="relative py-16 sm:py-32 mx-4 sm:mx-6 lg:mx-8 overflow-hidden bg-gradient-to-br from-purple-600 via-pink-500 to-orange-400 text-white rounded-2xl mt-8">
+          <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-20"></div>
+          <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center space-y-6 sm:space-y-8">
+              <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold leading-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-purple-200">
+                Powerful Features for
+                <br />
+                <span className="text-white">Data Visualization</span>
+              </h1>
+              <p className="text-lg sm:text-xl md:text-2xl text-purple-100 max-w-3xl mx-auto">
+                ChartGG provides all the tools you need to create beautiful,
+                interactive charts and visualize your data effectively.
+              </p>
+            </div>
           </div>
+        </section>
 
-          {/* Features Grid */}
-          <div className="space-y-24">
-            {features.map((feature) => (
-              <section key={feature.title} className="relative">
-                <div className="grid md:grid-cols-2 gap-8 items-center">
-                  {/* Feature Overview */}
-                  <div className="space-y-4">
-                    <div className="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-primary/10 text-primary">
-                      <feature.icon className="w-6 h-6" />
-                    </div>
-                    <h2 className="text-3xl font-bold">{feature.title}</h2>
-                    <p className="text-gray-600 text-lg">
-                      {feature.description}
-                    </p>
-                  </div>
-
-                  {/* Feature Items Grid */}
-                  <div className="grid sm:grid-cols-2 gap-6">
-                    {feature.items.map((item) => (
+        {/* Features Grid */}
+        <section className="py-16 sm:py-24 bg-gradient-to-b from-white to-purple-50">
+          <div className="max-w-7xl mx-auto px-4">
+            <div className="space-y-16 sm:space-y-24">
+              {features.map((feature, idx) => (
+                <div key={feature.title} className="relative">
+                  <div className="grid md:grid-cols-2 gap-12 items-center">
+                    {/* Feature Overview */}
+                    <div className="space-y-6">
                       <div
-                        key={item.title}
-                        className="p-6 rounded-lg border bg-card hover:shadow-lg transition-shadow"
+                        className={`p-4 bg-gradient-to-r ${feature.gradient} rounded-2xl w-16 h-16 flex items-center justify-center text-white shadow-lg transform transition-all duration-300 hover:scale-110`}
                       >
-                        <div className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-primary/10 text-primary mb-4">
-                          <item.icon className="w-5 h-5" />
-                        </div>
-                        <h3 className="font-semibold mb-2">{item.title}</h3>
-                        <p className="text-sm text-gray-600">
-                          {item.description}
-                        </p>
+                        <feature.icon className="w-8 h-8" />
                       </div>
-                    ))}
+                      <h2 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-600">
+                        {feature.title}
+                      </h2>
+                      <p className="text-xl text-gray-600">
+                        {feature.description}
+                      </p>
+                    </div>
+
+                    {/* Feature Items Grid */}
+                    <div className="grid sm:grid-cols-2 gap-6">
+                      {feature.items.map((item) => (
+                        <div
+                          key={item.title}
+                          className="group relative p-6 rounded-xl border bg-white/50 backdrop-blur-sm hover:bg-white hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+                        >
+                          <div className="absolute inset-0 bg-gradient-to-r from-purple-500/5 to-pink-500/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                          <div className="relative z-10 space-y-4">
+                            <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-r from-purple-500/10 to-pink-500/10 text-purple-600">
+                              <item.icon className="w-6 h-6" />
+                            </div>
+                            <h3 className="font-semibold text-lg group-hover:text-purple-600 transition-colors duration-300">
+                              {item.title}
+                            </h3>
+                            <p className="text-gray-600 group-hover:text-gray-700 transition-colors duration-300">
+                              {item.description}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </section>
-            ))}
+              ))}
+            </div>
           </div>
+        </section>
 
-          {/* CTA Section */}
-          <div className="mt-24 text-center">
-            <div className="max-w-2xl mx-auto p-8 rounded-lg bg-primary/5">
-              <h2 className="text-2xl font-bold mb-4">
+        {/* CTA Section */}
+        <section className="relative py-24 overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-pink-500 to-orange-400 opacity-10"></div>
+          <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div className="max-w-3xl mx-auto space-y-8 p-8 rounded-2xl bg-white/50 backdrop-blur-sm border shadow-lg hover:shadow-xl transition-all duration-300">
+              <h2 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-600">
                 Ready to Create Beautiful Charts?
               </h2>
-              <p className="text-gray-600 mb-6">
+              <p className="text-xl text-gray-600">
                 Start visualizing your data with ChartGG today.
               </p>
               <a
                 href="/chart-editor"
-                className="inline-flex items-center justify-center rounded-md bg-primary px-8 py-3 text-sm font-medium text-white transition-colors hover:bg-primary/90"
+                className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 px-8 py-4 text-lg font-medium text-white transition-all duration-300 hover:from-purple-700 hover:to-pink-700 hover:scale-105 shadow-lg hover:shadow-xl"
               >
                 Get Started Free
               </a>
             </div>
           </div>
-        </div>
+        </section>
       </main>
+      <Footer />
     </>
   );
 }
