@@ -105,14 +105,14 @@ export default function ChartEditor() {
 
 const Navbar = () => {
   return (
-    <header className="flex h-12 w-full shrink-0 items-center px-2 md:px-4 border-b border-muted bg-white/50 backdrop-blur-sm">
+    <header className="flex h-14 w-full shrink-0 items-center px-2 md:px-4 border-b border-muted bg-gradient-to-r from-purple-600 via-pink-500 to-orange-400 backdrop-blur-sm">
       <Link
         href="/"
         className="mr-4 md:mr-6 flex items-center"
         prefetch={false}
       >
         <div className="flex items-center">
-          <ChartggText size="md" showBeta={true} />
+          <ChartggText size="md" color="white" />
         </div>
       </Link>
       <div className="ml-auto flex gap-1.5 md:gap-2 justify-end">
@@ -144,7 +144,7 @@ const FileDownloadPopover = () => {
 
   return (
     <Popover>
-      <PopoverTrigger className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 gap-1.5 md:gap-2 bg-primary text-primary-foreground hover:bg-primary/90 h-7 md:h-8 px-2 md:px-3">
+      <PopoverTrigger className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 gap-1.5 md:gap-2 bg-white text-gray-800 hover:bg-gray-100 h-7 md:h-8 px-2 md:px-3">
         <ShareIcon className="h-3.5 w-3.5 md:h-4 md:w-4" />
         Share
       </PopoverTrigger>

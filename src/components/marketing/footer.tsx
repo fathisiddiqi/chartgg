@@ -13,7 +13,7 @@ export function Footer() {
               <ChartggText size="lg" showBeta />
             </div>
             <p className="text-gray-300 text-sm sm:text-base">
-              Turning data into stunning visuals, effortlessly.
+              Transform your data into beautiful visualizations instantly.
             </p>
           </div>
 
@@ -63,7 +63,7 @@ export function Footer() {
             </h4>
             <div className="flex space-x-4 justify-center sm:justify-start">
               <a
-                href="https://twitter.com/chartgg"
+                href="https://twitter.com/chartggapp"
                 className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors duration-200"
                 target="_blank"
                 rel="noopener noreferrer"

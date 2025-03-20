@@ -3,10 +3,12 @@ import { cn } from "@/lib/utils";
 interface ChartggTextProps {
   className?: string;
   showBeta?: boolean;
-  size?: "sm" | "md" | "lg" | "xl" | "2xl";
+  size?: "xs" | "sm" | "md" | "lg" | "xl" | "2xl";
+  color?: "gradient" | "white";
 }
 
 const sizeClasses = {
+  xs: "text-xs",
   sm: "text-lg",
   md: "text-xl",
   lg: "text-2xl",
@@ -16,6 +18,7 @@ const sizeClasses = {
 
 export function ChartggText({
   className,
+  color = "gradient",
   showBeta = false,
   size = "lg",
 }: ChartggTextProps) {
@@ -24,7 +27,8 @@ export function ChartggText({
       <h3
         className={cn(
           sizeClasses[size],
-          "font-extrabold bg-gradient-to-r from-purple-600 via-pink-500 to-orange-500 animate-gradient bg-[length:200%_auto] bg-clip-text text-transparent font-poppins transition-all duration-300 hover:scale-105",
+          "font-extrabold bg-gradient-to-r animate-gradient bg-[length:200%_auto] bg-clip-text text-transparent font-poppins transition-all duration-300 hover:scale-105",
+          color === "gradient" ? "from-purple-600 to-orange-500" : "text-white",
           className
         )}
       >

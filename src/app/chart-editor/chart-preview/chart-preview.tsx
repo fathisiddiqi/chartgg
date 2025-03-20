@@ -30,6 +30,7 @@ import {
   getScaleFromAspectRatio,
 } from "@/lib/chart";
 import { useIsMobile } from "@/hook/use-mobile";
+import { ChartggText } from "@/components/common/chartgg-text";
 
 const ChartPreview = () => {
   const { chartType, chartStyle, chartCustomization, setChartDownload } =
@@ -315,19 +316,8 @@ const Watermark = ({ className }: { className?: string }) => {
         <Text variant="sm" className="m-auto hidden md:block">
           made with
         </Text>
-        <Image
-          width={14}
-          height={14}
-          src="/logo.svg"
-          alt="logo"
-          className="w-[14px] h-[14px] object-contain m-auto"
-        />
-        <Text variant="sm" className="font-bold m-auto hidden md:block">
-          Chartgg
-        </Text>
-        <Text variant="xs" className="font-bold m-auto block md:hidden">
-          Chartgg
-        </Text>
+        <ChartggText size="sm" className="m-auto hidden md:block" />
+        <ChartggText size="xs" className="m-auto md:hidden" />
       </div>
     </div>
   );
