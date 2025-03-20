@@ -1,4 +1,5 @@
 import "@/styles/globals.css";
+import "@/styles/menu-toggle.css";
 import {
   Inter as FontSans,
   Poppins as FontPoppins,

@@ -18,7 +18,6 @@ export function BlogLayout({
   imageSource,
   imageLink,
 }: BlogLayoutProps) {
-  console.log(imageLink);
   return (
     <article className="max-w-4xl mx-auto px-4 py-12 prose prose-lg">
       <header className="mb-8 not-prose">

@@ -9,6 +9,7 @@ import matter from "gray-matter";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import Image from "next/image";
 import { Metadata } from "next";
+import { Footer } from "@/components/marketing/footer";
 
 // Components that can be used in MDX files
 const components = {
@@ -155,6 +156,7 @@ export default async function Page({
         </article>
         <RelatedPosts currentSlug={slug} tags={frontMatter.tags} />
       </BlogLayout>
+      <Footer />
     </>
   );
 }

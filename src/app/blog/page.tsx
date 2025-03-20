@@ -4,6 +4,16 @@ import matter from "gray-matter";
 import Link from "next/link";
 import Image from "next/image";
 import { Metadata } from "next";
+import { Footer } from "@/components/marketing/footer";
+
+function formatDate(dateString: string) {
+  const date = new Date(dateString);
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
 import Navbar from "@/components/marketing/navbar";
 
 export const metadata: Metadata = {
@@ -73,25 +83,28 @@ function BlogPostCard({ post }: { post: BlogPost }) {
       href={`/blog/${post.slug}`}
       className="block group hover:no-underline"
     >
-      <article className="relative h-full overflow-hidden rounded-lg">
+      <article className="relative h-full overflow-hidden rounded-xl bg-white/50 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-white/20">
         {post.image && (
-          <div className="relative h-64 mb-4 overflow-hidden rounded-lg">
+          <div className="relative h-64 overflow-hidden rounded-t-xl">
             <Image
               src={post.image}
               alt={post.title}
               fill
-              className="object-cover transition-transform duration-200 ease-in-out group-hover:scale-105"
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               priority={true}
             />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           </div>
         )}
-        <div className="space-y-2">
-          <h2 className="text-xl font-semibold tracking-tight text-gray-800 group-hover:text-primary transition-colors duration-200">
+        <div className="p-6 space-y-3">
+          <h2 className="text-xl font-bold tracking-tight text-gray-800 group-hover:text-purple-600 transition-colors duration-300">
             {post.title}
           </h2>
-          <p className="text-sm text-gray-500">{post.date}</p>
-          <p className="text-gray-600">{post.description}</p>
+          <p className="text-sm font-medium text-purple-500">
+            {formatDate(post.date)}
+          </p>
+          <p className="text-gray-600 line-clamp-3">{post.description}</p>
         </div>
       </article>
     </Link>
@@ -99,7 +112,6 @@ function BlogPostCard({ post }: { post: BlogPost }) {
 }
 
 export default function BlogPage() {
-  // Get all blog posts
   const blogDir = path.join(process.cwd(), "src/content/blog");
   const files = fs.readdirSync(blogDir).filter((file) => file.endsWith(".mdx"));
 
@@ -116,24 +128,82 @@ export default function BlogPage() {
     };
   });
 
-  // Sort posts by date
   const sortedPosts = posts.sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   );
 
+  const featuredPost = sortedPosts[0];
+  const remainingPosts = sortedPosts.slice(1);
+
   return (
     <>
-      <Navbar />
-      <main className="min-h-screen pt-16">
-        <div className="max-w-4xl mx-auto px-4 py-12">
-          <h1 className="text-4xl font-bold mb-8">Blog</h1>
-          <div className="grid gap-8 md:grid-cols-2">
-            {sortedPosts.map((post) => (
-              <BlogPostCard key={post.slug} post={post} />
-            ))}
+      <Navbar pathname="/blog" />
+      <main className="min-h-screen pt-16 bg-gradient-to-b from-purple-50 to-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Hero Section */}
+          <div className="py-12 sm:py-16 lg:py-24">
+            <div className="text-center space-y-4 max-w-3xl mx-auto">
+              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-600">
+                Data Visualization Insights
+              </h1>
+              <p className="text-lg sm:text-xl text-gray-600">
+                Expert tutorials, best practices, and the latest trends in chart
+                design
+              </p>
+            </div>
+          </div>
+
+          {/* Featured Post */}
+          {featuredPost && (
+            <div className="mb-16">
+              <h2 className="text-2xl font-semibold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-600">
+                Featured Article
+              </h2>
+              <Link href={`/blog/${featuredPost.slug}`} className="block group">
+                <div className="relative overflow-hidden rounded-2xl shadow-xl bg-white hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+                  {featuredPost.image && (
+                    <div className="relative h-96 overflow-hidden">
+                      <Image
+                        src={featuredPost.image}
+                        alt={featuredPost.title}
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        sizes="(max-width: 1280px) 100vw, 1280px"
+                        priority
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                      <div className="absolute bottom-0 p-8 text-white">
+                        <h3 className="text-3xl font-bold mb-4">
+                          {featuredPost.title}
+                        </h3>
+                        <p className="text-lg text-gray-200">
+                          {featuredPost.description}
+                        </p>
+                        <p className="mt-4 text-purple-200">
+                          {formatDate(featuredPost.date)}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </Link>
+            </div>
+          )}
+
+          {/* Recent Posts Grid */}
+          <div className="pb-24">
+            <h2 className="text-2xl font-semibold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-600">
+              Recent Articles
+            </h2>
+            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+              {remainingPosts.map((post) => (
+                <BlogPostCard key={post.slug} post={post} />
+              ))}
+            </div>
           </div>
         </div>
       </main>
+      <Footer />
     </>
   );
 }

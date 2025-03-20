@@ -27,6 +27,7 @@ import { ChartDownloadFileType, useChartStore } from "@/store/chart";
 import { useDownloadChart } from "@/service/chart";
 import Head from "next/head";
 import MobileEditor from "./editor/mobile-editor";
+import { ChartggText } from "@/components/common/chartgg-text";
 
 export default function ChartEditor() {
   return (
@@ -104,26 +105,14 @@ export default function ChartEditor() {
 
 const Navbar = () => {
   return (
-    <header className="flex h-12 w-full shrink-0 items-center px-2 md:px-4 border-b border-muted">
+    <header className="flex h-12 w-full shrink-0 items-center px-2 md:px-4 border-b border-muted bg-white/50 backdrop-blur-sm">
       <Link
         href="/"
         className="mr-4 md:mr-6 flex items-center"
         prefetch={false}
       >
         <div className="flex items-center">
-          <Image
-            src="/logo.svg"
-            alt="logo"
-            width={24}
-            height={24}
-            className="md:w-[28px] md:h-[28px]"
-          />
-          <span className="ml-1.5 md:ml-2 text-lg md:text-xl font-bold">
-            Chartgg
-          </span>
-          <span className="ml-1.5 md:ml-2 inline-flex items-center rounded-md bg-primary/10 px-1 md:px-1.5 py-0.5 text-[9px] md:text-[10px] font-medium uppercase tracking-wider text-primary ring-1 ring-inset ring-primary/20">
-            Beta
-          </span>
+          <ChartggText size="md" showBeta={true} />
         </div>
       </Link>
       <div className="ml-auto flex gap-1.5 md:gap-2 justify-end">
