@@ -4,7 +4,7 @@ import { ReactNode } from "react";
 export default function BlogLayout({ children }: { children: ReactNode }) {
   return (
     <>
-      <Navbar />
+      <Navbar pathname="/blog" />
       <main className="min-h-screen pt-16">{children}</main>
     </>
   );
