@@ -1,0 +1,6 @@
+{
+  "yaml.schemas": {
+    "file:///Users/fathisiddiqi/.vscode/extensions/atlassian.atlascode-2.10.9/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml",
+    "https://json.schemastore.org/github-issue-config.json": "file:///Users/fathisiddiqi/Development/startup/chartss/.github/ISSUE_TEMPLATE/config.yml"
+  }
+}

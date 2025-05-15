@@ -1,0 +1,80 @@
+name: Feature Request
+description: Suggest an idea for ChartGG
+title: "[Feature]: "
+labels: ["enhancement"]
+assignees:
+  - SampleAssignee
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to suggest a new feature! Please fill out this form as completely as possible.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Statement
+      description: Describe the problem or limitation you're facing. What's missing or could be improved?
+      placeholder: "Example: I'm unable to customize the chart's legend position..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: Describe your ideal solution. What would you like to see implemented?
+      placeholder: Be specific about how you envision this feature working.
+    validations:
+      required: true
+
+  - type: textarea
+    id: use-cases
+    attributes:
+      label: Use Cases
+      description: Explain how this feature would be used in practice
+      value: |
+        - Who would benefit from this feature?
+        - In what scenarios would it be most valuable?
+        - How would it improve the user experience?
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternative Solutions
+      description: Have you considered any alternative approaches or workarounds?
+      value: |
+        - What other solutions might address this need?
+        - What are the pros and cons of different approaches?
+    validations:
+      required: false
+
+  - type: textarea
+    id: visual-examples
+    attributes:
+      label: Visual Examples
+      description: If applicable, include mockups, sketches, or examples from similar tools
+      placeholder: Drag and drop images here, or describe your visual ideas in text
+    validations:
+      required: false
+
+  - type: textarea
+    id: technical
+    attributes:
+      label: Technical Considerations
+      description: Any technical details that might be relevant
+      value: |
+        - Any specific technical requirements or dependencies?
+        - Potential implementation challenges?
+        - Impact on existing features or workflows?
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Provide any other relevant information that might help us understand and evaluate the request
+      placeholder: Include related issues, user research, or industry standards
