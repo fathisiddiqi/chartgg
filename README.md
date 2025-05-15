@@ -2,6 +2,10 @@
 
 ChartGG is a modern, open-source data visualization tool that allows you to create beautiful charts with a screenshot-style download method. Whether you're a data scientist, business analyst, or developer, ChartGG provides the tools you need to transform your data into compelling visual stories.
 
+Visit [chartgg.com](https://chartgg.com) for a live demo
+
+![ChartGG Screenshot](screenshot.png)
+
 > **Note**: This project is developed with approximately 40% contribution from AI technologies, demonstrating the potential of human-AI collaboration in modern software development.
 
 ## Features
