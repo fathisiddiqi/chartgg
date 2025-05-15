@@ -1,0 +1,107 @@
+name: Bug Report
+description: Create a report to help us improve ChartGG
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+  - type: textarea
+    id: bug-description
+    attributes:
+      label: Bug Description
+      description: Provide a clear and concise description of what the bug is. What went wrong?
+      placeholder: When I try to..., the chart doesn't...
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction-steps
+    attributes:
+      label: Steps to Reproduce
+      description: How can we reproduce this issue? Be specific and include any relevant data or chart configurations.
+      placeholder: |
+        1. Go to '...'
+        2. Click on '...'
+        3. Scroll down to '...'
+        4. See error
+    validations:
+      required: true
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected Behavior
+      description: What did you expect to happen?
+      placeholder: The chart should have...
+    validations:
+      required: true
+  - type: textarea
+    id: actual-behavior
+    attributes:
+      label: Actual Behavior
+      description: What actually happened instead? Include any error messages or unexpected behavior.
+      placeholder: Instead, the chart...
+    validations:
+      required: true
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots or Examples
+      description: If applicable, add screenshots, GIFs, or code snippets to help explain your problem.
+      placeholder: Drag and drop images here, or paste chart configurations/data samples if relevant.
+    validations:
+      required: false
+  - type: dropdown
+    id: browsers
+    attributes:
+      label: Browser
+      description: Which browser(s) are you seeing the problem on?
+      multiple: true
+      options:
+        - Chrome
+        - Firefox
+        - Safari
+        - Microsoft Edge
+        - Other
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating System
+      multiple: true
+      options:
+        - Windows
+        - macOS
+        - Linux
+        - iOS
+        - Android
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: chartgg-version
+    attributes:
+      label: ChartGG Version
+      description: If known, what version of ChartGG are you using?
+      placeholder: e.g., 1.0.0
+    validations:
+      required: false
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: |
+        Add any other context about the problem here. For example:
+        - Does this happen consistently or intermittently?
+        - Are there any specific conditions that trigger this issue?
+        - Have you found any temporary workarounds?
+      placeholder: This issue occurs when...
+    validations:
+      required: false
+  - type: textarea
+    id: possible-solution
+    attributes:
+      label: Possible Solution
+      description: If you have any ideas about what might be causing the issue or how to fix it, please share them here.
+      placeholder: I think the problem might be...
+    validations:
+      required: false
